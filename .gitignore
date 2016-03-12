@@ -1,0 +1,12 @@
+.DS_Store
+.DS_Store?
+.Trashes
+sketch.properties
+build-tmp/
+web-export/
+applet
+application.linux32
+application.linux64
+application.windows32
+application.windows64
+application.macosx
