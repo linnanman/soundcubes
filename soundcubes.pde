@@ -15,11 +15,15 @@ Capture cam;
 // Number of markers to detect.
 int numMarkers = 13;
 
+// Camera image width and height
+int camWidth = 640;
+int camHeight = 480;
+
 void setup() {
   cameraParameterFile = dataPath(cameraParameterFile);
   patternPath = dataPath(patternPath);
   size(1280, 720);
-  nya = new MultiMarker(this, 640, 480, cameraParameterFile, NyAR4PsgConfig.CONFIG_DEFAULT);
+  nya = new MultiMarker(this, camWidth, camHeight, cameraParameterFile, NyAR4PsgConfig.CONFIG_DEFAULT);
   nya.setLostDelay(1);
   String[] patterns = loadPatternFilenames(patternPath);
   for (int i = 0; i < numMarkers; ++i) {
@@ -28,8 +32,7 @@ void setup() {
   }
   
   // Camera name is hardcoded, since we're most likely using the Surface Pro 3 front camera.
-  //cam = new Capture(this, 640, 480, "Microsoft LifeCam Front", 30);
-  cam = new Capture(this, 640, 480, "Microsoft LifeCam HD-5000", 30);
+  cam = new Capture(this, camWidth, camHeight, "Microsoft LifeCam Front", 30);
   cam.start();
 }
 
