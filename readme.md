@@ -3,7 +3,7 @@
 1. Download and install [NyARToolkit for Processing 2.1.0](https://github.com/nyatla/NyARToolkit-for-Processing/releases/tag/v2.1.0).
 2. If needed, [calibrate your camera with ARToolkit](http://artoolkit.org/documentation/doku.php?id=2_Configuration:config_camera_calibration) and replace the default **data/front_camera_para.dat**.
 3. Print the first 13 tracking markers from **data/gif**.
-4. If you are not using a Surface Pro 3, change the following line in **soundcubes.pde**: `cam = new Capture(this, camWidth, camHeight, "Microsoft LifeCam Front", 30);`
+4. If you are not using a Surface Pro 3, change the following line in **soundcubes.pde** to accommodate your webcam: `cam = new Capture(this, camWidth, camHeight, "Microsoft LifeCam Front", 30);`
 
 ## License
 The MIT License (MIT)
