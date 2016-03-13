@@ -37,12 +37,18 @@ void setup() {
 }
 
 void draw() {
-  background(0);
+  
+  //logic
   if (cam.available() == true) {
     cam.read();
   }
-  image(cam, 0, 0);
   nya.detect(cam);
+  Location[] locations = getLocations();
+  doLogic(locations);
+  
+  //visual
+  background(0);
+  image(cam, 0, 0);
   drawMarkers();
 }
 

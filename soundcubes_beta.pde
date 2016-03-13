@@ -26,3 +26,7 @@ Location[] getLocations() {
   }
   return locations;
 }
+
+void doLogic(Location[] locations) {
+  
+}
