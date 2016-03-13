@@ -1,6 +1,7 @@
 import jp.nyatla.nyar4psg.*;
 import java.io.*;
 import processing.video.*;
+import java.util.*;
 
 // front_camera_para.dat contains calibration data about Surface Pro 3 front camera.
 // Despite calibration data being camera-specific, the same calibration data should
@@ -32,7 +33,7 @@ void setup() {
   }
   
   // Camera name is hardcoded, since we're most likely using the Surface Pro 3 front camera.
-  cam = new Capture(this, camWidth, camHeight, "Microsoft LifeCam Front", 30);
+  cam = new Capture(this, camWidth, camHeight, "DroidCam Source 3", 30); //Microsoft LifeCam Front
   cam.start();
 }
 
@@ -43,42 +44,14 @@ void draw() {
     cam.read();
   }
   nya.detect(cam);
-  Location[] locations = getLocations();
+  List<Location> locations = getLocations();
   doLogic(locations);
   
   //visual
   background(0);
   image(cam, 0, 0);
-  drawMarkers();
-}
-
-// drawMarkers draws red circles on the center of detected markers,
-// and green circles on the corners.
-void drawMarkers() {
-  for (int i = 0; i < numMarkers; ++i) {
-    if (!nya.isExistMarker(i)) { continue; }
-    PVector[] cornerPositions = nya.getMarkerVertex2D(i);
-    PVector centerPosition = new PVector(0, 0);
-    for (int j = 0; j < cornerPositions.length; ++j) {
-      PVector cornerPosition = cornerPositions[j];
-      centerPosition.add(cornerPosition);
-      fill(0, 255, 0);
-      ellipse(cornerPosition.x, cornerPosition.y, 15, 15);
-    }
-    centerPosition.mult(0.25);
-    fill(255, 0, 0);
-    ellipse(centerPosition.x, centerPosition.y, 20, 20);
-  }
-}
-
-
-// This function loads .patt filenames into a list of Strings based on a full path to a directory (relies on java.io)
-String[] loadPatternFilenames(String path) {
-  File folder = new File(path);
-  FilenameFilter pattFilter = new FilenameFilter() {
-    public boolean accept(File dir, String name) {
-      return name.toLowerCase().endsWith(".patt");
-    }
-  };
-  return folder.list(pattFilter);
+  drawCenterPoints(locations);
+  
+  //drawMarkers();
+  drawOrder(locations);
 }
