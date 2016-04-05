@@ -33,7 +33,7 @@ void setup() {
   }
   
   // Camera name is hardcoded, since we're most likely using the Surface Pro 3 front camera.
-  cam = new Capture(this, camWidth, camHeight, "DroidCam Source 3", 30); //Microsoft LifeCam Front
+  cam = new Capture(this, camWidth, camHeight, "HD WebCam", 30); //DroidCam Source 3, Microsoft LifeCam Front
   cam.start();
 }
 
