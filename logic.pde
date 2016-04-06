@@ -30,14 +30,13 @@ List<Location> getLocations() {
 
 
 void doLogic(List<Location> locations, Serial serialPort) {
+  serialPort.write("0,0\r\n");
   for (int i = 0; i < locations.size(); ++i) {
     Location location = locations.get(i);
     
-    System.out.println(location.number);
-    
-    //cube found
+    //cube number 2 found
     if (location.number == 1) {
-      playSound("horn.wav", false);
+      serialPort.write("2,0\r\n");
     }
   }
 }

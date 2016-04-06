@@ -35,10 +35,10 @@ int camHeight = 480;
 Serial serialPort;
 
 void setup() {
-  //String serialPortName = Serial.list()[0];
-  //println("Using COM port: " + serialPortName);
-  //serialPort = new Serial(this, serialPortName, 9600);
-  serialPort = null;
+  String serialPortName = Serial.list()[0];
+  println("Using COM port: " + serialPortName);
+  serialPort = new Serial(this, serialPortName, 9600);
+  //serialPort = null;
   cameraParameterFile = dataPath(cameraParameterFile);
   patternPath = dataPath(patternPath);
   size(1280, 720);
@@ -51,7 +51,7 @@ void setup() {
   }
   
   // Camera name is hardcoded, since we're most likely using the Surface Pro 3 front camera.
-  cam = new Capture(this, camWidth, camHeight, "HD WebCam", 30); //DroidCam Source 3, Microsoft LifeCam Front
+  cam = new Capture(this, camWidth, camHeight, "Microsoft LifeCam Front", 30); //DroidCam Source 3, Microsoft LifeCam Front
   cam.start();
   
   server = new Server(this, port); 
