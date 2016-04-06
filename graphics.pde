@@ -1,8 +1,3 @@
-
-
-
-
-
 void drawCenterPoints(List<Location> locations) {
   for (int i = 0; i < locations.size(); ++i) {
     fill(255, 0, 0);
@@ -12,7 +7,6 @@ void drawCenterPoints(List<Location> locations) {
 
 //draws noticed qr codes and order of them
 void drawOrder(List<Location> locations) {
-  
   //Order the list by x
   Collections.sort(locations, new Comparator<Location>() {
         public int compare(Location o1, Location o2) {
@@ -20,7 +14,6 @@ void drawOrder(List<Location> locations) {
         }
     });
  
-  
   //Print the order as text
   String order = "";
   for (int i = 0; i < locations.size(); ++i) {
@@ -29,8 +22,6 @@ void drawOrder(List<Location> locations) {
   fill(255);
   textSize(30);
   text(order, 200, 600);
-  
-
 }
 
 // drawMarkers draws red circles on the center of detected markers,

@@ -1,4 +1,3 @@
-
 class Location {
   public int x; 
   public int y;
@@ -29,7 +28,7 @@ List<Location> getLocations() {
   return locations;
 }
 
-void doLogic(List<Location> locations) {
+void doLogic(List<Location> locations, Serial serialPort) {
   
 }
 

@@ -1,3 +1,4 @@
+import processing.serial.*;
 import jp.nyatla.nyar4psg.*;
 import java.io.*;
 import processing.video.*;
@@ -30,13 +31,17 @@ int numMarkers = 13;
 // Camera image width and height
 int camWidth = 640;
 int camHeight = 480;
+Serial serialPort;
 
 void setup() {
+  String serialPortName = Serial.list()[0];
+  println("Using COM port: " + serialPortName);
+  serialPort = new Serial(this, serialPortName, 9600);
   cameraParameterFile = dataPath(cameraParameterFile);
   patternPath = dataPath(patternPath);
   size(1280, 720);
   nya = new MultiMarker(this, camWidth, camHeight, cameraParameterFile, NyAR4PsgConfig.CONFIG_DEFAULT);
-  nya.setLostDelay(1);
+  nya.setLostDelay(15);
   String[] patterns = loadPatternFilenames(patternPath);
   for (int i = 0; i < numMarkers; ++i) {
     println("Adding marker: " + patterns[i]);
@@ -55,14 +60,13 @@ void setup() {
 }
 
 void draw() {
-  
   //logic
   if (cam.available() == true) {
     cam.read();
   }
   nya.detect(cam);
   List<Location> locations = getLocations();
-  doLogic(locations);
+  doLogic(locations, serialPort);
   
   //visual
   background(0);
