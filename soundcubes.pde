@@ -3,6 +3,17 @@ import java.io.*;
 import processing.video.*;
 import java.util.*;
 
+import processing.net.*;
+import ddf.minim.*;
+
+int port = 5204; 
+
+Server server;    
+Server testserver;  
+Client testclient;
+Minim minim;
+AudioPlayer player;
+
 // front_camera_para.dat contains calibration data about Surface Pro 3 front camera.
 // Despite calibration data being camera-specific, the same calibration data should
 // more or less work with other webcams, since we're only interested in the 2D coordinates
@@ -35,6 +46,12 @@ void setup() {
   // Camera name is hardcoded, since we're most likely using the Surface Pro 3 front camera.
   cam = new Capture(this, camWidth, camHeight, "HD WebCam", 30); //DroidCam Source 3, Microsoft LifeCam Front
   cam.start();
+  
+  server = new Server(this, port); 
+  //testserver = new Server(this, testport); 
+  //testclient = new Client(this, ownip, testport);  
+  minim = new Minim(this);
+  player = minim.loadFile("horn.wav");
 }
 
 void draw() {
@@ -54,4 +71,43 @@ void draw() {
   
   //drawMarkers();
   drawOrder(locations);
+  
+  serverAction();
+}
+
+
+void serverAction() {
+
+  //testserver.write("0"); 
+  
+  Client c = server.available();
+  if (c != null) {
+
+    String input = c.readString();
+    String httpline = input.substring(0, input.indexOf("\r\n")); // Only up to the newline
+    
+    c.write("HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n");  
+    c.write("<html><head><title>Processing server</title></head><body><h3>Jihuu");
+    c.write("</h3></body></html>");
+      
+    
+    
+    if (httpline.equals("GET /horn HTTP/1.1")) 
+    {
+      if ( player.isPlaying() ) {player.pause();}
+      player = minim.loadFile("horn.wav");
+      player.play();
+    }
+    else if (httpline.equals("GET /quack HTTP/1.1")) 
+    {
+      if ( player.isPlaying() ) {player.pause();}
+      player = minim.loadFile("duck.wav");
+      player.play();
+    }
+    
+    c.stop();
+  }
+  /*if (testclient.available() > 0) { 
+    println("jihaa");
+  }*/
 }
