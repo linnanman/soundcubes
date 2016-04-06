@@ -34,9 +34,10 @@ int camHeight = 480;
 Serial serialPort;
 
 void setup() {
-  String serialPortName = Serial.list()[0];
-  println("Using COM port: " + serialPortName);
-  serialPort = new Serial(this, serialPortName, 9600);
+  //String serialPortName = Serial.list()[0];
+  //println("Using COM port: " + serialPortName);
+  //serialPort = new Serial(this, serialPortName, 9600);
+  serialPort = null;
   cameraParameterFile = dataPath(cameraParameterFile);
   patternPath = dataPath(patternPath);
   size(1280, 720);
