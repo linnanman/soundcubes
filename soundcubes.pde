@@ -14,6 +14,7 @@ Server testserver;
 Client testclient;
 Minim minim;
 AudioPlayer player;
+int lastPlayed;
 
 // front_camera_para.dat contains calibration data about Surface Pro 3 front camera.
 // Despite calibration data being camera-specific, the same calibration data should
@@ -99,15 +100,11 @@ void serverAction() {
     
     if (httpline.equals("GET /horn HTTP/1.1")) 
     {
-      if ( player.isPlaying() ) {player.pause();}
-      player = minim.loadFile("horn.wav");
-      player.play();
+      playSound("horn.wav", true);
     }
     else if (httpline.equals("GET /quack HTTP/1.1")) 
     {
-      if ( player.isPlaying() ) {player.pause();}
-      player = minim.loadFile("duck.wav");
-      player.play();
+      playSound("duck.wav", true);
     }
     
     c.stop();

@@ -28,8 +28,18 @@ List<Location> getLocations() {
   return locations;
 }
 
+
 void doLogic(List<Location> locations, Serial serialPort) {
-  
+  for (int i = 0; i < locations.size(); ++i) {
+    Location lokaatio = locations.get(i);
+    
+    System.out.println(lokaatio.number);
+    
+    //cube found
+    if (lokaatio.number == 1) {
+      playSound("horn.wav", false);
+    }
+  }
 }
 
 // This function loads .patt filenames into a list of Strings based on a full path to a directory (relies on java.io)
