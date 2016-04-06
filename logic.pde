@@ -31,12 +31,12 @@ List<Location> getLocations() {
 
 void doLogic(List<Location> locations, Serial serialPort) {
   for (int i = 0; i < locations.size(); ++i) {
-    Location lokaatio = locations.get(i);
+    Location location = locations.get(i);
     
-    System.out.println(lokaatio.number);
+    System.out.println(location.number);
     
     //cube found
-    if (lokaatio.number == 1) {
+    if (location.number == 1) {
       playSound("horn.wav", false);
     }
   }
