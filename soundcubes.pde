@@ -25,7 +25,7 @@ void setup() {
   patternPath = dataPath(patternPath);
   size(1280, 720);
   nya = new MultiMarker(this, camWidth, camHeight, cameraParameterFile, NyAR4PsgConfig.CONFIG_DEFAULT);
-  nya.setLostDelay(1);
+  nya.setLostDelay(15);
   String[] patterns = loadPatternFilenames(patternPath);
   for (int i = 0; i < numMarkers; ++i) {
     println("Adding marker: " + patterns[i]);
