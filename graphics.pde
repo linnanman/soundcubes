@@ -1,8 +1,3 @@
-
-
-
-
-
 void drawCenterPoints(List<Location> locations) {
   for (int i = 0; i < locations.size(); ++i) {
     fill(255, 0, 0);
