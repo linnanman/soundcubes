@@ -1,9 +1,15 @@
 
 
-void playSound(String file, boolean overwrite) {
+void playSound(String file, boolean interrupt, boolean sameagain) {
   //lastPlayed = 
-  System.out.println("playing sound");
-  if (overwrite) {
+  //System.out.println("playing sound");
+  AudioMetaData meta = player.getMetaData();
+  
+  if (meta.fileName().equals(file) && sameagain == false) {
+    return;
+  }
+  
+  if (interrupt) {
     if ( player.isPlaying() ) {player.pause();}
       player = minim.loadFile(file);
       player.play(); 
@@ -14,5 +20,7 @@ void playSound(String file, boolean overwrite) {
         player.play(); 
       }
   }
+  
+
    
 }
