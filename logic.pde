@@ -1,35 +1,50 @@
 char pressedKey;
 PImage notes;
+PImage sound;
+PFont fontLobster;
+PFont fontKarla;
 
 void doSetup() {
   
   this.state = new State("start");
-  notes = loadImage("data/notes.png");  
+  notes = loadImage("data/notes.png");
+  sound = loadImage("data/sound.png");
+  fontLobster = createFont("Lobster 1.4.otf", 60);
+  fontKarla = createFont("Karla-Regular.ttf", 40);
+  textAlign(CENTER, CENTER);
 }
 
 void doLogic() {
   
-  background(0); // black backgrounf
+  background(53, 53, 53); // black background
   cubes.updateCubes(); 
   
   switch ( this.state.getState() ) {
    
-    case "start":
-     image(notes, 400, 300);
-     textSize(30);
-     text("SoundCubes v0.1, click and press space to start", 200, 500);
-     if (pressedKey == ' ') { 
-       this.state.setState("stage1"); 
-     }
-     break;
+  case "start":
+   turnOnLed();
+   image(notes, 450, 280);
+   //textSize(30);
+   fill(31, 181, 183);
+   textFont(fontLobster);
+   text("SoundCubes", 640, 150);
+   textFont(fontKarla);
+   text("Click and press space to start", 640, 550);
+   if (pressedKey == ' ') { 
+     this.state.setState("stage1"); 
+   }
+   break;
      
    case "stage1":
-     image(cam, 0, 0);
-     this.timer.setTimer("Stage 1 -text", 2000);
+     image(cam, 100, 100);
+     /*this.timer.setTimer("Stage 1 -text", 2000);
      if (this.timer.isGoing("Stage 1 -text")) {
        text("Stage 1: Find C", 200, 500);
-     }
-     
+     }*/
+     fill(255);
+     text("Stage 1: Find C", 1000, 120);
+     //Play note C as the task begins and each time the button is clicked for help
+     drawHelpButton();
      
      if (cubes.isCubeOnCamera(1)) { //if cube no 1 is on camera
         playSound("notes/c.wav", false, false); 
@@ -39,8 +54,8 @@ void doLogic() {
      }
        
       
-     drawCenterPoints(cubes.getCubesOnCamera());
-     drawOrder(cubes.getCubesOnCamera());
+     //drawCenterPoints(cubes.getCubesOnCamera());
+     //drawOrder(cubes.getCubesOnCamera());
      break;
      
    case "stage2":

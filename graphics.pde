@@ -1,6 +1,6 @@
 void drawCenterPoints(List<Cube> cubes) {
   for (int i = 0; i < cubes.size(); ++i) {
-    fill(255, 0, 0);
+    fill(31, 181, 183);
     ellipse(cubes.get(i).x, cubes.get(i).y, 20, 20);
   }
 }
@@ -17,9 +17,6 @@ void drawOrder(List<Cube> cubes) {
   textSize(30);
   text(order, 200, 600);
 }
-
-
-
 
 // drawMarkers draws red circles on the center of detected markers,
 // and green circles on the corners.
@@ -38,4 +35,10 @@ void drawMarkers() {
     fill(255, 0, 0);
     ellipse(centerPosition.x, centerPosition.y, 20, 20);
   }
+}
+
+void drawHelpButton() {
+  fill(31, 181, 183);
+  ellipse(1000, 250, 60, 60);
+  image(sound, 980, 235);
 }

@@ -8,7 +8,7 @@ import ddf.minim.*;
 
 //Settings
 boolean useSerial = false;
-String cameraName = "HD WebCam"; //Microsoft LifeCam Front, HD WebCam
+String cameraName = "FaceTime-HD-kamera (sisäinen)"; //Microsoft LifeCam Front, HD WebCam, FaceTime-HD-kamera (sisäinen)
 int port = 5204;
 
 Server server;    
