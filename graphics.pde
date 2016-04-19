@@ -1,4 +1,6 @@
 void drawCenterPoints(List<Cube> cubes) {
+  translate(100, 150);
+  
   for (int i = 0; i < cubes.size(); ++i) {
     fill(31, 181, 183);
     ellipse(cubes.get(i).x, cubes.get(i).y, 20, 20);
@@ -21,6 +23,7 @@ void drawOrder(List<Cube> cubes) {
 // drawMarkers draws red circles on the center of detected markers,
 // and green circles on the corners.
 void drawMarkers() {
+  
   for (int i = 0; i < numMarkers; ++i) {
     if (!nya.isExistMarker(i)) { continue; }
     PVector[] cornerPositions = nya.getMarkerVertex2D(i);
@@ -41,4 +44,13 @@ void drawSoundButton() {
   fill(31, 181, 183);
   ellipse(1000, 550, 60, 60);
   image(sound, 980, 535);
+}
+
+
+void drawArea(XYArea area) {
+  int Awidth = area.xMax-area.xMin;
+  int Aheight = area.yMax-area.yMin;
+  
+  noFill();
+  rect(area.xMin, area.yMin, Awidth, Aheight);
 }

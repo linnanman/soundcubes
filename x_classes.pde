@@ -1,3 +1,18 @@
+class XYArea {
+  public int xMin;
+  public int xMax;
+  public int yMin;
+  public int yMax;
+  
+  public XYArea(int xMin, int xMax, int yMin, int yMax) {
+    this.xMin = xMin;
+    this.xMax = xMax;
+    this.yMin = yMin;
+    this.yMax = yMax;
+  }
+}
+
+
 class Timer {
   
   private Hashtable<String, Long> timers;
@@ -167,6 +182,66 @@ class Cubes {
     number = number-1;
   
     if (list.size() <= number)
+      return false;
+      
+    return this.list.get(number).onCamera; 
+  }
+  
+  public Cube isAnyCubeOnCamera(int xMin, int xMax, int yMin, int yMax) {
+  
+
+    for (int i=0;i<this.list.size();i++) {
+      if (this.list.get(i).x > xMin && this.list.get(i).y > yMin && this.list.get(i).x < xMax && this.list.get(i).y < yMax && this.list.get(i).onCamera) {
+          return this.list.get(i);
+      }
+    }
+    return null;
+    
+  }
+  
+  public Cube isAnyCubeOnCamera(XYArea xyarea) {
+  
+    for (int i=0;i<this.list.size();i++) {
+      if (this.list.get(i).x > xyarea.xMin && this.list.get(i).y > xyarea.yMin && this.list.get(i).x < xyarea.xMax && this.list.get(i).y < xyarea.yMax && this.list.get(i).onCamera) {
+          System.out.println(this.list.get(i).x + " " + this.list.get(i).y);
+          return this.list.get(i);
+      }
+    }
+    return null;
+    
+  }
+  
+  public boolean isCubeOnCamera(int number, XYArea xyarea) {
+    number = number-1;
+  
+    if (list.size() <= number)
+      return false;
+      
+    if (this.list.get(number).x < xyarea.xMin)
+      return false;
+    if (this.list.get(number).y < xyarea.yMin)
+      return false;
+    if (this.list.get(number).x > xyarea.xMax)
+      return false;
+    if (this.list.get(number).y > xyarea.yMax)
+      return false;
+      
+    return this.list.get(number).onCamera; 
+  }
+  
+  public boolean isCubeOnCamera(int number, int xMin, int xMax, int yMin, int yMax) {
+    number = number-1;
+  
+    if (list.size() <= number)
+      return false;
+      
+    if (this.list.get(number).x < xMin)
+      return false;
+    if (this.list.get(number).y < yMin)
+      return false;
+    if (this.list.get(number).x > xMax)
+      return false;
+    if (this.list.get(number).y > yMax)
       return false;
       
     return this.list.get(number).onCamera; 

@@ -5,6 +5,13 @@ PFont fontLobster;
 PFont fontLobster_smaller;
 PFont fontKarla;
 
+XYArea cube1Area;
+XYArea cube2Area;
+XYArea cube3Area;
+XYArea playCubeArea;
+XYArea playTaskAgainArea;
+XYArea difficultyLevelArea;
+
 void doSetup() {
   
   this.state = new State("start");
@@ -14,12 +21,27 @@ void doSetup() {
   fontLobster_smaller = createFont("Lobster 1.4.otf", 35);
   fontKarla = createFont("Karla-Regular.ttf", 35);
   textAlign(CENTER, CENTER);
+  
+  this.cube1Area = new XYArea(0,0,0,0);
+  this.cube2Area = new XYArea(0,0,0,0);
+  this.cube3Area = new XYArea(0,0,0,0);
+  this.playCubeArea = new XYArea(290, 310, 290, 310);
+  this.playTaskAgainArea = new XYArea(0,0,0,0);
+  this.difficultyLevelArea =  new XYArea(0,0,0,0);
+  
+  
 }
 
 void doLogic() {
   
   background(53, 53, 53); // black background
   cubes.updateCubes(); 
+  
+  //play a single cube
+  Cube cubeToPlay = cubes.isAnyCubeOnCamera(this.playCubeArea);
+  if (cubeToPlay != null) {
+    playSound("notes/c.wav", false, true); 
+  }
   
   switch ( this.state.getState() ) {
    
@@ -99,7 +121,8 @@ void doLogic() {
      break;
   }
     
-  
+  if (this.developer)
+    drawArea(this.playCubeArea);
 }
 
 
@@ -112,6 +135,9 @@ void keyReleased() {
   pressedKey = '\0';
 }
 
+void mouseClicked() {
+  System.out.println("X: "+(mouseX-100)+"and Y:"+(mouseY-150));
+}
 
 void turnOnLed() {
   if (useSerial)
