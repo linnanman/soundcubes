@@ -54,3 +54,18 @@ void drawArea(XYArea area) {
   noFill();
   rect(area.xMin, area.yMin, Awidth, Aheight);
 }
+
+void drawLines() {
+  for (int i=1;i<13;i++) {
+    if (i %2 == 0)
+      stroke(200,100,100);
+    line(50*i,0, 50*i, 500);
+    stroke(255);
+  }
+  for (int i=1;i<10;i++) {
+    if (i %2 == 0)
+      stroke(200,100,100);
+    line(0,50*i, 650, 50*i);
+    stroke(255);
+  }
+}

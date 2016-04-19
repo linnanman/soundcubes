@@ -121,8 +121,10 @@ void doLogic() {
      break;
   }
     
-  if (this.developer)
+  if (this.developer) {
     drawArea(this.playCubeArea);
+    drawLines();
+  }
 }
 
 
