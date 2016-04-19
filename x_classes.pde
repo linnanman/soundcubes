@@ -190,6 +190,7 @@ class ModeButton {
   public int width;
   public int height;
   public int radius;
+  public boolean clicked;
   
   public ModeButton(int x, int y, String text) {
     this.x = x;
@@ -198,13 +199,18 @@ class ModeButton {
     this.width = 300;
     this.height = 150;
     this.radius = 7;
+    this.clicked = false;
   }
   
   public void drawButton() {
     fill(31, 181, 183);
     rect(this.x, this.y, this.width, this.height, this.radius);
     fill(255);
-    
     text(this.text, this.x+150, this.y+67);
   }
+  
+  public boolean isClicked() {
+    return this.clicked;
+  }
+  
 }

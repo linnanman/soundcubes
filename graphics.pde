@@ -37,8 +37,8 @@ void drawMarkers() {
   }
 }
 
-void drawHelpButton() {
+void drawSoundButton() {
   fill(31, 181, 183);
-  ellipse(1000, 250, 60, 60);
-  image(sound, 980, 235);
+  ellipse(1000, 350, 60, 60);
+  image(sound, 980, 335);
 }
