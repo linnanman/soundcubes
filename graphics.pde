@@ -39,6 +39,6 @@ void drawMarkers() {
 
 void drawSoundButton() {
   fill(31, 181, 183);
-  ellipse(1000, 350, 60, 60);
-  image(sound, 980, 335);
+  ellipse(1000, 550, 60, 60);
+  image(sound, 980, 535);
 }

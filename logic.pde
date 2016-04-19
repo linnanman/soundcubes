@@ -1,5 +1,6 @@
 char pressedKey;
 PImage sound;
+PImage C;
 PFont fontLobster;
 PFont fontLobster_smaller;
 PFont fontKarla;
@@ -8,6 +9,7 @@ void doSetup() {
   
   this.state = new State("start");
   sound = loadImage("data/sound.png");
+  C = loadImage("data/Middle_C.png");
   fontLobster = createFont("Lobster 1.4.otf", 80);
   fontLobster_smaller = createFont("Lobster 1.4.otf", 35);
   fontKarla = createFont("Karla-Regular.ttf", 35);
@@ -57,6 +59,7 @@ void doLogic() {
      textFont(fontKarla);
      text("Find C", 1000, 170);
      //Play note C as the task begins and each time the button is clicked for help TODO
+     image(C, 900, 300);
      drawSoundButton();
      
      if (cubes.isCubeOnCamera(1)) { //if cube no 1 is on camera
