@@ -1,5 +1,4 @@
 char pressedKey;
-PImage notes;
 PImage sound;
 PFont fontLobster;
 PFont fontKarla;
@@ -7,10 +6,9 @@ PFont fontKarla;
 void doSetup() {
   
   this.state = new State("start");
-  notes = loadImage("data/notes.png");
   sound = loadImage("data/sound.png");
-  fontLobster = createFont("Lobster 1.4.otf", 60);
-  fontKarla = createFont("Karla-Regular.ttf", 40);
+  fontLobster = createFont("Lobster 1.4.otf", 80);
+  fontKarla = createFont("Karla-Regular.ttf", 35);
   textAlign(CENTER, CENTER);
 }
 
@@ -23,13 +21,20 @@ void doLogic() {
    
   case "start":
    turnOnLed();
-   image(notes, 450, 280);
-   //textSize(30);
-   fill(31, 181, 183);
+   // Logo
+   fill(255);
    textFont(fontLobster);
    text("SoundCubes", 640, 150);
+   // Mode selection
    textFont(fontKarla);
-   text("Click and press space to start", 640, 550);
+   ModeButton learning = new ModeButton(315, 250, "Learning Mode");
+   learning.drawButton();
+   ModeButton easy = new ModeButton(655, 250, "Easy Mode");
+   easy.drawButton();
+   ModeButton normal = new ModeButton(315, 450, "Normal Mode");
+   normal.drawButton();
+   ModeButton advanced = new ModeButton(655, 450, "Advanced Mode");
+   advanced.drawButton();
    if (pressedKey == ' ') { 
      this.state.setState("stage1"); 
    }
@@ -54,18 +59,18 @@ void doLogic() {
      }
        
       
-     //drawCenterPoints(cubes.getCubesOnCamera());
-     //drawOrder(cubes.getCubesOnCamera());
+     drawCenterPoints(cubes.getCubesOnCamera());
+     drawOrder(cubes.getCubesOnCamera());
      break;
      
    case "stage2":
      image(cam, 0, 0);
      rect(0,0,100,100);
      
-     this.timer.setTimer("Stage 2 -text", 2000);
+     /*this.timer.setTimer("Stage 2 -text", 2000);
      if (this.timer.isGoing("Stage 2 -text")) {
        text("Stage 2: Find D", 200, 500);
-     }
+     }*/
      
       if (cubes.isCubeOnPhone(2)) { //if cube no 1 is on phone
         playSound("horn.wav", false, true);
