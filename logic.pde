@@ -219,11 +219,12 @@ void mouseClicked() {
   System.out.println("X: "+(mouseX-100)+"and Y:"+(mouseY-150));
 }
 
-void turnOnLed() {
+void changeLed(int first, int second, int third) {
   if (useSerial)
-    serialPort.write("2,0\r\n");
+    serialPort.write(first+","+second+","+third+"\r\n");
 }
 
+/*
 void turnOnBuzzer() {
   if (useSerial)
     serialPort.write("1,0\r\n");
@@ -233,7 +234,7 @@ void turnOffLedAndBuzzer() {
   if (useSerial)
     serialPort.write("0,0\r\n");
 }
-
+*/
 // This function loads .patt filenames into a list of Strings based on a full path to a directory (relies on java.io)
 String[] loadPatternFilenames(String path) {
   File folder = new File(path);
