@@ -76,7 +76,7 @@ void doLogic() {
   switch ( this.state.getState() ) {
    
   case "start":
-   turnOnLed();
+   //turnOnLed();
    
    // Logo
    fill(255);
@@ -126,7 +126,7 @@ void doLogic() {
        ) { //if cube is on camera
         playSound(randomNote.soundfile, false, true); 
         text("Correct! Fantastic!", 200, 500);
-        turnOnLed();     
+        //turnOnLed();     
         //Pick new random note
         this.timer.setTimer("learning-correct", 2000);
         if (this.timer.isOver("learning-correct")) {
