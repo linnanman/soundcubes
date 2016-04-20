@@ -25,12 +25,12 @@ void doSetup() {
   
   int xdivider = 200;
   int ydivider = 200;
-  this.cube1Area = new XYArea(0,xdivider,0,ydivider);
+  this.cube3Area = new XYArea(0,xdivider,0,ydivider);
   this.cube2Area = new XYArea(xdivider+1,xdivider+xdivider,0,ydivider);
-  this.cube3Area = new XYArea(xdivider+xdivider+1,1000,0,ydivider);
-  this.playCubeArea = new XYArea(0, xdivider, ydivider+1, 1000);
+  this.cube1Area = new XYArea(xdivider+xdivider+1,1000,0,ydivider);
+  this.difficultyLevelArea = new XYArea(0, xdivider, ydivider+1, 1000);
   this.playTaskAgainArea = new XYArea(xdivider+1,xdivider+xdivider,ydivider+1,1000);
-  this.difficultyLevelArea =  new XYArea(xdivider+xdivider+1,1000,ydivider+1,1000);
+  this.playCubeArea =  new XYArea(xdivider+xdivider+1,1000,ydivider+1,1000);
 
   notes = new Notes(this.cubes);
   randomNote = notes.randomNote();
