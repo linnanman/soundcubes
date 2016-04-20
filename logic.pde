@@ -28,7 +28,7 @@ void doSetup() {
   this.playCubeArea = new XYArea(290, 310, 290, 310);
   this.playTaskAgainArea = new XYArea(0,0,0,0);
   this.difficultyLevelArea =  new XYArea(0,0,0,0);
-  
+
   
 }
 
