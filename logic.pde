@@ -70,6 +70,12 @@ void doLogic() {
      if (mouseX > easy.x && mouseX < easy.x+easy.width && mouseY > easy.y && mouseY < easy.y+easy.height) {
        this.state.setState("stage2");
      }
+     if (mouseX > normal.x && mouseX < normal.x+normal.width && mouseY > normal.y && mouseY < normal.y+normal.height) {
+       this.state.setState("stage3");
+     }
+     if (mouseX > advanced.x && mouseX < advanced.x+advanced.width && mouseY > advanced.y && mouseY < advanced.y+advanced.height) {
+       this.state.setState("stage4");
+     }
    }
    break;
      
@@ -98,15 +104,20 @@ void doLogic() {
      break;
      
    case "stage2":
-     image(cam, 100, 100);
+     image(cam, 100, 150);
      fill(255);
+     textFont(fontLobster_smaller);
+     text("Easy Mode", 180, 70);
+     textFont(fontKarla);
+     text("Find the Correct Note", 1000, 170);
+     drawSoundButton();
      
-     /*this.timer.setTimer("Stage 2 -text", 2000);
-     if (this.timer.isGoing("Stage 2 -text")) {
-       text("Stage 2: Find D", 200, 500);
-     }*/
+     // The program picks a random note and plays it
+     // If the right cube is picked and showed to the camera, the green led turns on and the note is played. A new random note is picked!
+     // If the wrong cube is picked and showed to the camera, the buzzer sounds and the wrong note is played so that the player can compare the wrong note to the right one
      
-      if (cubes.isCubeOnPhone(2)) { //if cube no 1 is on phone
+     
+     /*if (cubes.isCubeOnPhone(2)) { //if cube no 1 is on phone
         playSound("horn.wav", false, true);
         turnOnBuzzer();
       }
@@ -114,8 +125,34 @@ void doLogic() {
      if (cubes.cameraArrayEquals(new int[] {2, 3})) { //if exactly cubes 2 and 3 are on camera in this order
         playSound("duck.wav", false, true);
         turnOffLedAndBuzzer();
-     }
+     }*/
       
+     drawCenterPoints(cubes.getCubesOnCamera());
+     drawOrder(cubes.getCubesOnCamera());
+     break;
+     
+     case "stage3":
+     image(cam, 100, 150);
+     fill(255);
+     textFont(fontLobster_smaller);
+     text("Normal Mode", 190, 70);
+     textFont(fontKarla);
+     text("Find the Correct Chord", 1000, 170);
+     drawSoundButton();
+     
+     drawCenterPoints(cubes.getCubesOnCamera());
+     drawOrder(cubes.getCubesOnCamera());
+     break;
+     
+     case "stage4":
+     image(cam, 100, 150);
+     fill(255);
+     textFont(fontLobster_smaller);
+     text("Advanced Mode", 200, 70);
+     textFont(fontKarla);
+     text("Find the Correct Chord", 1000, 170);
+     drawSoundButton();
+     
      drawCenterPoints(cubes.getCubesOnCamera());
      drawOrder(cubes.getCubesOnCamera());
      break;
