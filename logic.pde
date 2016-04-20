@@ -107,14 +107,20 @@ void doLogic() {
      image(randomNote.image, 900, 300);
      drawSoundButton();
      
-     System.out.println(randomNote.cube.number);
      if (cubes.isCubeOnCamera(randomNote.cube.number)) { //if cube is on camera
-        playSound("notes/c.wav", false, false); 
+        playSound(randomNote.soundfile, false, true); 
         text("Correct! Fantastic!", 200, 500);
-        System.out.println("cube on camera!");
         turnOnLed();     
         //Pick new random note
-        //this.state.setStateTimer("stage2", 2000);
+        this.timer.setTimer("stage2", 2000);
+        if (this.timer.isOver("stage2")) {
+          System.out.println("over");
+          Note newRandomNote = notes.randomNote();
+          while (newRandomNote.equals(randomNote))
+            newRandomNote = notes.randomNote();
+          randomNote = newRandomNote;
+          this.timer.removeTimer("stage2");
+        }
      }
        
       

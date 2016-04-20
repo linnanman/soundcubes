@@ -21,9 +21,19 @@ class Timer {
     this.timers = new Hashtable<String, Long>();
   }
   
+  public void removeTimer(String name) {
+    this.timers.remove(name);
+  }
+  
   public void setTimer(String name, long delayms) {
     if (!this.timers.containsKey(name))
       this.timers.put(name, System.currentTimeMillis()+delayms);
+  }
+  
+  public void setNewTimer(String name, long delayms) {
+    if (this.timers.containsKey(name))
+      this.timers.remove(name);
+    this.timers.put(name, System.currentTimeMillis()+delayms);
   }
   
   public boolean isGoing(String name) {
@@ -304,12 +314,14 @@ class ModeButton {
 class Note {
   public String name;
   public PImage image;
+  public String soundfile;
   public Cube cube;
   
-  public Note(String name, PImage image, Cube cube) {
+  public Note(String name, PImage image, Cube cube, String soundfile) {
     this.name = name;
     this.image = image;
     this.cube = cube;
+    this.soundfile = soundfile;
   }
 }
 
@@ -327,9 +339,9 @@ class Notes {
     C_image = loadImage("data/Middle_C.png");
     E_image = loadImage("data/E.png");
     G_image = loadImage("data/G.png");
-    C = new Note("C", C_image, cubes.getCube(1));
-    E = new Note("E", E_image, cubes.getCube(5));
-    G = new Note("G", G_image, cubes.getCube(8));
+    C = new Note("C", C_image, cubes.getCube(1), "notes/c.wav");
+    E = new Note("E", E_image, cubes.getCube(5), "notes/e.wav");
+    G = new Note("G", G_image, cubes.getCube(8), "notes/g.wav");
     rand = new Random();
   }
   
