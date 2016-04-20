@@ -35,7 +35,7 @@ void doSetup() {
   
 }
 
-void doLogic() {
+void doLogic(PImage cameraImage) {
   
   background(53, 53, 53); // black background
   cubes.updateCubes(); 
@@ -84,7 +84,7 @@ void doLogic() {
    break;
      
    case "stage1":
-     image(cam, 100, 150);
+     image(cameraImage, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);
      text("Learning Mode", 200, 70);
@@ -108,7 +108,7 @@ void doLogic() {
      break;
      
    case "stage2":
-     image(cam, 100, 150);
+     image(cameraImage, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);
      text("Easy Mode", 180, 70);
@@ -136,7 +136,7 @@ void doLogic() {
      break;
      
      case "stage3":
-     image(cam, 100, 150);
+     image(cameraImage, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);
      text("Normal Mode", 190, 70);
@@ -149,7 +149,7 @@ void doLogic() {
      break;
      
      case "stage4":
-     image(cam, 100, 150);
+     image(cameraImage, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);
      text("Advanced Mode", 200, 70);
