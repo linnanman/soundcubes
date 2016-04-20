@@ -87,6 +87,7 @@ class Cube {
   public int x; 
   public int y;
   public int number;
+  public float dia;
   public boolean onCamera;
   public boolean onPhone;
   
@@ -125,18 +126,41 @@ class Cubes {
         list.get(i).onCamera = false;
         list.get(i).x = 0;
         list.get(i).y = 0;
+        list.get(i).dia = 0;
       }
       else {
         PVector[] cornerPositions = nya.getMarkerVertex2D(i);
         PVector centerPosition = new PVector(0, 0);
+        float dia = 0;
+        
         for (int j = 0; j < cornerPositions.length; ++j) {
           PVector cornerPosition = cornerPositions[j];
           centerPosition.add(cornerPosition);
         }
         centerPosition.mult(0.25);
-        list.get(i).onCamera = true;
-        list.get(i).x = (int)centerPosition.x;
-        list.get(i).y = (int)centerPosition.y;
+        
+        for (int j = 0; j < cornerPositions.length; ++j) {
+          PVector cornerPosition = cornerPositions[j];
+          PVector diaVector = new PVector(0, 0);
+          diaVector.add(cornerPosition);
+          diaVector.sub(centerPosition);
+          dia += diaVector.mag();
+          
+        }
+        
+
+        if (dia > minimum_dia) {
+          list.get(i).onCamera = true;
+          list.get(i).x = (int)centerPosition.x;
+          list.get(i).y = (int)centerPosition.y;
+          list.get(i).dia = dia; 
+        }
+        else {
+          list.get(i).onCamera = false;
+          list.get(i).x = (int)centerPosition.x;
+          list.get(i).y = (int)centerPosition.y;
+          list.get(i).dia = dia; 
+        }
         
       }
     }
