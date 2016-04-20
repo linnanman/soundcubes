@@ -23,12 +23,14 @@ void doSetup() {
   fontKarla = createFont("Karla-Regular.ttf", 35);
   textAlign(CENTER, CENTER);
   
-  this.cube1Area = new XYArea(0,0,0,0);
-  this.cube2Area = new XYArea(0,0,0,0);
-  this.cube3Area = new XYArea(0,0,0,0);
-  this.playCubeArea = new XYArea(290, 310, 290, 310);
-  this.playTaskAgainArea = new XYArea(0,200,0,200);
-  this.difficultyLevelArea =  new XYArea(0,0,0,0);
+  int xdivider = 200;
+  int ydivider = 200;
+  this.cube1Area = new XYArea(0,xdivider,0,ydivider);
+  this.cube2Area = new XYArea(xdivider+1,xdivider+xdivider,0,ydivider);
+  this.cube3Area = new XYArea(xdivider+xdivider+1,1000,0,ydivider);
+  this.playCubeArea = new XYArea(0, xdivider, ydivider+1, 1000);
+  this.playTaskAgainArea = new XYArea(xdivider+1,xdivider+xdivider,ydivider+1,1000);
+  this.difficultyLevelArea =  new XYArea(xdivider+xdivider+1,1000,ydivider+1,1000);
 
   notes = new Notes(this.cubes);
   randomNote = notes.randomNote();
@@ -59,6 +61,14 @@ void doLogic() {
     Cube difficultyCube = cubes.isAnyCubeOnCamera(this.difficultyLevelArea);
     if (difficultyCube != null) {
       //change difficult level
+      if (difficultyCube.equals(cubes.getCube(1)))
+        this.state.setState("learning");
+      if (difficultyCube.equals(cubes.getCube(2))) //todo
+        this.state.setState("easy"); 
+      if (difficultyCube.equals(cubes.getCube(3))) //todo
+        this.state.setState("normal");
+      if (difficultyCube.equals(cubes.getCube(4))) //todo
+        this.state.setState("hard");
     }
   }
   
@@ -85,21 +95,21 @@ void doLogic() {
    advanced.drawButton();
    if (mousePressed) {
      if (mouseX > learning.x && mouseX < learning.x+learning.width && mouseY > learning.y && mouseY < learning.y+learning.height) {
-       this.state.setState("stage1");
+       this.state.setState("learning");
      }
      if (mouseX > easy.x && mouseX < easy.x+easy.width && mouseY > easy.y && mouseY < easy.y+easy.height) {
-       this.state.setState("stage2");
+       this.state.setState("easy");
      }
      if (mouseX > normal.x && mouseX < normal.x+normal.width && mouseY > normal.y && mouseY < normal.y+normal.height) {
-       this.state.setState("stage3");
+       this.state.setState("normal");
      }
      if (mouseX > advanced.x && mouseX < advanced.x+advanced.width && mouseY > advanced.y && mouseY < advanced.y+advanced.height) {
-       this.state.setState("stage4");
+       this.state.setState("hard");
      }
    }
    break;
      
-   case "stage1":
+   case "learning":
      image(cam, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);
@@ -110,19 +120,22 @@ void doLogic() {
      image(randomNote.image, 900, 300);
      drawSoundButton();
      
-     if (cubes.isCubeOnCamera(randomNote.cube.number)) { //if cube is on camera
+     if (cubes.isCubeOnCamera(randomNote.cube.number, this.cube1Area) ||
+       cubes.isCubeOnCamera(randomNote.cube.number, this.cube2Area) ||
+       cubes.isCubeOnCamera(randomNote.cube.number, this.cube3Area)
+       ) { //if cube is on camera
         playSound(randomNote.soundfile, false, true); 
         text("Correct! Fantastic!", 200, 500);
         turnOnLed();     
         //Pick new random note
-        this.timer.setTimer("stage2", 2000);
-        if (this.timer.isOver("stage2")) {
-          System.out.println("over");
+        this.timer.setTimer("learning-correct", 2000);
+        if (this.timer.isOver("learning-correct")) {
+          //System.out.println("over");
           Note newRandomNote = notes.randomNote();
           while (newRandomNote.equals(randomNote))
             newRandomNote = notes.randomNote();
           randomNote = newRandomNote;
-          this.timer.removeTimer("stage2");
+          this.timer.removeTimer("learning-correct");
         }
      }
        
@@ -131,7 +144,7 @@ void doLogic() {
      drawOrder(cubes.getCubesOnCamera());
      break;
      
-   case "stage2":
+   case "easy":
      image(cam, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);

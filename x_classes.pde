@@ -154,6 +154,7 @@ class Cubes {
           list.get(i).x = (int)centerPosition.x;
           list.get(i).y = (int)centerPosition.y;
           list.get(i).dia = dia; 
+          System.out.println(dia);
         }
         else {
           list.get(i).onCamera = false;
@@ -237,7 +238,7 @@ class Cubes {
   
     for (int i=0;i<this.list.size();i++) {
       if (this.list.get(i).x > xyarea.xMin && this.list.get(i).y > xyarea.yMin && this.list.get(i).x < xyarea.xMax && this.list.get(i).y < xyarea.yMax && this.list.get(i).onCamera) {
-          System.out.println(this.list.get(i).x + " " + this.list.get(i).y);
+          //System.out.println(this.list.get(i).x + " " + this.list.get(i).y);
           return this.list.get(i);
       }
     }
