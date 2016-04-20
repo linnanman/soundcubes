@@ -42,23 +42,26 @@ void doLogic() {
   cubes.updateCubes(); 
   
   //tangible user interface stuff:
-  //play a single cube
-  Cube cubeToPlay = cubes.isAnyCubeOnCamera(this.playCubeArea);
-  if (cubeToPlay != null) {
-    playSound("notes/c.wav", false, true); 
+  if (tangibleInterface) {
+    //play a single cube
+    Cube cubeToPlay = cubes.isAnyCubeOnCamera(this.playCubeArea);
+    if (cubeToPlay != null) {
+      playSound("notes/c.wav", false, true); 
+    }
+    
+    //play task again
+    Cube taskToPlay = cubes.isAnyCubeOnCamera(this.playTaskAgainArea);
+    if (taskToPlay != null) {
+      playSound(randomNote.soundfile, false, true); 
+    }
+    
+    //play task again
+    Cube difficultyCube = cubes.isAnyCubeOnCamera(this.difficultyLevelArea);
+    if (difficultyCube != null) {
+      //change difficult level
+    }
   }
   
-  //play task again
-  Cube taskToPlay = cubes.isAnyCubeOnCamera(this.playTaskAgainArea);
-  if (taskToPlay != null) {
-    playSound(randomNote.soundfile, false, true); 
-  }
-  
-  //play task again
-  Cube difficultyCube = cubes.isAnyCubeOnCamera(this.difficultyLevelArea);
-  if (difficultyCube != null) {
-    //change difficult level
-  }
   
   switch ( this.state.getState() ) {
    
