@@ -133,7 +133,7 @@ class Cubes {
   }
   
   public Cube getCube(int i) {
-    return this.list.get(i);  
+    return this.list.get(i-1);  
   }
   
   public int[] getCubesOnCameraArray() {
@@ -306,9 +306,10 @@ class Note {
   public PImage image;
   public Cube cube;
   
-  public Note(String name, PImage image) {
+  public Note(String name, PImage image, Cube cube) {
     this.name = name;
     this.image = image;
+    this.cube = cube;
   }
 }
 
@@ -322,13 +323,13 @@ class Notes {
   public Note E;
   public Note G;
   
-  public Notes() {
+  public Notes(Cubes cubes) {
     C_image = loadImage("data/Middle_C.png");
     E_image = loadImage("data/E.png");
     G_image = loadImage("data/G.png");
-    C = new Note("C", C_image);
-    E = new Note("E", E_image);
-    G = new Note("G", G_image);
+    C = new Note("C", C_image, cubes.getCube(1));
+    E = new Note("E", E_image, cubes.getCube(5));
+    G = new Note("G", G_image, cubes.getCube(8));
     rand = new Random();
   }
   

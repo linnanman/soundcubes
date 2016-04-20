@@ -30,8 +30,7 @@ void doSetup() {
   this.playTaskAgainArea = new XYArea(0,0,0,0);
   this.difficultyLevelArea =  new XYArea(0,0,0,0);
 
-  
-  notes = new Notes();
+  notes = new Notes(this.cubes);
   randomNote = notes.randomNote();
 
   
@@ -108,9 +107,11 @@ void doLogic() {
      image(randomNote.image, 900, 300);
      drawSoundButton();
      
-     if (cubes.isCubeOnCamera(1)) { //if cube no 1 is on camera
+     System.out.println(randomNote.cube.number);
+     if (cubes.isCubeOnCamera(randomNote.cube.number)) { //if cube is on camera
         playSound("notes/c.wav", false, false); 
         text("Correct! Fantastic!", 200, 500);
+        System.out.println("cube on camera!");
         turnOnLed();     
         //Pick new random note
         //this.state.setStateTimer("stage2", 2000);
