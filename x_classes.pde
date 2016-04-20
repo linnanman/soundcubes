@@ -278,14 +278,67 @@ class ModeButton {
   }
   
   public void drawButton() {
-    fill(31, 181, 183);
-    rect(this.x, this.y, this.width, this.height, this.radius);
-    fill(255);
-    text(this.text, this.x+150, this.y+67);
+    if (!clicked) {
+      fill(31, 181, 183);
+      rect(this.x, this.y, this.width, this.height, this.radius);
+      fill(255);
+      text(this.text, this.x+150, this.y+67);
+    } else {
+      fill(255);
+      rect(this.x, this.y, this.width, this.height, this.radius);
+      fill(31, 181, 183);
+      text(this.text, this.x+150, this.y+67);
+    }
   }
   
-  public boolean isClicked() {
-    return this.clicked;
+  public void setClicked() {
+    this.clicked = true;
   }
   
+  public void setDefault() {
+    this.clicked = false;
+  }
+  
+}
+
+class Note {
+  public String name;
+  public PImage image;
+  public Cube cube;
+  
+  public Note(String name, PImage image) {
+    this.name = name;
+    this.image = image;
+  }
+}
+
+class Notes {
+  
+  public PImage C_image;
+  public PImage E_image;
+  public PImage G_image;
+  public Random rand;
+  public Note C;
+  public Note E;
+  public Note G;
+  
+  public Notes() {
+    C_image = loadImage("data/Middle_C.png");
+    E_image = loadImage("data/E.png");
+    G_image = loadImage("data/G.png");
+    C = new Note("C", C_image);
+    E = new Note("E", E_image);
+    G = new Note("G", G_image);
+    rand = new Random();
+  }
+  
+  public Note randomNote() {
+    List<Note> list = new ArrayList<Note>();
+    list.add(C);
+    list.add(E);
+    list.add(G);
+    Note randomNote = list.get(rand.nextInt(list.size()));
+    return randomNote;
+  }
+
 }
