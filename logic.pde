@@ -27,7 +27,7 @@ void doSetup() {
   this.cube2Area = new XYArea(0,0,0,0);
   this.cube3Area = new XYArea(0,0,0,0);
   this.playCubeArea = new XYArea(290, 310, 290, 310);
-  this.playTaskAgainArea = new XYArea(0,0,0,0);
+  this.playTaskAgainArea = new XYArea(0,200,0,200);
   this.difficultyLevelArea =  new XYArea(0,0,0,0);
 
   notes = new Notes(this.cubes);
@@ -51,7 +51,7 @@ void doLogic() {
   //play task again
   Cube taskToPlay = cubes.isAnyCubeOnCamera(this.playTaskAgainArea);
   if (taskToPlay != null) {
-    playSound("notes/c.wav", false, true); 
+    playSound(randomNote.soundfile, false, true); 
   }
   
   //play task again

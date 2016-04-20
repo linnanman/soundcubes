@@ -353,5 +353,9 @@ class Notes {
     Note randomNote = list.get(rand.nextInt(list.size()));
     return randomNote;
   }
+  
+  public Note getNote(Cube cube) {
+    return null; //todo
+  }
 
 }
