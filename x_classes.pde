@@ -312,22 +312,23 @@ class Note {
   }
 }
 
-
-
-
 class Notes {
   
   public PImage C_image;
   public PImage E_image;
+  public PImage G_image;
   public Random rand;
   public Note C;
   public Note E;
+  public Note G;
   
   public Notes() {
     C_image = loadImage("data/Middle_C.png");
     E_image = loadImage("data/E.png");
+    G_image = loadImage("data/G.png");
     C = new Note("C", C_image);
     E = new Note("E", E_image);
+    G = new Note("G", G_image);
     rand = new Random();
   }
   
@@ -335,6 +336,7 @@ class Notes {
     List<Note> list = new ArrayList<Note>();
     list.add(C);
     list.add(E);
+    list.add(G);
     Note randomNote = list.get(rand.nextInt(list.size()));
     return randomNote;
   }
