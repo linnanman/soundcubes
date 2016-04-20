@@ -1,6 +1,5 @@
 char pressedKey;
 PImage sound;
-PImage C;
 PFont fontLobster;
 PFont fontLobster_smaller;
 PFont fontKarla;
@@ -12,11 +11,13 @@ XYArea playCubeArea;
 XYArea playTaskAgainArea;
 XYArea difficultyLevelArea;
 
+Notes notes;
+Note randomNote;
+
 void doSetup() {
   
   this.state = new State("start");
   sound = loadImage("data/sound.png");
-  C = loadImage("data/Middle_C.png");
   fontLobster = createFont("Lobster 1.4.otf", 80);
   fontLobster_smaller = createFont("Lobster 1.4.otf", 35);
   fontKarla = createFont("Karla-Regular.ttf", 35);
@@ -29,6 +30,8 @@ void doSetup() {
   this.playTaskAgainArea = new XYArea(0,0,0,0);
   this.difficultyLevelArea =  new XYArea(0,0,0,0);
   
+  notes = new Notes();
+  randomNote = notes.randomNote();
   
 }
 
@@ -36,6 +39,7 @@ void doLogic() {
   
   background(53, 53, 53); // black background
   cubes.updateCubes(); 
+  
   
   //play a single cube
   Cube cubeToPlay = cubes.isAnyCubeOnCamera(this.playCubeArea);
@@ -85,9 +89,9 @@ void doLogic() {
      textFont(fontLobster_smaller);
      text("Learning Mode", 200, 70);
      textFont(fontKarla);
-     text("Find C", 1000, 170);
+     text("Find " + randomNote.name, 1000, 170);
      //Play note C as the task begins and each time the button is clicked for help TODO
-     image(C, 900, 300);
+     image(randomNote.image, 900, 300);
      drawSoundButton();
      
      if (cubes.isCubeOnCamera(1)) { //if cube no 1 is on camera
