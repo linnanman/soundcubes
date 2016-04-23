@@ -10,6 +10,8 @@ class XYArea {
     this.yMin = yMin;
     this.yMax = yMax;
   }
+  
+ 
 }
 
 

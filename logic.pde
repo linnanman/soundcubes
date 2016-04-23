@@ -14,7 +14,15 @@ XYArea difficultyLevelArea;
 Notes notes;
 Note randomNote;
 
+int calibrState;
+int calibrWidth;
+int calibrHeight;
+List<int[]> calibrations;
+PrintWriter output;
+
 void doSetup() {
+  
+  
   
   this.state = new State("start");
   sound = loadImage("data/sound.png");
@@ -23,6 +31,9 @@ void doSetup() {
   fontKarla = createFont("Karla-Regular.ttf", 35);
   textAlign(CENTER, CENTER);
   
+  this.readCalibrations();
+  
+  /*
   int xdivider = 200;
   int ydivider = 200;
   this.cube3Area = new XYArea(0,xdivider,0,ydivider);
@@ -31,12 +42,20 @@ void doSetup() {
   this.difficultyLevelArea = new XYArea(0, xdivider, ydivider+1, 1000);
   this.playTaskAgainArea = new XYArea(xdivider+1,xdivider+xdivider,ydivider+1,1000);
   this.playCubeArea =  new XYArea(xdivider+xdivider+1,1000,ydivider+1,1000);
-
+*/
   notes = new Notes(this.cubes);
   randomNote = notes.randomNote();
+  
+  
+  //calibration variables
+  this.calibrWidth = 100;
+  this.calibrHeight = 100;
+  this.calibrState = 1;
+  this.calibrations = new ArrayList<int[]>();
 
   
 }
+
 
 void doLogic() {
   
@@ -197,17 +216,53 @@ void doLogic() {
      drawCenterPoints(cubes.getCubesOnCamera());
      drawOrder(cubes.getCubesOnCamera());
      break;
+  case "calibration":
+    image(cam, 100, 150);
+     fill(255, 100);
+     textFont(fontLobster_smaller);
+     text("Calibration mode", 200, 70);
+     textFont(fontKarla);
+     if (this.calibrState == 1) {
+       text("Cube 1\nclick\nscroll\nspace+scroll", 1000, 170);
+     }
+     if (this.calibrState == 2) {
+       text("Cube 2\nclick\nscroll\nspace+scroll", 1000, 170);
+     }
+     if (this.calibrState == 3) {
+       text("Cube 3\nclick\nscroll\nspace+scroll", 1000, 170);
+     }
+     if (this.calibrState == 4) {
+       text("Play cube\nclick\nscroll\nspace+scroll", 1000, 170);
+     }
+     if (this.calibrState == 5) {
+       text("Play task again\nclick\nscroll\nspace+scroll", 1000, 170);
+     }
+     if (this.calibrState == 6) {
+       text("Difficulty level\nclick\nscroll\nspace+scroll", 1000, 170);
+     }
+     rect(mouseX-calibrWidth/2, mouseY-calibrHeight/2, calibrWidth, calibrHeight);
+    break;
   }
     
-  if (this.developer) {
+  if (this.developer && this.state.getState() == "learning") {
+    drawArea(this.cube1Area);
+    drawArea(this.cube2Area);
+    drawArea(this.cube3Area);
     drawArea(this.playCubeArea);
+    drawArea(this.playTaskAgainArea);
+    drawArea(this.difficultyLevelArea);
     drawLines();
+    
   }
 }
 
 
 void keyPressed() {
   //System.out.println(key);
+  if (key == 'c' && this.state.getState() != "calibration") {
+    this.state.setState("calibration");
+  }
+  System.out.println(key);
   pressedKey = key;
 }
 
@@ -215,13 +270,91 @@ void keyReleased() {
   pressedKey = '\0';
 }
 
+
+
 void mouseClicked() {
   System.out.println("X: "+(mouseX-100)+"and Y:"+(mouseY-150));
+  
+  /* calibration */
+  if (this.state.getState() == "calibration") {
+    //System.out.println("kalibr");
+    int[] xy = new int[4];
+    xy[0] = mouseX-(this.calibrWidth/2)-100;
+    xy[1] = xy[0]+this.calibrWidth;
+    xy[2] = mouseY-(this.calibrHeight/2)-150;
+    xy[3] = xy[2]+this.calibrHeight;
+    System.out.println(xy[0] + " " + xy[1] + " " + xy[2] + " " + xy[3]);
+    this.calibrations.add(xy);
+    this.calibrState++;
+    
+    // save calibration
+    if (this.calibrState == 7) {
+      output = createWriter("data/positions.txt"); 
+      for (int q=0;q< this.calibrations.size(); q++) {
+        output.println(this.calibrations.get(q)[0] + " " + this.calibrations.get(q)[1] + " " + this.calibrations.get(q)[2] + " " + this.calibrations.get(q)[3]); // Write the coordinate to the file
+      }
+      output.flush(); // Writes the remaining data to the file
+      output.close(); // Finishes the file
+      readCalibrations();
+      this.state.setState("start");
+      this.calibrState = 1;
+    }
+  }
+  
+}
+
+void mouseWheel(MouseEvent event) {
+  float e = event.getCount();
+  if (pressedKey == ' ') {
+  if (e < 0)
+    this.calibrHeight = this.calibrHeight + 10;
+  if (e > 0)
+    this.calibrHeight = this.calibrHeight - 10;
+  }
+  else {
+  if (e < 0)
+    this.calibrWidth = this.calibrWidth + 10;
+  if (e > 0)
+    this.calibrWidth = this.calibrWidth - 10;
+  }
 }
 
 void changeLed(int first, int second, int third) {
   if (useSerial)
     serialPort.write(first+","+second+","+third+"\r\n");
+}
+
+void readCalibrations() {
+   /* read calibrations */
+  BufferedReader reader;
+  reader = createReader("data/positions.txt");    
+  String line;
+  String[] linesplit;
+  try {
+    line = reader.readLine();
+    
+    linesplit = line.split(" ");
+    this.cube1Area = new XYArea(Integer.parseInt(linesplit[0]), Integer.parseInt(linesplit[1]), Integer.parseInt(linesplit[2]), Integer.parseInt(linesplit[3]));
+    line = reader.readLine();
+    linesplit = line.split(" ");
+    this.cube2Area = new XYArea(Integer.parseInt(linesplit[0]), Integer.parseInt(linesplit[1]), Integer.parseInt(linesplit[2]), Integer.parseInt(linesplit[3]));
+    line = reader.readLine();
+    linesplit = line.split(" ");
+    this.cube3Area = new XYArea(Integer.parseInt(linesplit[0]), Integer.parseInt(linesplit[1]), Integer.parseInt(linesplit[2]), Integer.parseInt(linesplit[3]));
+    line = reader.readLine();
+    linesplit = line.split(" ");
+    this.playCubeArea = new XYArea(Integer.parseInt(linesplit[0]), Integer.parseInt(linesplit[1]), Integer.parseInt(linesplit[2]), Integer.parseInt(linesplit[3]));
+    line = reader.readLine();
+    linesplit = line.split(" ");
+    this.playTaskAgainArea = new XYArea(Integer.parseInt(linesplit[0]), Integer.parseInt(linesplit[1]), Integer.parseInt(linesplit[2]), Integer.parseInt(linesplit[3]));
+    line = reader.readLine();
+    linesplit = line.split(" ");
+    this.difficultyLevelArea = new XYArea(Integer.parseInt(linesplit[0]), Integer.parseInt(linesplit[1]), Integer.parseInt(linesplit[2]), Integer.parseInt(linesplit[3]));
+    
+  } catch (IOException e) {
+    e.printStackTrace();
+    exit();
+  } 
 }
 
 /*
