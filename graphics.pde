@@ -40,12 +40,6 @@ void drawMarkers() {
   }
 }
 
-void drawSoundButton() {
-  fill(31, 181, 183);
-  ellipse(1000, 550, 60, 60);
-  image(sound, 980, 535);
-}
-
 
 void drawArea(XYArea area) {
   int Awidth = area.xMax-area.xMin;

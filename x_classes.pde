@@ -98,7 +98,7 @@ class Cube {
     this.y = y;
     this.number = number;
     onCamera = false;
-    onCamera = false;
+    onPhone = false;
   }
 }
   

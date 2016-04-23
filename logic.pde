@@ -137,7 +137,8 @@ void doLogic() {
      text("Find " + randomNote.name, 1000, 170);
      //Play note C as the task begins and each time the button is clicked for help TODO
      image(randomNote.image, 900, 300);
-     drawSoundButton();
+     playSound(randomNote.soundfile, false, true); 
+     
      
      if (cubes.isCubeOnCamera(randomNote.cube.number, this.cube1Area) ||
        cubes.isCubeOnCamera(randomNote.cube.number, this.cube2Area) ||
@@ -170,7 +171,7 @@ void doLogic() {
      text("Easy Mode", 180, 70);
      textFont(fontKarla);
      text("Find the Correct Note", 1000, 170);
-     drawSoundButton();
+     playSound(randomNote.soundfile, false, true); 
      
      // The program picks a random note and plays it
      // If the right cube is picked and showed to the camera, the green led turns on and the note is played. A new random note is picked!
@@ -191,28 +192,26 @@ void doLogic() {
      drawOrder(cubes.getCubesOnCamera());
      break;
      
-     case "stage3":
+     case "normal":
      image(cam, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);
      text("Normal Mode", 190, 70);
      textFont(fontKarla);
      text("Find the Correct Chord", 1000, 170);
-     drawSoundButton();
-     
+     //playSound: chord tms
      drawCenterPoints(cubes.getCubesOnCamera());
      drawOrder(cubes.getCubesOnCamera());
      break;
      
-     case "stage4":
+     case "hard":
      image(cam, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);
      text("Advanced Mode", 200, 70);
      textFont(fontKarla);
      text("Find the Correct Chord", 1000, 170);
-     drawSoundButton();
-     
+     //playSound: chord tms
      drawCenterPoints(cubes.getCubesOnCamera());
      drawOrder(cubes.getCubesOnCamera());
      break;
