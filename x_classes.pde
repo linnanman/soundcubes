@@ -380,6 +380,7 @@ class Notes {
     List<Note> list = new ArrayList<Note>();
     list.add(C);
     list.add(E);
+    list.add(F);
     list.add(G);
     Note randomNote = list.get(rand.nextInt(list.size()));
     return randomNote;
