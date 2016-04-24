@@ -1,5 +1,5 @@
 char pressedKey;
-PImage sound;
+PImage arrow;
 PFont fontLobster;
 PFont fontLobster_smaller;
 PFont fontKarla;
@@ -25,7 +25,7 @@ void doSetup() {
   
   
   this.state = new State("start");
-  sound = loadImage("data/sound.png");
+  arrow = loadImage("data/arrow.png");
   fontLobster = createFont("Lobster 1.4.otf", 80);
   fontLobster_smaller = createFont("Lobster 1.4.otf", 35);
   fontKarla = createFont("Karla-Regular.ttf", 35);
@@ -56,9 +56,7 @@ void doSetup() {
   
 }
 
-
-void doLogic() {
-  
+void doLogic(PImage cameraImage) {
   background(53, 53, 53); // black background
   cubes.updateCubes(); 
   
@@ -127,17 +125,25 @@ void doLogic() {
      }
    }
    break;
-     
+
    case "learning":
-     image(cam, 100, 150);
+     image(cameraImage, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);
-     text("Learning Mode", 200, 70);
+     text("Learning Mode", 260, 70);
      textFont(fontKarla);
      text("Find " + randomNote.name, 1000, 170);
      //Play note C as the task begins and each time the button is clicked for help TODO
+     drawBackButton();
+     if (mousePressed) {
+       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
+         this.state.setState("start");
+       }
+     }
+     
      image(randomNote.image, 900, 300);
-     drawSoundButton();
+     playSound(randomNote.soundfile, false, false); 
+     
      
      if (cubes.isCubeOnCamera(randomNote.cube.number, this.cube1Area) ||
        cubes.isCubeOnCamera(randomNote.cube.number, this.cube2Area) ||
@@ -162,15 +168,21 @@ void doLogic() {
      drawCenterPoints(cubes.getCubesOnCamera());
      drawOrder(cubes.getCubesOnCamera());
      break;
-     
+
    case "easy":
-     image(cam, 100, 150);
+     image(cameraImage, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);
-     text("Easy Mode", 180, 70);
+     text("Easy Mode", 230, 70);
      textFont(fontKarla);
      text("Find the Correct Note", 1000, 170);
-     drawSoundButton();
+     drawBackButton();
+     if (mousePressed) {
+       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
+         this.state.setState("start");
+       }
+     }
+     playSound(randomNote.soundfile, false, false); 
      
      // The program picks a random note and plays it
      // If the right cube is picked and showed to the camera, the green led turns on and the note is played. A new random note is picked!
@@ -190,29 +202,39 @@ void doLogic() {
      drawCenterPoints(cubes.getCubesOnCamera());
      drawOrder(cubes.getCubesOnCamera());
      break;
-     
-     case "stage3":
-     image(cam, 100, 150);
+
+     case "normal":
+     image(cameraImage, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);
-     text("Normal Mode", 190, 70);
+     text("Normal Mode", 250, 70);
      textFont(fontKarla);
      text("Find the Correct Chord", 1000, 170);
-     drawSoundButton();
-     
+     drawBackButton();
+     if (mousePressed) {
+       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
+         this.state.setState("start");
+       }
+     }
+     //playSound: chord tms
      drawCenterPoints(cubes.getCubesOnCamera());
      drawOrder(cubes.getCubesOnCamera());
      break;
      
-     case "stage4":
-     image(cam, 100, 150);
+     case "hard":
+     image(cameraImage, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);
-     text("Advanced Mode", 200, 70);
+     text("Advanced Mode", 260, 70);
      textFont(fontKarla);
      text("Find the Correct Chord", 1000, 170);
-     drawSoundButton();
-     
+     drawBackButton();
+     if (mousePressed) {
+       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
+         this.state.setState("start");
+       }
+     }
+     //playSound: chord tms
      drawCenterPoints(cubes.getCubesOnCamera());
      drawOrder(cubes.getCubesOnCamera());
      break;

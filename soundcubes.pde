@@ -8,7 +8,8 @@ import ddf.minim.*;
 
 //Settings
 boolean useSerial = false;
-String cameraName = "Microsoft LifeCam VX-1000"; //Microsoft LifeCam Front, HD WebCam, FaceTime-HD-kamera (sisäinen), Microsoft LifeCam VX-1000
+boolean mirrorImage = true;
+String cameraName = "FaceTime-HD-kamera (sisäinen)"; //Microsoft LifeCam Front, HD WebCam, FaceTime-HD-kamera (sisäinen), Microsoft LifeCam VX-1000
 boolean tangibleInterface = true;
 boolean developer = false;
 boolean printFoundMarkers = true;
@@ -87,10 +88,19 @@ void draw() {
   //logic
   if (cam.available() == true) {
     cam.read();
+    PImage processedImage = cam.copy();
+    if (mirrorImage) {
+      for (int x = 0; x < processedImage.width; ++x) {
+        for (int y = 0; y < processedImage.height; ++y) {
+          color originalColor = cam.get(cam.width - x, y);
+          processedImage.set(x, y, originalColor);
+        }
+      }
+    }
   
-    nya.detect(cam);
+    nya.detect(processedImage);
 
-    doLogic();
+    doLogic(processedImage);
     serverAction();
   }
 }
