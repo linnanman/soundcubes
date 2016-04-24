@@ -102,8 +102,11 @@ void draw() {
       }
     }
   
+    try {
     nya.detect(processedImage);
-
+    }
+    catch (Exception e) {
+    }
     doLogic(processedImage);
     serverAction();
   }
