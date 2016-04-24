@@ -1,5 +1,5 @@
 char pressedKey;
-PImage sound;
+PImage arrow;
 PFont fontLobster;
 PFont fontLobster_smaller;
 PFont fontKarla;
@@ -30,6 +30,8 @@ void doSetup() {
   this.state = new State("start");
   this.chordPlayed = false;
   sound = loadImage("data/sound.png");
+  arrow = loadImage("data/arrow.png");
+
   fontLobster = createFont("Lobster 1.4.otf", 80);
   fontLobster_smaller = createFont("Lobster 1.4.otf", 35);
   fontKarla = createFont("Karla-Regular.ttf", 35);
@@ -135,12 +137,19 @@ void doLogic(PImage cameraImage) {
      image(cameraImage, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);
-     text("Learning Mode", 200, 70);
+     text("Learning Mode", 260, 70);
      textFont(fontKarla);
      text("Find " + randomNote.name, 1000, 170);
      //Play note C as the task begins and each time the button is clicked for help TODO
+     drawBackButton();
+     if (mousePressed) {
+       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
+         this.state.setState("start");
+       }
+     }
+     
      image(randomNote.image, 900, 300);
-     playSound(randomNote.soundfile, false, true); 
+     playSound(randomNote.soundfile, false, false); 
      
      
      if (cubes.isCubeOnCamera(randomNote.cube.number, this.cube1Area) ||
@@ -171,10 +180,16 @@ void doLogic(PImage cameraImage) {
      image(cameraImage, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);
-     text("Easy Mode", 180, 70);
+     text("Easy Mode", 230, 70);
      textFont(fontKarla);
      text("Find the Correct Note", 1000, 170);
-     playSound(randomNote.soundfile, false, true); 
+     drawBackButton();
+     if (mousePressed) {
+       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
+         this.state.setState("start");
+       }
+     }
+     playSound(randomNote.soundfile, false, false); 
      
      // The program picks a random note and plays it
      // If the right cube is picked and showed to the camera, the green led turns on and the note is played. A new random note is picked!
@@ -199,7 +214,7 @@ void doLogic(PImage cameraImage) {
      image(cameraImage, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);
-     text("Normal Mode", 190, 70);
+     text("Normal Mode", 250, 70);
      textFont(fontKarla);
      text("Find the Correct Chord", 1000, 170);
      PImage img = loadImage("data/C_major_white.png");
@@ -224,6 +239,14 @@ void doLogic(PImage cameraImage) {
      }
      //playSound(chord.secondNote.soundfile, true, false);
      //playSound(chord.thirdNote.soundfile, true, false);
+
+     drawBackButton();
+     if (mousePressed) {
+       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
+         this.state.setState("start");
+       }
+     }
+
      drawCenterPoints(cubes.getCubesOnCamera());
      drawOrder(cubes.getCubesOnCamera());
      break;
@@ -232,7 +255,7 @@ void doLogic(PImage cameraImage) {
      image(cameraImage, 100, 150);
      fill(255);
      textFont(fontLobster_smaller);
-     text("Advanced Mode", 200, 70);
+     text("Advanced Mode", 260, 70);
      textFont(fontKarla);
      text("Find the Correct Chord", 1000, 170);
      PImage cImg = loadImage("data/C_major_white.png");
@@ -242,6 +265,13 @@ void doLogic(PImage cameraImage) {
        playChord(chord.firstNote.soundfile, chord.secondNote.soundfile, chord.thirdNote.soundfile);
        chordPlayed = true;
      }
+     drawBackButton();
+     if (mousePressed) {
+       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
+         this.state.setState("start");
+       }
+     }
+
      drawCenterPoints(cubes.getCubesOnCamera());
      drawOrder(cubes.getCubesOnCamera());
      break;

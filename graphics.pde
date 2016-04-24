@@ -63,3 +63,9 @@ void drawLines() {
     stroke(255);
   }
 }
+
+void drawBackButton() {
+  fill(31, 181, 183);
+  ellipse(120, 70, 40, 40);
+  image(arrow, 108, 63);
+}
