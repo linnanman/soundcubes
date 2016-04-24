@@ -262,7 +262,7 @@ void keyPressed() {
   if (key == 'c' && this.state.getState() != "calibration") {
     this.state.setState("calibration");
   }
-  System.out.println(key);
+  //System.out.println(key);
   pressedKey = key;
 }
 
@@ -283,7 +283,7 @@ void mouseClicked() {
     xy[1] = xy[0]+this.calibrWidth;
     xy[2] = mouseY-(this.calibrHeight/2)-150;
     xy[3] = xy[2]+this.calibrHeight;
-    System.out.println(xy[0] + " " + xy[1] + " " + xy[2] + " " + xy[3]);
+    //System.out.println(xy[0] + " " + xy[1] + " " + xy[2] + " " + xy[3]);
     this.calibrations.add(xy);
     this.calibrState++;
     

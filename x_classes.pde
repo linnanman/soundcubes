@@ -108,7 +108,6 @@ class Cubes {
   
   public List<Cube> list;
   
-  
   public Cubes() {
     
     List<Cube> list = new ArrayList<Cube>();
@@ -156,7 +155,9 @@ class Cubes {
           list.get(i).x = (int)centerPosition.x;
           list.get(i).y = (int)centerPosition.y;
           list.get(i).dia = dia; 
-          System.out.println(dia);
+          //System.out.println(dia);
+          if (printFoundMarkers)
+            System.out.println("Found n. " + (i+1) + ", dia: " + dia);
         }
         else {
           list.get(i).onCamera = false;
