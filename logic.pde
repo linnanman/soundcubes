@@ -14,6 +14,9 @@ XYArea difficultyLevelArea;
 Notes notes;
 Note randomNote;
 
+Chord chord;
+boolean chordPlayed;
+
 int calibrState;
 int calibrWidth;
 int calibrHeight;
@@ -25,6 +28,7 @@ void doSetup() {
   
   
   this.state = new State("start");
+  this.chordPlayed = false;
   sound = loadImage("data/sound.png");
   fontLobster = createFont("Lobster 1.4.otf", 80);
   fontLobster_smaller = createFont("Lobster 1.4.otf", 35);
@@ -45,6 +49,7 @@ void doSetup() {
 */
   notes = new Notes(this.cubes);
   randomNote = notes.randomNote();
+  
   
   
   //calibration variables
@@ -197,7 +202,28 @@ void doLogic(PImage cameraImage) {
      text("Normal Mode", 190, 70);
      textFont(fontKarla);
      text("Find the Correct Chord", 1000, 170);
-     //playSound: chord tms
+     PImage img = loadImage("data/C_major_white.png");
+     chord = new Chord("cMajor", img);
+     image(chord.image, 900, 300);
+     
+     if (!chordPlayed){
+       playSound(chord.firstNote.soundfile, false, false);  
+       
+       this.timer.setTimer("chord-first", 1500);
+       this.timer.setTimer("chord-second", 3000);
+       if (this.timer.isOver("chord-first")) {
+         playSound(chord.secondNote.soundfile, true, false);
+         this.timer.removeTimer("chord-first");
+       }
+       if (this.timer.isOver("chord-second")) {
+         playSound(chord.thirdNote.soundfile, true, false);
+         this.timer.removeTimer("chord-second");
+         chordPlayed = true;
+       }
+       
+     }
+     //playSound(chord.secondNote.soundfile, true, false);
+     //playSound(chord.thirdNote.soundfile, true, false);
      drawCenterPoints(cubes.getCubesOnCamera());
      drawOrder(cubes.getCubesOnCamera());
      break;
@@ -209,7 +235,13 @@ void doLogic(PImage cameraImage) {
      text("Advanced Mode", 200, 70);
      textFont(fontKarla);
      text("Find the Correct Chord", 1000, 170);
-     //playSound: chord tms
+     PImage cImg = loadImage("data/C_major_white.png");
+     chord = new Chord("cMajor", cImg);
+     image(chord.image, 900, 300);
+     if (!chordPlayed){
+       playChord(chord.firstNote.soundfile, chord.secondNote.soundfile, chord.thirdNote.soundfile);
+       chordPlayed = true;
+     }
      drawCenterPoints(cubes.getCubesOnCamera());
      drawOrder(cubes.getCubesOnCamera());
      break;

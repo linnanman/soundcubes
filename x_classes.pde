@@ -386,3 +386,27 @@ class Notes {
   }
 
 }
+
+class Chord {
+  public Note firstNote;
+  public Note secondNote;
+  public Note thirdNote;
+  public String name;
+  public PImage image;
+  
+  public Chord(String name, PImage image) {
+    this.name = name;
+    this.image = image;
+    
+    if (name == "cMajor") {
+      
+      PImage C_image = loadImage("data/Middle_C.png");
+      PImage E_image = loadImage("data/E.png");
+      PImage G_image = loadImage("data/G.png");
+      firstNote = new Note("C", C_image, cubes.getCube(1), "notes/c.wav");
+      secondNote = new Note("E", E_image, cubes.getCube(5), "notes/e.wav");
+      thirdNote = new Note("G", G_image, cubes.getCube(8), "notes/g.wav");
+    }
+  }
+  
+}

@@ -20,7 +20,15 @@ void playSound(String file, boolean interrupt, boolean sameagain) {
         player.play(); 
       }
   }
-  
-
    
+}
+
+void playChord(String firstfile, String secondfile, String thirdfile) {
+  AudioPlayer s1 = minim.loadFile(firstfile);
+  AudioPlayer s2 = minim.loadFile(secondfile);
+  AudioPlayer s3 = minim.loadFile(thirdfile);
+  
+  s1.play();
+  s2.play();
+  s3.play();
 }
