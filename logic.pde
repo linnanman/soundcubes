@@ -17,6 +17,9 @@ Note randomNote;
 Chords chords;
 Chord randomChord;
 boolean chordPlayed;
+boolean firstNoteCorrect = false;
+boolean secondNoteCorrect = false;
+boolean thirdNoteCorrect = false;
 
 int calibrState;
 int calibrWidth;
@@ -213,64 +216,88 @@ void doLogic(PImage cameraImage) {
      break;
 
      case "normal":
-     image(cameraImage, 100, 150);
-     fill(255);
-     textFont(fontLobster_smaller);
-     text("Normal Mode", 250, 70);
-     textFont(fontKarla);
-     text("Find the Correct Chord", 1000, 170);
-     image(randomChord.image, 900, 300);
-     
-     if (!chordPlayed){
-       playSound(randomChord.firstNote.soundfile, false, false);  
+       image(cameraImage, 100, 150);
+       fill(255);
+       textFont(fontLobster_smaller);
+       text("Normal Mode", 250, 70);
+       textFont(fontKarla);
+       text("Find the Correct Chord", 1000, 170);
+       image(randomChord.image, 900, 200);
        
-       this.timer.setTimer("chord-first", 1500);
-       this.timer.setTimer("chord-second", 3000);
-       if (this.timer.isOver("chord-first")) {
-         playSound(randomChord.secondNote.soundfile, true, false);
-         this.timer.removeTimer("chord-first");
-       }
-       if (this.timer.isOver("chord-second")) {
-         playSound(randomChord.thirdNote.soundfile, true, false);
-         this.timer.removeTimer("chord-second");
-         chordPlayed = true;
+       if (!chordPlayed){
+         playSound(randomChord.firstNote.soundfile, false, false);  
+         
+         this.timer.setTimer("chord-first", 1500);
+         this.timer.setTimer("chord-second", 3000);
+         if (this.timer.isOver("chord-first")) {
+           playSound(randomChord.secondNote.soundfile, true, false);
+           this.timer.removeTimer("chord-first");
+         }
+         if (this.timer.isOver("chord-second")) {
+           playSound(randomChord.thirdNote.soundfile, true, false);
+           this.timer.removeTimer("chord-second");
+           chordPlayed = true;
+         }
        }
        
-     }
-
-     drawBackButton();
-     if (mousePressed) {
-       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
-         this.state.setState("start");
+       if (cubes.isCubeOnCamera(randomChord.firstNote.cube.number, this.cube1Area)) { //if cube is on camera
+          playSound(randomChord.firstNote.soundfile, false, false); 
+          text("First note is correct!", 1000, 400);
+          //turnOnLed(); 
+          firstNoteCorrect = true;
        }
-     }
-
-     drawCenterPoints(cubes.getCubesOnCamera());
-     drawOrder(cubes.getCubesOnCamera());
+       if (cubes.isCubeOnCamera(randomChord.secondNote.cube.number, this.cube2Area)) { //if cube is on camera
+          playSound(randomChord.secondNote.soundfile, false, false); 
+          text("Second note is correct!", 1000, 450);
+          //turnOnLed(); 
+          secondNoteCorrect = true;
+       }
+       if (cubes.isCubeOnCamera(randomChord.thirdNote.cube.number, this.cube3Area)) { //if cube is on camera
+          playSound(randomChord.thirdNote.soundfile, false, false); 
+          text("Third note is correct!", 1000, 500);
+          //turnOnLed(); 
+          thirdNoteCorrect = true;
+       }
+       
+       if (firstNoteCorrect && secondNoteCorrect && thirdNoteCorrect) {
+         chordPlayed = false;
+         text("All notes are correct! Fantastic!", 1000, 600);
+         //TODO: Play new chord
+       }
+  
+       drawBackButton();
+       if (mousePressed) {
+         if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
+           this.state.setState("start");
+         }
+       }
+  
+       drawCenterPoints(cubes.getCubesOnCamera());
+       drawOrder(cubes.getCubesOnCamera());
      break;
      
      case "hard":
-     image(cameraImage, 100, 150);
-     fill(255);
-     textFont(fontLobster_smaller);
-     text("Advanced Mode", 260, 70);
-     textFont(fontKarla);
-     text("Find the Correct Chord", 1000, 170);
- 
-     image(randomChord.image, 900, 300);
-     if (!chordPlayed){
-       playChord(randomChord.firstNote.soundfile, randomChord.secondNote.soundfile, randomChord.thirdNote.soundfile);
-       chordPlayed = true;
-     }
-     drawBackButton();
-     if (mousePressed) {
-       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
-         this.state.setState("start");
+       image(cameraImage, 100, 150);
+       fill(255);
+       textFont(fontLobster_smaller);
+       text("Advanced Mode", 260, 70);
+       textFont(fontKarla);
+       text("Find the Correct Chord", 1000, 170);
+   
+       image(randomChord.image, 900, 300);
+       if (!chordPlayed){
+         playChord(randomChord.firstNote.soundfile, randomChord.secondNote.soundfile, randomChord.thirdNote.soundfile);
+         chordPlayed = true;
        }
-     }
-
-     drawCenterPoints(cubes.getCubesOnCamera());
-     drawOrder(cubes.getCubesOnCamera());
+       drawBackButton();
+       if (mousePressed) {
+         if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
+           this.state.setState("start");
+         }
+       }
+  
+       drawCenterPoints(cubes.getCubesOnCamera());
+       drawOrder(cubes.getCubesOnCamera());
      break;
   case "calibration":
     image(cam, 100, 150);
