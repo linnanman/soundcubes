@@ -433,3 +433,37 @@ class Notes {
   }
 
 }
+
+class Chord {
+  public Note firstNote;
+  public Note secondNote;
+  public Note thirdNote;
+  public String name;
+  public PImage image;
+  
+  public Chord(Note firstNote, Note secondNote, Note thirdNote, PImage image, String name) {
+    this.name = name;
+    this.image = image;
+    this.firstNote = firstNote;
+    this.secondNote = secondNote;
+    this.thirdNote = thirdNote;
+  }
+  
+}
+
+class Chords {
+ public Chord cMajor;
+ 
+ public Chords(Note C, Note E, Note G) {
+   PImage cImg = loadImage("data/C_major_white.png");
+   String name = "cMajor";
+   cMajor = new Chord(C, E, G, cImg, name);
+ }
+ 
+ public Chord getRandomChord() {
+   Chord[] chords = { cMajor };
+    Chord randomChord = chords[int(random(chords.length))];
+    return randomChord;
+ }
+ 
+}
