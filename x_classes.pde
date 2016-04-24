@@ -1,3 +1,41 @@
+
+class RunOnce {
+  
+  private Hashtable<String, Boolean> name;
+  
+  public RunOnce() {
+    this.name = new Hashtable<String, Boolean>();
+  }
+
+ 
+  public boolean runOnce(String name) {
+    //if already in memory do not run
+    if (this.name.containsKey(name)) {
+      return false;
+    }
+    this.name.put(name, true);
+    return true;
+  }
+  
+  public void remove(String name) {
+    if (this.name.containsKey(name)) {
+      this.name.remove(name);
+    }
+    
+  }
+  
+  
+  
+  public boolean hasRun(String name) {
+    if (this.name.containsKey(name)) {
+      return this.name.get(name);
+    }
+    return false;
+    
+  }
+  
+}
+
 class XYArea {
   public int xMin;
   public int xMax;
@@ -98,6 +136,7 @@ class Cube {
     onCamera = false;
     onPhone = false;
   }
+  
 }
 
 
@@ -387,7 +426,8 @@ class Notes {
   public Note E;
   public Note F;
   public Note G;
-
+  List<Note> list = new ArrayList<Note>();
+  
   public Notes(Cubes cubes) {
     C_image = loadImage("data/Middle_C.png");
     E_image = loadImage("data/E.png");
@@ -398,20 +438,23 @@ class Notes {
     F = new Note("F", F_image, cubes.getCube(6), "notes/f.wav");
     G = new Note("G", G_image, cubes.getCube(8), "notes/g.wav");
     rand = new Random();
-  }
-
-  public Note randomNote() {
-    List<Note> list = new ArrayList<Note>();
     list.add(C);
     list.add(E);
     list.add(F);
     list.add(G);
+  }
+
+  public Note randomNote() {
     Note randomNote = list.get(rand.nextInt(list.size()));
     return randomNote;
   }
 
   public Note getNote(Cube cube) {
-    return null; //todo
+    for (int i=0; i<list.size();i++) {
+       if (list.get(i).cube.equals(cube))
+         return list.get(i);
+    }
+    return null;
   }
 }
 

@@ -60,11 +60,14 @@ void drawMarkers() {
 
 
 void drawArea(XYArea area) {
+  pushMatrix();
+  translate(100, 150);
   int Awidth = area.xMax-area.xMin;
   int Aheight = area.yMax-area.yMin;
 
   noFill();
   rect(area.xMin, area.yMin, Awidth, Aheight);
+  popMatrix();
 }
 
 void drawLines() {
@@ -72,14 +75,14 @@ void drawLines() {
     if (i % 2 == 0)
       stroke(200, 100, 100);
 
-    line(50*i, 0, 50*i, 500);
+    line(50*i+100, 0+150, 50*i+100, 500+150);
     stroke(255);
   }
   for (int i=1; i<10; i++) {
     if (i % 2 == 0)
       stroke(200, 100, 100);
 
-    line(0, 50*i, 650, 50*i);
+    line(0+100, 50*i+150, 650+100, 50*i+150);
     stroke(255);
   }
 }

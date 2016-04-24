@@ -5,7 +5,7 @@ void playSound(String file, boolean interrupt, boolean sameagain) {
   //System.out.println("playing sound");
   AudioMetaData meta = player.getMetaData();
 
-  if (meta.fileName().equals(file) && sameagain == false) {
+  if (meta.fileName() == file && sameagain == false) {
     return;
   }
 
@@ -19,6 +19,7 @@ void playSound(String file, boolean interrupt, boolean sameagain) {
     if ( !player.isPlaying() ) {
       player = minim.loadFile(file);
       player.play();
+      System.out.println(file);
     }
   }
 }

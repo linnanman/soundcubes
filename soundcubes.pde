@@ -12,11 +12,11 @@ boolean mirrorImage = false;
 String cameraName = "Microsoft LifeCam VX-1000"; //Microsoft LifeCam Front, HD WebCam, FaceTime-HD-kamera (sisäinen), Microsoft LifeCam VX-1000
 boolean tangibleInterface = true;
 int markerSideFactor = 3; //to avoid false markers
-int minimum_dia = 50; //min diameter for marker, to avoid false marker recognitions
+int minimum_dia = 60; //min diameter for marker, to avoid false marker recognitions
 
 //developer features
 boolean developer = false;
-boolean printFoundMarkers = true;
+boolean printFoundMarkers = false;
 boolean drawCubeCorners = false;
 
 int port = 5204;
@@ -31,7 +31,7 @@ AudioPlayer player;
 Cubes cubes;
 State state;
 Timer timer;
-
+RunOnce runonce;
 
 // front_camera_para.dat contains calibration data about Surface Pro 3 front camera.
 // Despite calibration data being camera-specific, the same calibration data should
@@ -82,6 +82,7 @@ void setup() {
   player = minim.loadFile("null.wav");
   cubes = new Cubes();
   this.timer = new Timer();
+  this.runonce = new RunOnce();
 
   doSetup();
 }
