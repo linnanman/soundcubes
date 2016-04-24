@@ -164,9 +164,12 @@ void doLogic(PImage cameraImage) {
         }
      }
        
-      
+      //drawMarkers();
      drawCenterPoints(cubes.getCubesOnCamera());
-     drawOrder(cubes.getCubesOnCamera());
+     if (drawCubeCorners)
+       drawCornerPoints(cubes.getCubesOnCamera());
+     //drawOrder(cubes.getCubesOnCamera());
+     
      break;
 
    case "easy":

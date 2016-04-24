@@ -8,11 +8,15 @@ import ddf.minim.*;
 
 //Settings
 boolean useSerial = false;
-boolean mirrorImage = true;
-String cameraName = "FaceTime-HD-kamera (sisäinen)"; //Microsoft LifeCam Front, HD WebCam, FaceTime-HD-kamera (sisäinen), Microsoft LifeCam VX-1000
+boolean mirrorImage = false;
+String cameraName = "Microsoft LifeCam VX-1000"; //Microsoft LifeCam Front, HD WebCam, FaceTime-HD-kamera (sisäinen), Microsoft LifeCam VX-1000
 boolean tangibleInterface = true;
+int markerSideFactor = 3; //to avoid false markers
+
+//developer features
 boolean developer = false;
 boolean printFoundMarkers = true;
+boolean drawCubeCorners = false;
 
 int port = 5204;
 int minimum_dia = 50; //min diameter for marker, to avoid false marker recognitions

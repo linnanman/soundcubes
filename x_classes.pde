@@ -88,6 +88,7 @@ class State {
 class Cube {
   public int x; 
   public int y;
+  public int[][] corners;
   public int number;
   public float dia;
   public boolean onCamera;
@@ -96,6 +97,7 @@ class Cube {
   public Cube(int x, int y, int number) {
     this.x = x;
     this.y = y;
+    this.corners = new int[4][2];
     this.number = number;
     onCamera = false;
     onPhone = false;
@@ -120,26 +122,37 @@ class Cubes {
     this.list = list;
   }
   
+  //update cubes that are on camera
   public void updateCubes() {
 
     for (int i = 0; i < this.list.size(); ++i) {
+      
+      //cube is not on camera
       if (!nya.isExistMarker(i)) { 
         list.get(i).onCamera = false;
         list.get(i).x = 0;
         list.get(i).y = 0;
+        list.get(i).corners = new int[4][2];
         list.get(i).dia = 0;
       }
+      //cube is on camera
       else {
         PVector[] cornerPositions = nya.getMarkerVertex2D(i);
         PVector centerPosition = new PVector(0, 0);
         float dia = 0;
         
+        //calculate center position and take corners in memory
         for (int j = 0; j < cornerPositions.length; ++j) {
           PVector cornerPosition = cornerPositions[j];
           centerPosition.add(cornerPosition);
+          
+          list.get(i).corners[j][0] = (int)cornerPosition.x;
+          list.get(i).corners[j][1] = (int)cornerPosition.y;
+          
         }
         centerPosition.mult(0.25);
         
+        //calculate dia
         for (int j = 0; j < cornerPositions.length; ++j) {
           PVector cornerPosition = cornerPositions[j];
           PVector diaVector = new PVector(0, 0);
@@ -147,23 +160,51 @@ class Cubes {
           diaVector.sub(centerPosition);
           dia += diaVector.mag();
           
+          
+          
         }
         
-
-        if (dia > minimum_dia) {
+        //location to memory
+        list.get(i).x = (int)centerPosition.x;
+        list.get(i).y = (int)centerPosition.y;
+        list.get(i).dia = dia; 
+          
+        //calculate distance between corners, discard cubes that dont seem to be cubes
+        boolean validMarker = true;
+        int[] distances = new int[6];
+        for (int q=0; q<4; q++) {
+          int xqs = list.get(i).corners[q][0];
+          int yqs = list.get(i).corners[q][1];
+          int xq, yq;
+          if (q != 3) {
+            xq = list.get(i).corners[q+1][0];
+            yq = list.get(i).corners[q+1][1];
+          }
+          else {
+            xq = list.get(i).corners[0][0];
+            yq = list.get(i).corners[0][1];
+          }
+          distances[q] = abs(xq-xqs)+abs(yq-yqs);
+        }
+        distances[4] = abs(list.get(i).corners[2][0]-list.get(i).corners[0][0])+abs(list.get(i).corners[2][1]-list.get(i).corners[0][1]);
+        distances[5] = abs(list.get(i).corners[1][0]-list.get(i).corners[3][0])+abs(list.get(i).corners[1][1]-list.get(i).corners[3][1]);
+        
+        for (int q=1; q<6; q++) {
+          if (distances[q] > (markerSideFactor*distances[q-1]) || distances[q] < ((1/markerSideFactor)*distances[q-1]))
+            validMarker = false;
+        }
+ 
+        //System.out.println(distances[0] + " " + distances[1] + " " + distances[2] + " " + distances[3]);
+        
+        //check dia
+        if (dia > minimum_dia && validMarker) {
           list.get(i).onCamera = true;
-          list.get(i).x = (int)centerPosition.x;
-          list.get(i).y = (int)centerPosition.y;
-          list.get(i).dia = dia; 
-          //System.out.println(dia);
           if (printFoundMarkers)
-            System.out.println("Found n. " + (i+1) + ", dia: " + dia);
+            System.out.println("Found n. " + (i+1) + ", x: " + (int)centerPosition.x + ", y: " + (int)centerPosition.y +  " dia: " + dia);
         }
         else {
           list.get(i).onCamera = false;
-          list.get(i).x = (int)centerPosition.x;
-          list.get(i).y = (int)centerPosition.y;
-          list.get(i).dia = dia; 
+          
         }
         
       }

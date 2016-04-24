@@ -1,11 +1,27 @@
 void drawCenterPoints(List<Cube> cubes) {
-  translate(100, 150);
+  //translate(100, 150);
   
   for (int i = 0; i < cubes.size(); ++i) {
     fill(31, 181, 183);
-    ellipse(cubes.get(i).x, cubes.get(i).y, 20, 20);
+    ellipse((cubes.get(i).x+100), (cubes.get(i).y+150), 20, 20);
+    
   }
 }
+
+void drawCornerPoints(List<Cube> cubes) {
+  //translate(100, 150);
+  
+  for (int i = 0; i < cubes.size(); ++i) {
+    fill(31, 181, 83);
+    for (int k=0;k<4;k++) {
+      ellipse(cubes.get(i).corners[k][0]+100, cubes.get(i).corners[k][1]+150, 20, 20);
+      textSize(20);
+      text(k, cubes.get(i).corners[k][0]+100, cubes.get(i).corners[k][1]+150+20);
+    }
+  }
+}
+
+
 
 //draws noticed qr codes and order of them
 void drawOrder(List<Cube> cubes) {
@@ -24,6 +40,7 @@ void drawOrder(List<Cube> cubes) {
 // and green circles on the corners.
 void drawMarkers() {
   
+
   for (int i = 0; i < numMarkers; ++i) {
     if (!nya.isExistMarker(i)) { continue; }
     PVector[] cornerPositions = nya.getMarkerVertex2D(i);
@@ -32,11 +49,11 @@ void drawMarkers() {
       PVector cornerPosition = cornerPositions[j];
       centerPosition.add(cornerPosition);
       fill(0, 255, 0);
-      ellipse(cornerPosition.x, cornerPosition.y, 15, 15);
+      ellipse(cornerPosition.x+100, cornerPosition.y+150, 15, 15);
     }
     centerPosition.mult(0.25);
     fill(255, 0, 0);
-    ellipse(centerPosition.x, centerPosition.y, 20, 20);
+    ellipse(centerPosition.x+100, centerPosition.y+150, 20, 20);
   }
 }
 
