@@ -356,18 +356,22 @@ class Notes {
   
   public PImage C_image;
   public PImage E_image;
+  public PImage F_image;
   public PImage G_image;
   public Random rand;
   public Note C;
   public Note E;
+  public Note F;
   public Note G;
   
   public Notes(Cubes cubes) {
     C_image = loadImage("data/Middle_C.png");
     E_image = loadImage("data/E.png");
+    F_image = loadImage("data/F.png");
     G_image = loadImage("data/G.png");
     C = new Note("C", C_image, cubes.getCube(1), "notes/c.wav");
     E = new Note("E", E_image, cubes.getCube(5), "notes/e.wav");
+    F = new Note("F", F_image, cubes.getCube(6), "notes/f.wav");
     G = new Note("G", G_image, cubes.getCube(8), "notes/g.wav");
     rand = new Random();
   }

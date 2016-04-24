@@ -142,7 +142,7 @@ void doLogic(PImage cameraImage) {
      }
      
      image(randomNote.image, 900, 300);
-     playSound(randomNote.soundfile, false, true); 
+     //playSound(randomNote.soundfile, false, true); 
      
      
      if (cubes.isCubeOnCamera(randomNote.cube.number, this.cube1Area) ||
@@ -182,7 +182,7 @@ void doLogic(PImage cameraImage) {
          this.state.setState("start");
        }
      }
-     playSound(randomNote.soundfile, false, true); 
+     //playSound(randomNote.soundfile, false, true); 
      
      // The program picks a random note and plays it
      // If the right cube is picked and showed to the camera, the green led turns on and the note is played. A new random note is picked!
