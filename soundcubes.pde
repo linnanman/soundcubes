@@ -10,8 +10,11 @@ import ddf.minim.*;
 boolean useSerial = false;
 boolean mirrorImage = true;
 String cameraName = "FaceTime-HD-kamera (sisäinen)"; //Microsoft LifeCam Front, HD WebCam, FaceTime-HD-kamera (sisäinen), Microsoft LifeCam VX-1000
+boolean tangibleInterface = true;
 boolean developer = false;
+
 int port = 5204;
+int minimum_dia = 50; //min diameter for marker, to avoid false marker recognitions
 
 Server server;    
 Server testserver;  
@@ -52,7 +55,7 @@ void setup() {
     serialPort = null;
   }
   
-  doSetup();
+  
   
   cameraParameterFile = dataPath(cameraParameterFile);
   patternPath = dataPath(patternPath);
@@ -74,6 +77,8 @@ void setup() {
   player = minim.loadFile("null.wav");
   cubes = new Cubes();
   this.timer = new Timer();
+  
+  doSetup();
   
 }
 

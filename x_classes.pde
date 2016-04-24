@@ -10,6 +10,8 @@ class XYArea {
     this.yMin = yMin;
     this.yMax = yMax;
   }
+  
+ 
 }
 
 
@@ -21,9 +23,19 @@ class Timer {
     this.timers = new Hashtable<String, Long>();
   }
   
+  public void removeTimer(String name) {
+    this.timers.remove(name);
+  }
+  
   public void setTimer(String name, long delayms) {
     if (!this.timers.containsKey(name))
       this.timers.put(name, System.currentTimeMillis()+delayms);
+  }
+  
+  public void setNewTimer(String name, long delayms) {
+    if (this.timers.containsKey(name))
+      this.timers.remove(name);
+    this.timers.put(name, System.currentTimeMillis()+delayms);
   }
   
   public boolean isGoing(String name) {
@@ -77,6 +89,7 @@ class Cube {
   public int x; 
   public int y;
   public int number;
+  public float dia;
   public boolean onCamera;
   public boolean onPhone;
   
@@ -85,7 +98,7 @@ class Cube {
     this.y = y;
     this.number = number;
     onCamera = false;
-    onCamera = false;
+    onPhone = false;
   }
 }
   
@@ -115,25 +128,49 @@ class Cubes {
         list.get(i).onCamera = false;
         list.get(i).x = 0;
         list.get(i).y = 0;
+        list.get(i).dia = 0;
       }
       else {
         PVector[] cornerPositions = nya.getMarkerVertex2D(i);
         PVector centerPosition = new PVector(0, 0);
+        float dia = 0;
+        
         for (int j = 0; j < cornerPositions.length; ++j) {
           PVector cornerPosition = cornerPositions[j];
           centerPosition.add(cornerPosition);
         }
         centerPosition.mult(0.25);
-        list.get(i).onCamera = true;
-        list.get(i).x = (int)centerPosition.x;
-        list.get(i).y = (int)centerPosition.y;
+        
+        for (int j = 0; j < cornerPositions.length; ++j) {
+          PVector cornerPosition = cornerPositions[j];
+          PVector diaVector = new PVector(0, 0);
+          diaVector.add(cornerPosition);
+          diaVector.sub(centerPosition);
+          dia += diaVector.mag();
+          
+        }
+        
+
+        if (dia > minimum_dia) {
+          list.get(i).onCamera = true;
+          list.get(i).x = (int)centerPosition.x;
+          list.get(i).y = (int)centerPosition.y;
+          list.get(i).dia = dia; 
+          System.out.println(dia);
+        }
+        else {
+          list.get(i).onCamera = false;
+          list.get(i).x = (int)centerPosition.x;
+          list.get(i).y = (int)centerPosition.y;
+          list.get(i).dia = dia; 
+        }
         
       }
     }
   }
   
   public Cube getCube(int i) {
-    return this.list.get(i);  
+    return this.list.get(i-1);  
   }
   
   public int[] getCubesOnCameraArray() {
@@ -203,7 +240,7 @@ class Cubes {
   
     for (int i=0;i<this.list.size();i++) {
       if (this.list.get(i).x > xyarea.xMin && this.list.get(i).y > xyarea.yMin && this.list.get(i).x < xyarea.xMax && this.list.get(i).y < xyarea.yMax && this.list.get(i).onCamera) {
-          System.out.println(this.list.get(i).x + " " + this.list.get(i).y);
+          //System.out.println(this.list.get(i).x + " " + this.list.get(i).y);
           return this.list.get(i);
       }
     }
@@ -304,11 +341,14 @@ class ModeButton {
 class Note {
   public String name;
   public PImage image;
+  public String soundfile;
   public Cube cube;
   
-  public Note(String name, PImage image) {
+  public Note(String name, PImage image, Cube cube, String soundfile) {
     this.name = name;
     this.image = image;
+    this.cube = cube;
+    this.soundfile = soundfile;
   }
 }
 
@@ -322,13 +362,13 @@ class Notes {
   public Note E;
   public Note G;
   
-  public Notes() {
+  public Notes(Cubes cubes) {
     C_image = loadImage("data/Middle_C.png");
     E_image = loadImage("data/E.png");
     G_image = loadImage("data/G.png");
-    C = new Note("C", C_image);
-    E = new Note("E", E_image);
-    G = new Note("G", G_image);
+    C = new Note("C", C_image, cubes.getCube(1), "notes/c.wav");
+    E = new Note("E", E_image, cubes.getCube(5), "notes/e.wav");
+    G = new Note("G", G_image, cubes.getCube(8), "notes/g.wav");
     rand = new Random();
   }
   
@@ -339,6 +379,10 @@ class Notes {
     list.add(G);
     Note randomNote = list.get(rand.nextInt(list.size()));
     return randomNote;
+  }
+  
+  public Note getNote(Cube cube) {
+    return null; //todo
   }
 
 }
