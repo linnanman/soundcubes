@@ -56,13 +56,12 @@ void setup() {
     String serialPortName = Serial.list()[0];
     println("Using COM port: " + serialPortName);
     serialPort = new Serial(this, serialPortName, 9600);
-  }
-  else {
+  } else {
     serialPort = null;
   }
-  
-  
-  
+
+
+
   cameraParameterFile = dataPath(cameraParameterFile);
   patternPath = dataPath(patternPath);
   size(1280, 720);
@@ -73,19 +72,18 @@ void setup() {
     println("Adding marker: " + patterns[i]);
     nya.addARMarker(patternPath + "/" + patterns[i], 80);
   }
-  
+
   // Camera name is hardcoded, since we're most likely using the Surface Pro 3 front camera.
-  cam = new Capture(this, camWidth, camHeight, cameraName, 30); //DroidCam Source 3, Microsoft LifeCam Front
+  cam = new Capture(this, camWidth, camHeight, cameraName, 30);
   cam.start();
-  
+
   server = new Server(this, port); 
   minim = new Minim(this);
   player = minim.loadFile("null.wav");
   cubes = new Cubes();
   this.timer = new Timer();
-  
+
   doSetup();
-  
 }
 
 void draw() {
@@ -101,9 +99,9 @@ void draw() {
         }
       }
     }
-  
+
     try {
-    nya.detect(processedImage);
+      nya.detect(processedImage);
     }
     catch (Exception e) {
     }
