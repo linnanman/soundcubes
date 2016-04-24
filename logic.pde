@@ -14,7 +14,8 @@ XYArea difficultyLevelArea;
 Notes notes;
 Note randomNote;
 
-Chord chord;
+Chords chords;
+Chord randomChord;
 boolean chordPlayed;
 
 int calibrState;
@@ -29,7 +30,7 @@ void doSetup() {
   
   this.state = new State("start");
   this.chordPlayed = false;
-  sound = loadImage("data/sound.png");
+  //sound = loadImage("data/sound.png");
   arrow = loadImage("data/arrow.png");
 
   fontLobster = createFont("Lobster 1.4.otf", 80);
@@ -52,7 +53,8 @@ void doSetup() {
   notes = new Notes(this.cubes);
   randomNote = notes.randomNote();
   
-  
+  chords = new Chords(notes.C, notes.E, notes.G);
+  randomChord = chords.getRandomChord();
   
   //calibration variables
   this.calibrWidth = 100;
@@ -217,28 +219,24 @@ void doLogic(PImage cameraImage) {
      text("Normal Mode", 250, 70);
      textFont(fontKarla);
      text("Find the Correct Chord", 1000, 170);
-     PImage img = loadImage("data/C_major_white.png");
-     chord = new Chord("cMajor", img);
-     image(chord.image, 900, 300);
+     image(randomChord.image, 900, 300);
      
      if (!chordPlayed){
-       playSound(chord.firstNote.soundfile, false, false);  
+       playSound(randomChord.firstNote.soundfile, false, false);  
        
        this.timer.setTimer("chord-first", 1500);
        this.timer.setTimer("chord-second", 3000);
        if (this.timer.isOver("chord-first")) {
-         playSound(chord.secondNote.soundfile, true, false);
+         playSound(randomChord.secondNote.soundfile, true, false);
          this.timer.removeTimer("chord-first");
        }
        if (this.timer.isOver("chord-second")) {
-         playSound(chord.thirdNote.soundfile, true, false);
+         playSound(randomChord.thirdNote.soundfile, true, false);
          this.timer.removeTimer("chord-second");
          chordPlayed = true;
        }
        
      }
-     //playSound(chord.secondNote.soundfile, true, false);
-     //playSound(chord.thirdNote.soundfile, true, false);
 
      drawBackButton();
      if (mousePressed) {
@@ -258,11 +256,10 @@ void doLogic(PImage cameraImage) {
      text("Advanced Mode", 260, 70);
      textFont(fontKarla);
      text("Find the Correct Chord", 1000, 170);
-     PImage cImg = loadImage("data/C_major_white.png");
-     chord = new Chord("cMajor", cImg);
-     image(chord.image, 900, 300);
+ 
+     image(randomChord.image, 900, 300);
      if (!chordPlayed){
-       playChord(chord.firstNote.soundfile, chord.secondNote.soundfile, chord.thirdNote.soundfile);
+       playChord(randomChord.firstNote.soundfile, randomChord.secondNote.soundfile, randomChord.thirdNote.soundfile);
        chordPlayed = true;
      }
      drawBackButton();
