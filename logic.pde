@@ -122,6 +122,8 @@ void doLogic(PImage cameraImage) {
   case "start":
     //turnOnLed();
 
+    this.runonce.clearAll();
+    
     // Logo
     fill(255);
     textFont(fontLobster);
@@ -349,7 +351,7 @@ void doLogic(PImage cameraImage) {
     break;
   }
 
-  if (this.developer && this.state.getState() == "learning") {
+  if (this.developer && this.state.getState() != "start") {
     drawArea(this.cube1Area);
     drawArea(this.cube2Area);
     drawArea(this.cube3Area);

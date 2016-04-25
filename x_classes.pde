@@ -6,6 +6,10 @@ class RunOnce {
   public RunOnce() {
     this.name = new Hashtable<String, Boolean>();
   }
+  
+  public void clearAll() {
+  this.name = new Hashtable<String, Boolean>();
+}
 
  
   public boolean runOnce(String name) {
