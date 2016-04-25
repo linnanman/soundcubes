@@ -83,6 +83,8 @@ class Timer {
   }
 
   public boolean isGoing(String name) {
+    if (this.timers.get(name) == null)
+      return false;
     if (this.timers.get(name) > System.currentTimeMillis()) {
       return true;
     }
@@ -90,6 +92,8 @@ class Timer {
   }
 
   public boolean isOver(String name) {
+    if (this.timers.get(name) == null)
+      return false;
     return !this.isGoing(name);
   }
 }

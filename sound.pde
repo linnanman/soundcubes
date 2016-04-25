@@ -1,4 +1,4 @@
-
+String soundQueue = "";
 
 void playSound(String file, boolean interrupt, boolean sameagain) {
   //lastPlayed = 
@@ -23,6 +23,22 @@ void playSound(String file, boolean interrupt, boolean sameagain) {
     }
   }
 }
+
+void addSoundQueue(String file) {
+
+  soundQueue = file;
+}
+
+void playSoundQueue() {
+  if (this.soundQueue != "" && !player.isPlaying()) {
+    player = minim.loadFile(this.soundQueue);
+    player.play();
+    System.out.println(this.soundQueue);
+    this.soundQueue = "";
+  }
+}
+
+
 
 void playChord(Chord chord) {
   String firstfile = chord.firstNote.soundfile;
