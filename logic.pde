@@ -224,7 +224,8 @@ void doLogic(PImage cameraImage) {
         this.state.setState("start");
       }
     }
-    playSound(randomNote.soundfile, false, false); 
+    if (this.runonce.runOnce("playNote"))
+      playSound(randomNote.soundfile, false, false); 
 
     // The program picks a random note and plays it
     // If the right cube is picked and showed to the camera, the green led turns on and the note is played. A new random note is picked!
@@ -389,7 +390,7 @@ void doLogic(PImage cameraImage) {
     break;
   }
 
-  if (this.developer ) {
+  if (this.developer && this.state.getState() != "start") {
     drawArea(this.cube1Area);
     drawArea(this.cube2Area);
     drawArea(this.cube3Area);
