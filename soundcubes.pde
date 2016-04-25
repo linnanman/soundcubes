@@ -16,8 +16,8 @@ int minimum_dia = 60; //min diameter for marker, to avoid false marker recogniti
 
 //developer features
 boolean developer = true;
-boolean printFoundMarkers = true;
-boolean drawCubeCorners = true;
+boolean printFoundMarkers = false;
+boolean drawCubeCorners = false;
 
 int port = 5204;
 // Number of markers to detect.
