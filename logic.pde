@@ -276,19 +276,25 @@ void doLogic(PImage cameraImage) {
     }
 
     if (cubes.isCubeOnCamera(randomChord.firstNote.cube.number, this.cube1Area)) { //if cube is on camera
+    if (this.runonce.runOnce("playFirst")) {
       playSound(randomChord.firstNote.soundfile, false, false); 
+    }
       text("First note is correct!", 1000, 400);
       //turnOnLed(); 
       firstNoteCorrect = true;
     }
     if (cubes.isCubeOnCamera(randomChord.secondNote.cube.number, this.cube2Area)) { //if cube is on camera
-      playSound(randomChord.secondNote.soundfile, false, false); 
+    if (this.runonce.runOnce("playSecond")) {
+      playSound(randomChord.secondNote.soundfile, false, false);
+    }
       text("Second note is correct!", 1000, 450);
       //turnOnLed(); 
       secondNoteCorrect = true;
     }
     if (cubes.isCubeOnCamera(randomChord.thirdNote.cube.number, this.cube3Area)) { //if cube is on camera
+    if (this.runonce.runOnce("playThird")) {
       playSound(randomChord.thirdNote.soundfile, false, false); 
+    }
       text("Third note is correct!", 1000, 500);
       //turnOnLed(); 
       thirdNoteCorrect = true;
@@ -329,19 +335,25 @@ void doLogic(PImage cameraImage) {
     }
     
     if (cubes.isCubeOnCamera(randomChord.firstNote.cube.number, this.cube1Area)) { //if cube is on camera
+    if (this.runonce.runOnce("playFirst-hard")) {
       playSound(randomChord.firstNote.soundfile, false, false); 
+    }
       text("First note is correct!", 1000, 400);
       //turnOnLed(); 
       firstNoteCorrect = true;
     }
     if (cubes.isCubeOnCamera(randomChord.secondNote.cube.number, this.cube2Area)) { //if cube is on camera
+    if (this.runonce.runOnce("playSecond-hard")) {
       playSound(randomChord.secondNote.soundfile, false, false); 
+    }
       text("Second note is correct!", 1000, 450);
       //turnOnLed(); 
       secondNoteCorrect = true;
     }
     if (cubes.isCubeOnCamera(randomChord.thirdNote.cube.number, this.cube3Area)) { //if cube is on camera
+    if (this.runonce.runOnce("playThird-hard")) {
       playSound(randomChord.thirdNote.soundfile, false, false); 
+    }
       text("Third note is correct!", 1000, 500);
       //turnOnLed(); 
       thirdNoteCorrect = true;
