@@ -181,7 +181,7 @@ void doLogic(PImage cameraImage) {
       ) { //if cube is on camera
       playSound(randomNote.soundfile, false, false); 
       text("Correct! Fantastic!", 200, 500);
-      //turnOnLed();     
+      //turnOnLed();
       //Pick new random note
       this.timer.setTimer("learning-correct", 2000);
       if (this.timer.isOver("learning-correct")) {
@@ -282,7 +282,11 @@ void doLogic(PImage cameraImage) {
     }
 
     if (firstNoteCorrect && secondNoteCorrect && thirdNoteCorrect) {
-      chordPlayed = false;
+      //this.runonce.runOnce("playChord");
+      if (this.runonce.runOnce("playChord")) {
+        playChord(randomChord.firstNote.soundfile, randomChord.secondNote.soundfile, randomChord.thirdNote.soundfile); 
+      }
+      
       text("All notes are correct! Fantastic!", 1000, 600);
       //TODO: Play new chord
     }
@@ -306,10 +310,38 @@ void doLogic(PImage cameraImage) {
     textFont(fontKarla);
     text("Find the Correct Chord", 1000, 170);
 
-    image(randomChord.image, 900, 300);
     if (!chordPlayed) {
       playChord(randomChord.firstNote.soundfile, randomChord.secondNote.soundfile, randomChord.thirdNote.soundfile);
       chordPlayed = true;
+    }
+    
+    if (cubes.isCubeOnCamera(randomChord.firstNote.cube.number, this.cube1Area)) { //if cube is on camera
+      playSound(randomChord.firstNote.soundfile, false, false); 
+      text("First note is correct!", 1000, 400);
+      //turnOnLed(); 
+      firstNoteCorrect = true;
+    }
+    if (cubes.isCubeOnCamera(randomChord.secondNote.cube.number, this.cube2Area)) { //if cube is on camera
+      playSound(randomChord.secondNote.soundfile, false, false); 
+      text("Second note is correct!", 1000, 450);
+      //turnOnLed(); 
+      secondNoteCorrect = true;
+    }
+    if (cubes.isCubeOnCamera(randomChord.thirdNote.cube.number, this.cube3Area)) { //if cube is on camera
+      playSound(randomChord.thirdNote.soundfile, false, false); 
+      text("Third note is correct!", 1000, 500);
+      //turnOnLed(); 
+      thirdNoteCorrect = true;
+    }
+
+    if (firstNoteCorrect && secondNoteCorrect && thirdNoteCorrect) {
+      //this.runonce.runOnce("playChord");
+      if (this.runonce.runOnce("playChord")) {
+        playChord(randomChord.firstNote.soundfile, randomChord.secondNote.soundfile, randomChord.thirdNote.soundfile); 
+      }
+      
+      text("All notes are correct! Fantastic!", 1000, 600);
+      //TODO: Play new chord
     }
     drawBackButton();
     if (mousePressed) {
@@ -349,7 +381,7 @@ void doLogic(PImage cameraImage) {
     break;
   }
 
-  if (this.developer && this.state.getState() == "learning") {
+  if (this.developer ) {
     drawArea(this.cube1Area);
     drawArea(this.cube2Area);
     drawArea(this.cube3Area);
