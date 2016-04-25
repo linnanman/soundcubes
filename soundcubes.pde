@@ -13,10 +13,11 @@ String cameraName = "Microsoft LifeCam VX-1000"; //Microsoft LifeCam Front, HD W
 boolean tangibleInterface = true;
 int markerSideFactor = 6; //to avoid false markers
 int minimum_dia = 60; //min diameter for marker, to avoid false marker recognitions
+boolean limitToFive = true;
 
 //developer features
 boolean developer = false;
-boolean printFoundMarkers = false;
+boolean printFoundMarkers = true;
 boolean drawCubeCorners = false;
 
 int port = 5204;
@@ -68,9 +69,20 @@ void setup() {
   nya = new MultiMarker(this, camWidth, camHeight, cameraParameterFile, NyAR4PsgConfig.CONFIG_DEFAULT);
   nya.setLostDelay(15);
   String[] patterns = loadPatternFilenames(patternPath);
-  for (int i = 0; i < numMarkers; ++i) {
-    println("Adding marker: " + patterns[i]);
-    nya.addARMarker(patternPath + "/" + patterns[i], 80);
+  
+  if (!limitToFive) {
+    for (int i = 0; i < numMarkers; ++i) {
+      println("Adding marker: " + patterns[i]);
+      nya.addARMarker(patternPath + "/" + patterns[i], 80);
+    }
+  }
+  //5 only
+  else {
+    nya.addARMarker(patternPath + "/" + "4x4_01.patt", 80);
+    nya.addARMarker(patternPath + "/" + "4x4_05.patt", 80);
+    nya.addARMarker(patternPath + "/" + "4x4_06.patt", 80);
+    nya.addARMarker(patternPath + "/" + "4x4_08.patt", 80);
+    nya.addARMarker(patternPath + "/" + "4x4_10.patt", 80);
   }
 
   // Camera name is hardcoded, since we're most likely using the Surface Pro 3 front camera.

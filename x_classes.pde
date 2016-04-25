@@ -136,15 +136,17 @@ class Cube {
   public int y;
   public int[][] corners;
   public int number;
+  public int marker_number;
   public float dia;
   public boolean onCamera;
   public boolean onPhone;
 
-  public Cube(int x, int y, int number) {
+  public Cube(int x, int y, int number, int marker_number) {
     this.x = x;
     this.y = y;
     this.corners = new int[4][2];
     this.number = number;
+    this.marker_number = marker_number;
     onCamera = false;
     onPhone = false;
   }
@@ -159,23 +161,34 @@ class Cubes {
 
   public Cubes() {
 
-    List<Cube> list = new ArrayList<Cube>();
-
-
+    this.list = new ArrayList<Cube>();
 
     for (int i = 0; i < numMarkers; ++i) {
-      list.add(new Cube(0, 0, i+1));
+      this.list.add(new Cube(0, 0, i+1, limitToFive ? -1 : i+1));
     }
-    this.list = list;
+    //5 only
+    if (limitToFive) {
+      this.list.get(1-1).marker_number = 0;
+      this.list.get(5-1).marker_number = 1;
+      this.list.get(6-1).marker_number = 2;
+      this.list.get(8-1).marker_number = 3;
+      this.list.get(10-1).marker_number = 4;
+    }
+    
+    
   }
 
   //update cubes that are on camera
   public void updateCubes() {
 
     for (int i = 0; i < this.list.size(); ++i) {
-
+      
+      int marker_number = this.list.get(i).marker_number;
+      if (marker_number < 0)
+        continue;
+      
       //cube is not on camera
-      if (!nya.isExistMarker(i)) { 
+      if (!nya.isExistMarker(marker_number)) { 
         list.get(i).onCamera = false;
         list.get(i).x = 0;
         list.get(i).y = 0;
@@ -184,7 +197,7 @@ class Cubes {
       }
       //cube is on camera
       else {
-        PVector[] cornerPositions = nya.getMarkerVertex2D(i);
+        PVector[] cornerPositions = nya.getMarkerVertex2D(marker_number);
         PVector centerPosition = new PVector(0, 0);
         float dia = 0;
 
