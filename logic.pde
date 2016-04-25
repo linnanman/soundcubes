@@ -122,6 +122,8 @@ void doLogic(PImage cameraImage) {
   case "start":
     //turnOnLed();
 
+    this.runonce.clearAll();
+    
     // Logo
     fill(255);
     textFont(fontLobster);
