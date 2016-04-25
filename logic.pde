@@ -142,14 +142,18 @@ void doLogic(PImage cameraImage) {
     if (mousePressed) {
       if (mouseX > learning.x && mouseX < learning.x+learning.width && mouseY > learning.y && mouseY < learning.y+learning.height) {
         this.state.setState("learning");
+        this.runonce.clearAll();
       }
       if (mouseX > easy.x && mouseX < easy.x+easy.width && mouseY > easy.y && mouseY < easy.y+easy.height) {
         this.state.setState("easy");
+        this.runonce.clearAll();
       }
       if (mouseX > normal.x && mouseX < normal.x+normal.width && mouseY > normal.y && mouseY < normal.y+normal.height) {
         this.state.setState("normal");
+        this.runonce.clearAll();
       }
       if (mouseX > advanced.x && mouseX < advanced.x+advanced.width && mouseY > advanced.y && mouseY < advanced.y+advanced.height) {
+        this.runonce.clearAll();
         this.state.setState("hard");
       }
     }
@@ -177,11 +181,13 @@ void doLogic(PImage cameraImage) {
     }
 
     
+    //correct cube
     if (cubes.isCubeOnCamera(randomNote.cube.number, this.cube1Area) ||
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube2Area) ||
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube3Area)
       ) { //if cube is on camera
       playSound(randomNote.soundfile, false, false); 
+      changeLed(1,1,1);
       text("Correct! Fantastic!", 200, 500);
       //turnOnLed();     
       //Pick new random note
