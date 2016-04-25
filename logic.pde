@@ -293,7 +293,7 @@ void doLogic(PImage cameraImage) {
     if (firstNoteCorrect && secondNoteCorrect && thirdNoteCorrect) {
       //this.runonce.runOnce("playChord");
       if (this.runonce.runOnce("playChord")) {
-        playChord(randomChord.firstNote.soundfile, randomChord.secondNote.soundfile, randomChord.thirdNote.soundfile); 
+        playChord(randomChord); 
       }
       
       text("All notes are correct! Fantastic!", 1000, 600);
@@ -320,7 +320,7 @@ void doLogic(PImage cameraImage) {
     text("Find the Correct Chord", 1000, 170);
 
     if (!chordPlayed) {
-      playChord(randomChord.firstNote.soundfile, randomChord.secondNote.soundfile, randomChord.thirdNote.soundfile);
+      playChord(randomChord);
       chordPlayed = true;
     }
     
@@ -346,7 +346,7 @@ void doLogic(PImage cameraImage) {
     if (firstNoteCorrect && secondNoteCorrect && thirdNoteCorrect) {
       //this.runonce.runOnce("playChord");
       if (this.runonce.runOnce("playChord")) {
-        playChord(randomChord.firstNote.soundfile, randomChord.secondNote.soundfile, randomChord.thirdNote.soundfile); 
+        playChord(randomChord); 
       }
       
       text("All notes are correct! Fantastic!", 1000, 600);
