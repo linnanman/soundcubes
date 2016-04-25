@@ -63,6 +63,10 @@ class Timer {
     this.timers = new Hashtable<String, Long>();
   }
 
+  public void clearAll() {
+    this.timers = new Hashtable<String, Long>();
+}
+
   public void removeTimer(String name) {
     this.timers.remove(name);
   }

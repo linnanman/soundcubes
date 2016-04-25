@@ -93,14 +93,30 @@ void doLogic(PImage cameraImage) {
     Cube difficultyCube = cubes.isAnyCubeOnCamera(this.difficultyLevelArea);
     if (difficultyCube != null) {
       //change difficult level
-      if (difficultyCube.equals(cubes.getCube(1)))
+      if (difficultyCube.equals(cubes.getCube(1))) {
         this.state.setState("learning");
-      if (difficultyCube.equals(cubes.getCube(5))) //todo
+        this.runonce.clearAll();
+        this.timer.clearAll();
+        chordPlayed = false;
+      }
+      if (difficultyCube.equals(cubes.getCube(5))) { //todo
         this.state.setState("easy"); 
-      if (difficultyCube.equals(cubes.getCube(6))) //todo
+        this.runonce.clearAll();
+        this.timer.clearAll();
+        chordPlayed = false;
+      }
+      if (difficultyCube.equals(cubes.getCube(6))) { //todo
         this.state.setState("normal");
-      if (difficultyCube.equals(cubes.getCube(8))) //todo
+        this.runonce.clearAll();
+        this.timer.clearAll();
+        chordPlayed = false;
+      }
+      if (difficultyCube.equals(cubes.getCube(8))) { //todo
         this.state.setState("hard");
+        this.runonce.clearAll();
+        this.timer.clearAll();
+        chordPlayed = false;
+      }
     }
     
     //no cube at all
@@ -124,6 +140,8 @@ void doLogic(PImage cameraImage) {
     changeLed(0,0,0);
 
     this.runonce.clearAll();
+    chordPlayed = false;
+    this.timer.clearAll();
     
     // Logo
     fill(255);
