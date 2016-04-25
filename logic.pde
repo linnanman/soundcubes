@@ -189,6 +189,7 @@ void doLogic(PImage cameraImage) {
       playSound(randomNote.soundfile, false, false); 
       changeLed(1,1,1);
       text("Correct! Fantastic!", 200, 500);
+      changeLed(2,2,2);
       //turnOnLed();
       //Pick new random note
       this.timer.setTimer("learning-correct", 2000);
@@ -200,6 +201,7 @@ void doLogic(PImage cameraImage) {
         randomNote = newRandomNote;
         this.timer.removeTimer("learning-correct");
         this.runonce.remove("playNote");
+        changeLed(0,0,0);
       }
     }
 
