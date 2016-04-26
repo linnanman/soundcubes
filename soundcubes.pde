@@ -42,6 +42,8 @@ Timer timer;
 RunOnce runonce;
 TTS tts;
 
+LedControl ledControl;
+
 // front_camera_para.dat contains calibration data about Surface Pro 3 front camera.
 // Despite calibration data being camera-specific, the same calibration data should
 // more or less work with other webcams, since we're only interested in the 2D coordinates
@@ -106,6 +108,8 @@ void setup() {
   this.runonce = new RunOnce();
 
   doSetup();
+  
+  ledControl = new LedControl(serialPort);
 }
 
 void draw() {

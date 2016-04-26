@@ -192,7 +192,7 @@ void doLogic(PImage cameraImage) {
 
   case "start":
     // Disable LEDs in main menu.
-    changeLed(0, 0, 0);
+    ledControl.ChangeLed(0, 0, 0);
 
     this.timer.setTimer("intro", 1000);
     if (this.timer.isOver("intro") && this.runonce.runOnce("intro"))
@@ -277,7 +277,7 @@ void doLogic(PImage cameraImage) {
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube3Area)
       ) { //if correct cube is on camera
       text("Correct! Fantastic!", 200, 500);
-      changeLed(2, 2, 2);
+      ledControl.ChangeLed(2, 2, 2);
       //Pick new random note
       this.timer.setTimer("learning-correct", 4000);
       this.timer.setTimer("correct-sound", 1500);
@@ -285,10 +285,10 @@ void doLogic(PImage cameraImage) {
       cubes.isAnyCubeOnCamera(this.cube2Area) != null ||
       cubes.isAnyCubeOnCamera(this.cube3Area) != null) {
       // Show red LEDs if wrong cube detected.
-      changeLed(1, 1, 1);
+      ledControl.ChangeLed(1, 1, 1);
     } else {
       // Don't show any LEDs if cubes are not detected.
-      changeLed(0, 0, 0);
+      ledControl.ChangeLed(0, 0, 0);
     }
 
     //move on
@@ -307,7 +307,7 @@ void doLogic(PImage cameraImage) {
       randomNote = newRandomNote;
       this.timer.clearAll();
       this.runonce.clearAllExcept("dlevel");
-      changeLed(0, 0, 0);
+      ledControl.ChangeLed(0, 0, 0);
     }
 
 
@@ -355,7 +355,7 @@ void doLogic(PImage cameraImage) {
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube3Area)
       ) { //if cube is on camera
       text("Correct! Fantastic!", 200, 500);
-      changeLed(2, 2, 2);
+      ledControl.ChangeLed(2, 2, 2);
       //Pick new random note
       this.timer.setTimer("learning-correct", 4000);
       this.timer.setTimer("correct-sound", 1500);
@@ -363,10 +363,10 @@ void doLogic(PImage cameraImage) {
       cubes.isAnyCubeOnCamera(this.cube2Area) != null ||
       cubes.isAnyCubeOnCamera(this.cube3Area) != null) {
       // Show red LEDs if wrong cube detected.
-      changeLed(1, 1, 1);
+      ledControl.ChangeLed(1, 1, 1);
     } else {
       // Don't show any LEDs if cubes are not detected.
-      changeLed(0, 0, 0);
+      ledControl.ChangeLed(0, 0, 0);
     }
 
     //move on
@@ -385,7 +385,7 @@ void doLogic(PImage cameraImage) {
       randomNote = newRandomNote;
       this.timer.clearAll();
       this.runonce.clearAllExcept("dlevel");
-      changeLed(0, 0, 0);
+      ledControl.ChangeLed(0, 0, 0);
     }
 
     drawCenterPoints(cubes.getCubesOnCamera());
@@ -701,23 +701,6 @@ void mouseWheel(MouseEvent event) {
       this.calibrWidth = this.calibrWidth + 10;
     if (e > 0)
       this.calibrWidth = this.calibrWidth - 10;
-  }
-}
-
-// Sorry, this is an ugly hack!
-// The variables are used to prevent unnecessary calls to the arduino.
-int firstLedStatus = -1;
-int secondLedStatus = -1;
-int thirdLedStatus = -1;
-
-
-void changeLed(int first, int second, int third) {
-  if (firstLedStatus != first || secondLedStatus != second || thirdLedStatus != third) {
-    firstLedStatus = first;
-    secondLedStatus = second;
-    thirdLedStatus = third;
-    if (useSerial)
-      serialPort.write(first+","+second+","+third+"\r\n");
   }
 }
 
