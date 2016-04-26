@@ -21,9 +21,10 @@ int minimum_dia = 60; //min diameter for marker, to avoid false marker recogniti
 boolean markerSideCleanup = true;
 int markerSideFactor = 6; //to avoid false markers
 boolean limitToFive = true;
+boolean showAreaBoxes = true;
 
 //developer features
-boolean developer = true;
+boolean developer = false;
 boolean printFoundMarkers = false;
 boolean drawCubeCorners = false;
 

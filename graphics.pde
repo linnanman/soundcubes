@@ -70,20 +70,34 @@ void drawArea(XYArea area) {
   popMatrix();
 }
 
-void drawLines() {
-  for (int i=1; i<13; i++) {
-    if (i % 2 == 0)
-      stroke(200, 100, 100);
-
-    line(50*i+100, 0+150, 50*i+100, 500+150);
-    stroke(255);
+void drawAreas() {
+  if (showAreaBoxes) {
+    drawArea(this.cube1Area);
+    drawArea(this.cube2Area);
+    drawArea(this.cube3Area);
+    drawArea(this.playCubeArea);
+    drawArea(this.playTaskAgainArea);
+    drawArea(this.difficultyLevelArea); 
   }
-  for (int i=1; i<10; i++) {
-    if (i % 2 == 0)
-      stroke(200, 100, 100);
-
-    line(0+100, 50*i+150, 650+100, 50*i+150);
-    stroke(255);
+     
+}
+void drawLines() {
+  
+  if (developer) {
+    for (int i=1; i<13; i++) {
+      if (i % 2 == 0)
+        stroke(200, 100, 100);
+  
+      line(50*i+100, 0+150, 50*i+100, 500+150);
+      stroke(255);
+    }
+    for (int i=1; i<10; i++) {
+      if (i % 2 == 0)
+        stroke(200, 100, 100);
+  
+      line(0+100, 50*i+150, 650+100, 50*i+150);
+      stroke(255);
+    }
   }
 }
 

@@ -279,7 +279,7 @@ void doLogic(PImage cameraImage) {
       text("Correct! Fantastic!", 200, 500);
       ledControl.ChangeLed(2, 2, 2);
       //Pick new random note
-      this.timer.setTimer("learning-correct", 4000);
+      this.timer.setTimer("learning-correct", 6000);
       this.timer.setTimer("correct-sound", 1500);
     } else if (cubes.isAnyCubeOnCamera(this.cube1Area) != null ||
       cubes.isAnyCubeOnCamera(this.cube2Area) != null ||
@@ -357,7 +357,7 @@ void doLogic(PImage cameraImage) {
       text("Correct! Fantastic!", 200, 500);
       ledControl.ChangeLed(2, 2, 2);
       //Pick new random note
-      this.timer.setTimer("learning-correct", 4000);
+      this.timer.setTimer("learning-correct", 6000);
       this.timer.setTimer("correct-sound", 1500);
     } else if (cubes.isAnyCubeOnCamera(this.cube1Area) != null ||
       cubes.isAnyCubeOnCamera(this.cube2Area) != null ||
@@ -473,7 +473,7 @@ void doLogic(PImage cameraImage) {
       /*if (this.runonce.runOnce("playChord")) {
        playChord(randomChord); 
        }*/
-      this.timer.setTimer("chord-correct", 4000);
+      this.timer.setTimer("chord-correct", 6000);
       this.timer.setTimer("correct-sound", 1500);
 
       text("All notes are correct! Fantastic!", 1000, 600);
@@ -586,7 +586,7 @@ void doLogic(PImage cameraImage) {
        playChord(randomChord); 
        }*/
 
-      this.timer.setTimer("chord-correct", 4000);
+      this.timer.setTimer("chord-correct", 6000);
       this.timer.setTimer("correct-sound", 1500);
 
       text("All notes are correct! Fantastic!", 1000, 600);
@@ -657,15 +657,13 @@ void doLogic(PImage cameraImage) {
     break;
   }
 
-  if (this.developer && this.state.getState() != "start") {
-    drawArea(this.cube1Area);
-    drawArea(this.cube2Area);
-    drawArea(this.cube3Area);
-    drawArea(this.playCubeArea);
-    drawArea(this.playTaskAgainArea);
-    drawArea(this.difficultyLevelArea);
+  if (this.state.getState() != "start") {
+    drawAreas();
     drawLines();
+    
   }
+  
+  
 }
 
 
