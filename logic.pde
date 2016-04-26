@@ -1,4 +1,4 @@
-char pressedKey;
+char pressedKey; //<>//
 PImage arrow;
 PFont fontLobster;
 PFont fontLobster_smaller;
@@ -66,8 +66,6 @@ void doSetup() {
   this.calibrHeight = 100;
   this.calibrState = 1;
   this.calibrations = new ArrayList<int[]>();
-  
-
 }
 
 void doLogic(PImage cameraImage) {
@@ -78,10 +76,10 @@ void doLogic(PImage cameraImage) {
   if (tangibleInterface) {
     /*
       play single cube -slot
-      */
+     */
     Cube cubeToPlay = cubes.isAnyCubeOnCamera(this.playCubeArea);
     if (cubeToPlay != null) {
-      
+
       Note toPlay = notes.getNote(cubeToPlay);
       if (toPlay != null) {
         this.timer.setTimer("cubeToPlay", 1500);
@@ -89,56 +87,47 @@ void doLogic(PImage cameraImage) {
           speak("The cube is:");
           System.out.println("joojooo");
           this.timer.setTimer("cubeToPlay2", 1500);
-          
         }
         if (this.timer.isOver("cubeToPlay2") && this.runonce.runOnce("cubeToPlay2")) {
-          playSound(toPlay.soundfile, true , true);
+          playSound(toPlay.soundfile, true, true);
         }
-        
       }
       //System.out.println("cubetoplay");
-    }
-    else {
+    } else {
       this.timer.removeTimer("cubeToPlay");
       this.timer.removeTimer("cubeToPlay2");
       this.runonce.remove("cubeToPlay");
       this.runonce.remove("cubeToPlay2");
     }
-    
+
     /*
       play task again -slot
-      */
+     */
     Cube taskToPlay = cubes.isAnyCubeOnCamera(this.playTaskAgainArea);
     if (taskToPlay != null) {
 
-        this.timer.setTimer("taskToPlay", 1500);
-        if (this.timer.isOver("taskToPlay") && this.runonce.runOnce("taskToPlay")) {
-          if (this.state.getState() == "learning" || this.state.getState() == "easy") {
-            speak("The note is:");
-          }
-          else if (this.state.getState() == "normal" || this.state.getState() == "hard") {
-            speak("The chord is:");
-          }
-          
-          System.out.println("joojooo");
-          this.timer.setTimer("taskToPlay2", 1500);
-          
+      this.timer.setTimer("taskToPlay", 1500);
+      if (this.timer.isOver("taskToPlay") && this.runonce.runOnce("taskToPlay")) {
+        if (this.state.getState() == "learning" || this.state.getState() == "easy") {
+          speak("The note is:");
+        } else if (this.state.getState() == "normal" || this.state.getState() == "hard") {
+          speak("The chord is:");
         }
-        if (this.timer.isOver("taskToPlay2") && this.runonce.runOnce("taskToPlay2")) {
-          System.out.println("joojoo2");
-          if (this.state.getState().equals("learning") || this.state.getState().equals("easy")) {
-            playSound(randomNote.soundfile, false, true);
-          }
-          else if (this.state.getState().equals("hard")) {
-            playChord(randomChord);
-          }
-        }
-        else if (this.timer.isOver("taskToPlay2") && this.state.getState().equals("normal")) {
-          taskChordPlayed = playChordSteply(taskChordPlayed, randomChord, "taskplay");
-        }
-        
+
+        System.out.println("joojooo");
+        this.timer.setTimer("taskToPlay2", 1500);
       }
-    else {
+      if (this.timer.isOver("taskToPlay2") && this.runonce.runOnce("taskToPlay2")) {
+        System.out.println("joojoo2");
+        if (this.state.getState().equals("learning") || this.state.getState().equals("easy")) {
+          playSound(randomNote.soundfile, false, true);
+        } else if (this.state.getState().equals("hard")) {
+          playChord(randomChord);
+        }
+      } else if (this.timer.isOver("taskToPlay2") && this.state.getState().equals("normal")) {
+        taskChordPlayed = playChordSteply(taskChordPlayed, randomChord, "taskplay");
+      }
+    } else {
       if ( !this.state.getState().equals("normal") || (this.state.getState().equals("normal") && this.timer.isOver("taskToPlay2")) ) {
         this.timer.removeTimer("taskToPlay");
         this.timer.removeTimer("taskToPlay2");
@@ -149,11 +138,11 @@ void doLogic(PImage cameraImage) {
         taskChordPlayed = false;
       }
     }
-   
+
 
     /*
       change difficulty level -slot
-      */
+     */
     Cube difficultyCube = cubes.isAnyCubeOnCamera(this.difficultyLevelArea);
     if (difficultyCube != null) {
       this.timer.setTimer("doNotChangeTooQuickly", 2000);
@@ -164,44 +153,38 @@ void doLogic(PImage cameraImage) {
         this.runonce.clearAll();
         this.timer.clearAll();
         chordPlayed = false;
-      }
-      else if (this.timer.isOver("doNotChangeTooQuickly") && difficultyCube.equals(cubes.getCube(5)) && this.state.getState() != "easy") { //todo
-      //speak("Difficulty level is: easy");
+      } else if (this.timer.isOver("doNotChangeTooQuickly") && difficultyCube.equals(cubes.getCube(5)) && this.state.getState() != "easy") { //todo
+        //speak("Difficulty level is: easy");
         this.state.setState("easy"); 
         this.runonce.clearAll();
         this.timer.clearAll();
         chordPlayed = false;
-      }
-      else if (this.timer.isOver("doNotChangeTooQuickly") && difficultyCube.equals(cubes.getCube(6)) && this.state.getState() != "normal") { //todo
+      } else if (this.timer.isOver("doNotChangeTooQuickly") && difficultyCube.equals(cubes.getCube(6)) && this.state.getState() != "normal") { //todo
         //speak("Difficulty c level is: normal");
         this.state.setState("normal");
         this.runonce.clearAll();
         this.timer.clearAll();
         chordPlayed = false;
-      }
-      else if (this.timer.isOver("doNotChangeTooQuickly") && difficultyCube.equals(cubes.getCube(8)) && this.state.getState() != "hard") { //todo
+      } else if (this.timer.isOver("doNotChangeTooQuickly") && difficultyCube.equals(cubes.getCube(8)) && this.state.getState() != "hard") { //todo
         //speak("Difficulty level is: advanced");
         this.state.setState("hard");
         this.runonce.clearAll();
         this.timer.clearAll();
         chordPlayed = false;
       }
-    }
-    else {
+    } else {
       this.timer.removeTimer("doNotChangeTooQuickly");
     }
-    
+
     //no cube at all
     if (cubes.isAnyCubeOnCamera(this.difficultyLevelArea) == null &&
-        cubes.isAnyCubeOnCamera(this.playTaskAgainArea) == null &&
-        cubes.isAnyCubeOnCamera(this.playCubeArea) == null &&
-        cubes.isAnyCubeOnCamera(this.cube1Area) == null &&
-        cubes.isAnyCubeOnCamera(this.cube2Area) == null &&
-        cubes.isAnyCubeOnCamera(this.cube3Area) == null) {
+      cubes.isAnyCubeOnCamera(this.playTaskAgainArea) == null &&
+      cubes.isAnyCubeOnCamera(this.playCubeArea) == null &&
+      cubes.isAnyCubeOnCamera(this.cube1Area) == null &&
+      cubes.isAnyCubeOnCamera(this.cube2Area) == null &&
+      cubes.isAnyCubeOnCamera(this.cube3Area) == null) {
       playSound("null.wav", false, false);
     }
-    
-    
   }
 
 
@@ -209,16 +192,16 @@ void doLogic(PImage cameraImage) {
 
   case "start":
     // Disable LEDs in main menu.
-    changeLed(0,0,0);
+    changeLed(0, 0, 0);
 
     this.timer.setTimer("intro", 1000);
     if (this.timer.isOver("intro") && this.runonce.runOnce("intro"))
-        speak("Please select a difficulty level");
-        
+      speak("Please select a difficulty level");
+
     this.runonce.clearAll();
     chordPlayed = false;
     this.timer.clearAll();
-    
+
     // Logo
     fill(255);
     textFont(fontLobster);
@@ -273,60 +256,60 @@ void doLogic(PImage cameraImage) {
     }
 
     image(randomNote.image, 900, 300);
-    
+
     if (this.runonce.runOnce("dlevel"))
       speak("Difficulty level is: learning");
-    
+
     this.timer.setTimer("anoteis", 500);
     if (this.timer.isOver("anoteis") && this.runonce.runOnce("playNote")) {
       //playSound("newNoteIs.wav", true, false); 
       speak("A note is: " + randomNote.name);
       this.timer.setTimer("noteisdelay", 1000);
-      addSoundQueue(randomNote.soundfile); 
+      addSoundQueue(randomNote.soundfile);
     }
     if (this.timer.isOver("noteisdelay"))
       playSoundQueue();
 
-    
+
     //correct cube found
     if (cubes.isCubeOnCamera(randomNote.cube.number, this.cube1Area) ||
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube2Area) ||
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube3Area)
       ) { //if correct cube is on camera
-        text("Correct! Fantastic!", 200, 500);
-        changeLed(2,2,2);
-        //Pick new random note
-        this.timer.setTimer("learning-correct", 4000);
-        this.timer.setTimer("correct-sound", 1500);
-      } else if (cubes.isAnyCubeOnCamera(this.cube1Area) != null ||
-                cubes.isAnyCubeOnCamera(this.cube2Area) != null ||
-                cubes.isAnyCubeOnCamera(this.cube3Area) != null) {
-        // Show red LEDs if wrong cube detected.
-        changeLed(1,1,1);
-      } else {
-        // Don't show any LEDs if cubes are not detected.
-        changeLed(0,0,0);
-      }
-      
+      text("Correct! Fantastic!", 200, 500);
+      changeLed(2, 2, 2);
+      //Pick new random note
+      this.timer.setTimer("learning-correct", 4000);
+      this.timer.setTimer("correct-sound", 1500);
+    } else if (cubes.isAnyCubeOnCamera(this.cube1Area) != null ||
+      cubes.isAnyCubeOnCamera(this.cube2Area) != null ||
+      cubes.isAnyCubeOnCamera(this.cube3Area) != null) {
+      // Show red LEDs if wrong cube detected.
+      changeLed(1, 1, 1);
+    } else {
+      // Don't show any LEDs if cubes are not detected.
+      changeLed(0, 0, 0);
+    }
+
     //move on
     if (this.timer.isOver("correct-sound") && this.runonce.runOnce("speak")) {
       //playSound("thatsCorrectAwesome.wav", true, false);
       speak("That is correct. Awesome!");
     }
-    
+
     if (this.timer.isOver("learning-correct")) {
       //System.out.println("over");
       //addSoundQueue(randomNote.soundfile); 
-      
+
       Note newRandomNote = notes.randomNote();
       while (newRandomNote.equals(randomNote))
         newRandomNote = notes.randomNote();
       randomNote = newRandomNote;
       this.timer.clearAll();
       this.runonce.clearAllExcept("dlevel");
-      changeLed(0,0,0);
+      changeLed(0, 0, 0);
     }
-    
+
 
     //drawMarkers();
     drawCenterPoints(cubes.getCubesOnCamera());
@@ -355,71 +338,55 @@ void doLogic(PImage cameraImage) {
 
     if (this.runonce.runOnce("dlevel"))
       speak("Difficulty level is: easy");
-    
+
     this.timer.setTimer("anoteis", 500);
     if (this.timer.isOver("anoteis") && this.runonce.runOnce("playNote")) {
       //playSound("newNoteIs.wav", true, false); 
       speak("A note is:");
       this.timer.setTimer("noteisdelay", 1000);
-      addSoundQueue(randomNote.soundfile); 
+      addSoundQueue(randomNote.soundfile);
     }
     if (this.timer.isOver("noteisdelay"))
       playSoundQueue();
-    
+
     //correct cube found
     if (cubes.isCubeOnCamera(randomNote.cube.number, this.cube1Area) ||
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube2Area) ||
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube3Area)
       ) { //if cube is on camera
-        text("Correct! Fantastic!", 200, 500);
-        changeLed(2,2,2);
-        //turnOnLed();
-        //Pick new random note
-        this.timer.setTimer("learning-correct", 4000);
-        this.timer.setTimer("correct-sound", 1500);
-      } else if (cubes.isAnyCubeOnCamera(this.cube1Area) != null ||
-                cubes.isAnyCubeOnCamera(this.cube2Area) != null ||
-                cubes.isAnyCubeOnCamera(this.cube3Area) != null) {
-        // Show red LEDs if wrong cube detected.
-        changeLed(1,1,1);
-      } else {
-        // Don't show any LEDs if cubes are not detected.
-        changeLed(0,0,0);
-      }
-      
+      text("Correct! Fantastic!", 200, 500);
+      changeLed(2, 2, 2);
+      //Pick new random note
+      this.timer.setTimer("learning-correct", 4000);
+      this.timer.setTimer("correct-sound", 1500);
+    } else if (cubes.isAnyCubeOnCamera(this.cube1Area) != null ||
+      cubes.isAnyCubeOnCamera(this.cube2Area) != null ||
+      cubes.isAnyCubeOnCamera(this.cube3Area) != null) {
+      // Show red LEDs if wrong cube detected.
+      changeLed(1, 1, 1);
+    } else {
+      // Don't show any LEDs if cubes are not detected.
+      changeLed(0, 0, 0);
+    }
+
     //move on
     if (this.timer.isOver("correct-sound") && this.runonce.runOnce("correct")) {
       //playSound("thatsCorrectAwesome.wav", true, false);
       speak("That is correct. Awesome!");
     }
-    
+
     if (this.timer.isOver("learning-correct")) {
       //System.out.println("over");
       //addSoundQueue(randomNote.soundfile); 
-      
+
       Note newRandomNote = notes.randomNote();
       while (newRandomNote.equals(randomNote))
         newRandomNote = notes.randomNote();
       randomNote = newRandomNote;
       this.timer.clearAll();
       this.runonce.clearAllExcept("dlevel");
-      changeLed(0,0,0);
+      changeLed(0, 0, 0);
     }
-    
-    // The program picks a random note and plays it
-    // If the right cube is picked and showed to the camera, the green led turns on and the note is played. A new random note is picked!
-    // If the wrong cube is picked and showed to the camera, the buzzer sounds and the wrong note is played so that the player can compare the wrong note to the right one
-
-
-    /*if (cubes.isCubeOnPhone(2)) { //if cube no 1 is on phone
-     playSound("horn.wav", false, true);
-     turnOnBuzzer();
-     }
-     
-     if (cubes.cameraArrayEquals(new int[] {2, 3})) { //if exactly cubes 2 and 3 are on camera in this order
-     playSound("duck.wav", false, true);
-     turnOffLedAndBuzzer();
-     }*/
 
     drawCenterPoints(cubes.getCubesOnCamera());
     if (drawCubeCorners)
@@ -438,80 +405,77 @@ void doLogic(PImage cameraImage) {
 
     if (this.runonce.runOnce("dlevel"))
       speak("Difficulty level is: normal");
-    
+
     this.timer.setTimer("achordis", 1500);
-      
+
     if (this.timer.isOver("achordis") && this.runonce.runOnce("playNote")) {
       //playSound("newChordIs.wav", true, false); 
       speak("A chord is:");
     }
-    
-    
+
+
     this.timer.setTimer("chord-introduction", 3500);
     chordPlayed = playChordSteply(chordPlayed, randomChord, "real");/*
     if (!chordPlayed && this.timer.isOver("chord-introduction")) {
-      playSound(randomChord.firstNote.soundfile, false, false);  
-
-      this.timer.setTimer("chord-first", 1500);
-      this.timer.setTimer("chord-second", 3000);
-      if (this.timer.isOver("chord-first")) {
-        playSound(randomChord.secondNote.soundfile, true, false);
-        this.timer.removeTimer("chord-first");
-      }
-      if (this.timer.isOver("chord-second")) {
-        playSound(randomChord.thirdNote.soundfile, true, false);
-        this.timer.removeTimer("chord-second");
-        chordPlayed = true;
-      }
-    }*/
+     playSound(randomChord.firstNote.soundfile, false, false);  
+     
+     this.timer.setTimer("chord-first", 1500);
+     this.timer.setTimer("chord-second", 3000);
+     if (this.timer.isOver("chord-first")) {
+     playSound(randomChord.secondNote.soundfile, true, false);
+     this.timer.removeTimer("chord-first");
+     }
+     if (this.timer.isOver("chord-second")) {
+     playSound(randomChord.thirdNote.soundfile, true, false);
+     this.timer.removeTimer("chord-second");
+     chordPlayed = true;
+     }
+     }*/
 
     if (cubes.isCubeOnCamera(randomChord.firstNote.cube.number, this.cube1Area)) { //if cube is on camera
-    if (this.runonce.runOnce("playFirst")) {
-      //playSound(randomChord.firstNote.soundfile, false, false); 
-    }
+      if (this.runonce.runOnce("playFirst")) {
+        //playSound(randomChord.firstNote.soundfile, false, false);
+      }
       text("First note is correct!", 1000, 400);
-      //turnOnLed(); 
       firstNoteCorrect = true;
     }
     if (cubes.isCubeOnCamera(randomChord.secondNote.cube.number, this.cube2Area)) { //if cube is on camera
-    if (this.runonce.runOnce("playSecond")) {
-      //playSound(randomChord.secondNote.soundfile, false, false);
-    }
+      if (this.runonce.runOnce("playSecond")) {
+        //playSound(randomChord.secondNote.soundfile, false, false);
+      }
       text("Second note is correct!", 1000, 450);
-      //turnOnLed(); 
       secondNoteCorrect = true;
     }
     if (cubes.isCubeOnCamera(randomChord.thirdNote.cube.number, this.cube3Area)) { //if cube is on camera
-    if (this.runonce.runOnce("playThird")) {
-      //playSound(randomChord.thirdNote.soundfile, false, false); 
-    }
+      if (this.runonce.runOnce("playThird")) {
+        //playSound(randomChord.thirdNote.soundfile, false, false);
+      }
       text("Third note is correct!", 1000, 500);
-      //turnOnLed(); 
       thirdNoteCorrect = true;
     }
 
     if (firstNoteCorrect && secondNoteCorrect && thirdNoteCorrect) {
       //this.runonce.runOnce("playChord");
       /*if (this.runonce.runOnce("playChord")) {
-        playChord(randomChord); 
-      }*/
+       playChord(randomChord); 
+       }*/
       this.timer.setTimer("chord-correct", 4000);
       this.timer.setTimer("correct-sound", 1500);
-      
+
       text("All notes are correct! Fantastic!", 1000, 600);
       //TODO: Play new chord
     }
-    
+
     if (this.timer.isOver("correct-sound") && this.runonce.runOnce("correct-feedback")) {
       //playSound("thatsCorrectAwesome.wav", true, false);
       speak("That is correct. Awesome!");
     }
-    
+
 
     if (this.timer.isOver("chord-correct")) {
       //System.out.println("over");
       //addSoundQueue(randomNote.soundfile); 
-      
+
       chordPlayed = false;
       Chord newRandomChord = chords.getRandomChord();
       while (newRandomChord.equals(randomChord))
@@ -523,7 +487,7 @@ void doLogic(PImage cameraImage) {
       secondNoteCorrect = false;
       thirdNoteCorrect = false;
     }
-    
+
     drawBackButton();
     if (mousePressed) {
       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
@@ -549,66 +513,63 @@ void doLogic(PImage cameraImage) {
     textFont(fontKarla);
     text("Find the Correct Chord", 1000, 170);
 
-        if (this.runonce.runOnce("dlevel"))
+    if (this.runonce.runOnce("dlevel"))
       speak("Difficulty level is: advanced");
-    
+
     this.timer.setTimer("achordis", 1500);
-      
+
     if (this.timer.isOver("achordis") && this.runonce.runOnce("playNote")) {
       //playSound("newChordIs.wav", true, false); 
       speak("A chord is:");
     }
-    
-    
+
+
     this.timer.setTimer("chord-introduction", 3500);
     if (!chordPlayed && this.timer.isOver("chord-introduction")) {
       playChord(randomChord);
       chordPlayed = true;
     }
-    
+
     if (cubes.isCubeOnCamera(randomChord.firstNote.cube.number, this.cube1Area)) { //if cube is on camera
-    if (this.runonce.runOnce("playFirst-hard")) {
-      //playSound(randomChord.firstNote.soundfile, false, false); 
-    }
+      if (this.runonce.runOnce("playFirst-hard")) {
+        //playSound(randomChord.firstNote.soundfile, false, false);
+      }
       text("First note is correct!", 1000, 400);
-      //turnOnLed(); 
       firstNoteCorrect = true;
     }
     if (cubes.isCubeOnCamera(randomChord.secondNote.cube.number, this.cube2Area)) { //if cube is on camera
-    if (this.runonce.runOnce("playSecond-hard")) {
-      //playSound(randomChord.secondNote.soundfile, false, false); 
-    }
+      if (this.runonce.runOnce("playSecond-hard")) {
+        //playSound(randomChord.secondNote.soundfile, false, false);
+      }
       text("Second note is correct!", 1000, 450);
-      //turnOnLed(); 
       secondNoteCorrect = true;
     }
     if (cubes.isCubeOnCamera(randomChord.thirdNote.cube.number, this.cube3Area)) { //if cube is on camera
-    if (this.runonce.runOnce("playThird-hard")) {
-      //playSound(randomChord.thirdNote.soundfile, false, false); 
-    }
+      if (this.runonce.runOnce("playThird-hard")) {
+        //playSound(randomChord.thirdNote.soundfile, false, false);
+      }
       text("Third note is correct!", 1000, 500);
-      //turnOnLed(); 
       thirdNoteCorrect = true;
     }
 
     if (firstNoteCorrect && secondNoteCorrect && thirdNoteCorrect) {
       //this.runonce.runOnce("playChord");
       /*if (this.runonce.runOnce("playChord")) {
-        playChord(randomChord); 
-      }*/
-      
+       playChord(randomChord); 
+       }*/
+
       this.timer.setTimer("chord-correct", 4000);
       this.timer.setTimer("correct-sound", 1500);
-      
+
       text("All notes are correct! Fantastic!", 1000, 600);
       //TODO: Play new chord
     }
-    
+
     if (this.timer.isOver("correct-sound") && this.runonce.runOnce("correct-feedback")) {
       //playSound("thatsCorrectAwesome.wav", true, false);
       speak("That is correct. Awesome!");
     }
-    
+
 
     if (this.timer.isOver("chord-correct")) {
       //System.out.println("over");
@@ -624,7 +585,7 @@ void doLogic(PImage cameraImage) {
       secondNoteCorrect = false;
       thirdNoteCorrect = false;
     }
-    
+
     drawBackButton();
     if (mousePressed) {
       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
@@ -638,8 +599,8 @@ void doLogic(PImage cameraImage) {
     drawCenterPoints(cubes.getCubesOnCamera());
     //drawOrder(cubes.getCubesOnCamera());
     break;
-    
-    
+
+
   case "calibration":
     image(cameraImage, 100, 150);
     fill(255, 100);
@@ -756,7 +717,7 @@ void changeLed(int first, int second, int third) {
     secondLedStatus = second;
     thirdLedStatus = third;
     if (useSerial)
-      serialPort.write(first+","+second+","+third+"\r\n"); //<>//
+      serialPort.write(first+","+second+","+third+"\r\n");
   }
 }
 
@@ -793,17 +754,6 @@ void readCalibrations() {
   }
 }
 
-/*
-void turnOnBuzzer() {
- if (useSerial)
- serialPort.write("1,0\r\n");
- }
- 
- void turnOffLedAndBuzzer() {
- if (useSerial)
- serialPort.write("0,0\r\n");
- }
- */
 // This function loads .patt filenames into a list of Strings based on a full path to a directory (relies on java.io)
 String[] loadPatternFilenames(String path) {
   File folder = new File(path);
