@@ -21,6 +21,8 @@ boolean firstNoteCorrect = false;
 boolean secondNoteCorrect = false;
 boolean thirdNoteCorrect = false;
 
+boolean taskChordPlayed = false;
+
 int calibrState;
 int calibrWidth;
 int calibrHeight;
@@ -88,7 +90,7 @@ void doLogic(PImage cameraImage) {
           
         }
         if (this.timer.isOver("cubeToPlay2") && this.runonce.runOnce("cubeToPlay2")) {
-          playSound(toPlay.soundfile, false, false);
+          playSound(toPlay.soundfile, true , true);
         }
         
       }
@@ -104,23 +106,44 @@ void doLogic(PImage cameraImage) {
     //play task again
     Cube taskToPlay = cubes.isAnyCubeOnCamera(this.playTaskAgainArea);
     if (taskToPlay != null) {
+
         this.timer.setTimer("taskToPlay", 500);
         if (this.timer.isOver("taskToPlay") && this.runonce.runOnce("taskToPlay")) {
-          speak("The note is:");
+          if (this.state.getState() == "learning" || this.state.getState() == "easy") {
+            speak("The note is:");
+          }
+          else if (this.state.getState() == "normal" || this.state.getState() == "hard") {
+            speak("The chord is:");
+          }
+          
           System.out.println("joojooo");
           this.timer.setTimer("taskToPlay2", 1500);
           
         }
         if (this.timer.isOver("taskToPlay2") && this.runonce.runOnce("taskToPlay2")) {
-          playSound(randomNote.soundfile, false, false);
+          System.out.println("joojoo2");
+          if (this.state.getState().equals("learning") || this.state.getState().equals("easy")) {
+            playSound(randomNote.soundfile, false, true);
+          }
+          else if (this.state.getState().equals("hard")) {
+            playChord(randomChord);
+          }
+        }
+        else if (this.timer.isOver("taskToPlay2") && this.state.getState().equals("normal")) {
+          taskChordPlayed = playChordSteply(taskChordPlayed, randomChord, "taskplay");
         }
         
       }
     else {
-      this.timer.removeTimer("taskToPlay");
-      this.timer.removeTimer("taskToPlay2");
-      this.runonce.remove("taskToPlay");
-      this.runonce.remove("taskToPlay");
+      if (this.timer.isOver("taskToPlay2")) {
+        this.timer.removeTimer("taskToPlay");
+        this.timer.removeTimer("taskToPlay2");
+        this.timer.removeTimer("chord-firsttaskplay");
+        this.timer.removeTimer("chord-secondtaskplay");
+        this.runonce.remove("taskToPlay");
+        this.runonce.remove("taskToPlay2");
+        taskChordPlayed = false;
+      }
     }
    
 
@@ -406,6 +429,7 @@ void doLogic(PImage cameraImage) {
     
     
     this.timer.setTimer("chord-introduction", 3500);
+    chordPlayed = playChordSteply(chordPlayed, randomChord, "real");/*
     if (!chordPlayed && this.timer.isOver("chord-introduction")) {
       playSound(randomChord.firstNote.soundfile, false, false);  
 
@@ -420,7 +444,7 @@ void doLogic(PImage cameraImage) {
         this.timer.removeTimer("chord-second");
         chordPlayed = true;
       }
-    }
+    }*/
 
     if (cubes.isCubeOnCamera(randomChord.firstNote.cube.number, this.cube1Area)) { //if cube is on camera
     if (this.runonce.runOnce("playFirst")) {

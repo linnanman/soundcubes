@@ -53,6 +53,29 @@ void playChord(Chord chord) {
   s3.play();
 }
 
+boolean playChordSteply(boolean chordPlayed, Chord randomChord, String unique) {
+  
+  if (!chordPlayed && this.timer.isOver("chord-introduction")) {
+      playSound(randomChord.firstNote.soundfile, false, false);  
+
+      this.timer.setTimer("chord-first"+unique, 1500);
+      this.timer.setTimer("chord-second"+unique, 3000);
+      if (this.timer.isOver("chord-first"+unique)) {
+        playSound(randomChord.secondNote.soundfile, true, false);
+        this.timer.removeTimer("chord-first"+unique);
+        System.out.println("second");
+      }
+      if (this.timer.isOver("chord-second"+unique)) {
+        playSound(randomChord.thirdNote.soundfile, true, false);
+        this.timer.removeTimer("chord-second"+unique);
+        System.out.println("third");
+        return true;
+      }
+      
+    }
+   return chordPlayed;
+}
+
 void speak(String speak) {
    tts.speak(speak);
 }
