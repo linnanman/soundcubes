@@ -285,16 +285,18 @@ class Cubes {
         }
         distances[4] = abs(list.get(i).corners[2][0]-list.get(i).corners[0][0])+abs(list.get(i).corners[2][1]-list.get(i).corners[0][1]);
         distances[5] = abs(list.get(i).corners[1][0]-list.get(i).corners[3][0])+abs(list.get(i).corners[1][1]-list.get(i).corners[3][1]);
-
-        for (int q=1; q<6; q++) {
-          if (distances[q] > (markerSideFactor*distances[q-1]) || distances[q] < ((1/markerSideFactor)*distances[q-1]))
-            validMarker = false;
+        
+        if (markerSideCleanup) {
+          for (int q=1; q<6; q++) {
+            if (distances[q] > (markerSideFactor*distances[q-1]) || distances[q] < ((1/markerSideFactor)*distances[q-1]))
+              validMarker = false;
+          }
         }
 
         //System.out.println(distances[0] + " " + distances[1] + " " + distances[2] + " " + distances[3]);
 
         //check dia
-        if (dia > minimum_dia && validMarker) {
+        if (markerDiaCleanup && dia > minimum_dia && validMarker) {
           list.get(i).onCamera = true;
           if (printFoundMarkers)
             System.out.println("Found n. " + (i+1) + ", x: " + (int)centerPosition.x + ", y: " + (int)centerPosition.y +  " dia: " + dia);
