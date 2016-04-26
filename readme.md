@@ -1,5 +1,5 @@
 # Soundcubes - Project assignment for Experimental User Interfaces course
-## Installation
+## Installation (NOT UP TO DATE!)
 1. Download and install [NyARToolkit for Processing 2.1.0](https://github.com/nyatla/NyARToolkit-for-Processing/releases/tag/v2.1.0).
 2. If needed, [calibrate your camera with ARToolkit](http://artoolkit.org/documentation/doku.php?id=2_Configuration:config_camera_calibration) and replace the default **data/front_camera_para.dat**.
 3. Print the first 13 tracking markers from **data/gif**.
