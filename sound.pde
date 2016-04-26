@@ -1,5 +1,19 @@
 String soundQueue = "";
 
+int punchlinePoint = 0;
+String[] punchlines = { 
+                    "You are correct! Awesome!" ,
+                    "Correct! You are unlimited!",
+                    "Correct! Patience pays!",
+                    "Correct! Be proud of who you are!",
+                    "Intelligence and Intuition are two friends.",
+                    "Correct! You have an ear for music!"
+                };
+
+String getPunchline() {
+   return this.punchlines[punchlinePoint++%punchlines.length]; 
+}
+
 void playSound(String file, boolean interrupt, boolean sameagain) {
   //lastPlayed = 
   //System.out.println("playing sound");

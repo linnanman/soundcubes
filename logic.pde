@@ -308,7 +308,7 @@ void doLogic(PImage cameraImage) {
     //move on
     if (this.timer.isOver("correct-sound") && this.runonce.runOnce("speak")) {
       //playSound("thatsCorrectAwesome.wav", true, false);
-      speak("That is correct. Awesome!");
+      speak(getPunchline());
     }
     
     if (this.timer.isOver("learning-correct")) {
@@ -380,7 +380,7 @@ void doLogic(PImage cameraImage) {
     //move on
     if (this.timer.isOver("correct-sound") && this.runonce.runOnce("correct")) {
       //playSound("thatsCorrectAwesome.wav", true, false);
-      speak("That is correct. Awesome!");
+      speak(getPunchline());
     }
     
     if (this.timer.isOver("learning-correct")) {
@@ -495,7 +495,7 @@ void doLogic(PImage cameraImage) {
     
     if (this.timer.isOver("correct-sound") && this.runonce.runOnce("correct-feedback")) {
       //playSound("thatsCorrectAwesome.wav", true, false);
-      speak("That is correct. Awesome!");
+      speak(getPunchline());
     }
     
 
@@ -597,7 +597,7 @@ void doLogic(PImage cameraImage) {
     
     if (this.timer.isOver("correct-sound") && this.runonce.runOnce("correct-feedback")) {
       //playSound("thatsCorrectAwesome.wav", true, false);
-      speak("That is correct. Awesome!");
+      speak(getPunchline());
     }
     
 
