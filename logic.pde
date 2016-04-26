@@ -71,7 +71,7 @@ void doSetup() {
 }
 
 void doLogic(PImage cameraImage) {
-  background(53, 53, 53); // black background
+  background(53, 53, 53); // gray background
   cubes.updateCubes(); 
 
   //tangible user interface stuff:
@@ -208,9 +208,8 @@ void doLogic(PImage cameraImage) {
   switch ( this.state.getState() ) {
 
   case "start":
-    //turnOnLed();
+    // Disable LEDs in main menu.
     changeLed(0,0,0);
-    
 
     this.timer.setTimer("intro", 1000);
     if (this.timer.isOver("intro") && this.runonce.runOnce("intro"))
@@ -293,16 +292,20 @@ void doLogic(PImage cameraImage) {
     if (cubes.isCubeOnCamera(randomNote.cube.number, this.cube1Area) ||
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube2Area) ||
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube3Area)
-      ) { //if cube is on camera
-
-      changeLed(1,1,1);
-
-      text("Correct! Fantastic!", 200, 500);
-      changeLed(2,2,2);
-      //turnOnLed();
-      //Pick new random note
-      this.timer.setTimer("learning-correct", 4000);
-      this.timer.setTimer("correct-sound", 1500);
+      ) { //if correct cube is on camera
+        text("Correct! Fantastic!", 200, 500);
+        changeLed(2,2,2);
+        //Pick new random note
+        this.timer.setTimer("learning-correct", 4000);
+        this.timer.setTimer("correct-sound", 1500);
+      } else if (cubes.isAnyCubeOnCamera(this.cube1Area) != null ||
+                cubes.isAnyCubeOnCamera(this.cube2Area) != null ||
+                cubes.isAnyCubeOnCamera(this.cube3Area) != null) {
+        // Show red LEDs if wrong cube detected.
+        changeLed(1,1,1);
+      } else {
+        // Don't show any LEDs if cubes are not detected.
+        changeLed(0,0,0);
       }
       
     //move on
@@ -321,7 +324,7 @@ void doLogic(PImage cameraImage) {
       randomNote = newRandomNote;
       this.timer.clearAll();
       this.runonce.clearAllExcept("dlevel");
-      changeLed(1,1,1);
+      changeLed(0,0,0);
     }
     
 
@@ -368,13 +371,20 @@ void doLogic(PImage cameraImage) {
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube2Area) ||
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube3Area)
       ) { //if cube is on camera
-      
-      text("Correct! Fantastic!", 200, 500);
-      changeLed(2,2,2);
-      //turnOnLed();
-      //Pick new random note
-      this.timer.setTimer("learning-correct", 4000);
-      this.timer.setTimer("correct-sound", 1500);
+        text("Correct! Fantastic!", 200, 500);
+        changeLed(2,2,2);
+        //turnOnLed();
+        //Pick new random note
+        this.timer.setTimer("learning-correct", 4000);
+        this.timer.setTimer("correct-sound", 1500);
+      } else if (cubes.isAnyCubeOnCamera(this.cube1Area) != null ||
+                cubes.isAnyCubeOnCamera(this.cube2Area) != null ||
+                cubes.isAnyCubeOnCamera(this.cube3Area) != null) {
+        // Show red LEDs if wrong cube detected.
+        changeLed(1,1,1);
+      } else {
+        // Don't show any LEDs if cubes are not detected.
+        changeLed(0,0,0);
       }
       
     //move on
@@ -393,7 +403,7 @@ void doLogic(PImage cameraImage) {
       randomNote = newRandomNote;
       this.timer.clearAll();
       this.runonce.clearAllExcept("dlevel");
-      changeLed(1,1,1);
+      changeLed(0,0,0);
     }
     
     // The program picks a random note and plays it
