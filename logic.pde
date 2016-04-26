@@ -284,8 +284,6 @@ void doLogic(PImage cameraImage) {
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube2Area) ||
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube3Area)
       ) { //if cube is on camera
-      
-      changeLed(1,1,1);
       text("Correct! Fantastic!", 200, 500);
       changeLed(2,2,2);
       //turnOnLed();
@@ -310,7 +308,7 @@ void doLogic(PImage cameraImage) {
       randomNote = newRandomNote;
       this.timer.clearAll();
       this.runonce.clearAllExcept("dlevel");
-      changeLed(0,0,0);
+      changeLed(1,1,1);
     }
     
 
@@ -358,7 +356,6 @@ void doLogic(PImage cameraImage) {
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube3Area)
       ) { //if cube is on camera
       
-      changeLed(1,1,1);
       text("Correct! Fantastic!", 200, 500);
       changeLed(2,2,2);
       //turnOnLed();
@@ -383,7 +380,7 @@ void doLogic(PImage cameraImage) {
       randomNote = newRandomNote;
       this.timer.clearAll();
       this.runonce.clearAllExcept("dlevel");
-      changeLed(0,0,0);
+      changeLed(1,1,1);
     }
     
     // The program picks a random note and plays it
@@ -724,9 +721,21 @@ void mouseWheel(MouseEvent event) {
   }
 }
 
+// Sorry, this is an ugly hack!
+// The variables are used to prevent unnecessary calls to the arduino.
+int firstLedStatus = -1;
+int secondLedStatus = -1;
+int thirdLedStatus = -1;
+
+
 void changeLed(int first, int second, int third) {
-  if (useSerial)
-    serialPort.write(first+","+second+","+third+"\r\n");
+  if (firstLedStatus != first || secondLedStatus != second || thirdLedStatus != third) {
+    firstLedStatus = first;
+    secondLedStatus = second;
+    thirdLedStatus = third;
+    if (useSerial)
+      serialPort.write(first+","+second+","+third+"\r\n"); //<>//
+  }
 }
 
 void readCalibrations() {
