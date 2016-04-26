@@ -435,8 +435,7 @@ void doLogic(PImage cameraImage) {
     textFont(fontKarla);
     text("Find the Correct Chord", 1000, 170);
     image(randomChord.image, 900, 200);
-    changeLed(firstNoteCorrect ? 2 : 1, secondNoteCorrect ? 2 : 1, thirdNoteCorrect ? 2 : 1);
-    
+
     if (this.runonce.runOnce("dlevel"))
       speak("Difficulty level is: normal");
     
