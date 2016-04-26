@@ -9,9 +9,9 @@ import guru.ttslib.*;
 import java.lang.reflect.Method;
 
 //Settings
-boolean useSerial = false;
-boolean mirrorImage = false;
-String cameraName = "Microsoft LifeCam VX-1000"; //Microsoft LifeCam Front, HD WebCam, FaceTime-HD-kamera (sisäinen), Microsoft LifeCam VX-1000, FaceTime HD Camera (Built-in)
+boolean useSerial = true;
+boolean mirrorImage = true;
+String cameraName = "Microsoft LifeCam Front"; //Microsoft LifeCam Front, HD WebCam, FaceTime-HD-kamera (sisäinen), Microsoft LifeCam VX-1000, FaceTime HD Camera (Built-in)
 boolean tangibleInterface = true;
 boolean speakToUser = true;
 
@@ -23,7 +23,7 @@ int markerSideFactor = 6; //to avoid false markers
 boolean limitToFive = true;
 
 //developer features
-boolean developer = false;
+boolean developer = true;
 boolean printFoundMarkers = false;
 boolean drawCubeCorners = false;
 
