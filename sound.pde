@@ -77,5 +77,6 @@ boolean playChordSteply(boolean chordPlayed, Chord randomChord, String unique) {
 }
 
 void speak(String speak) {
+  if (speakToUser)
    tts.speak(speak);
 }

@@ -13,6 +13,7 @@ boolean useSerial = false;
 boolean mirrorImage = false;
 String cameraName = "Microsoft LifeCam VX-1000"; //Microsoft LifeCam Front, HD WebCam, FaceTime-HD-kamera (sisäinen), Microsoft LifeCam VX-1000, FaceTime HD Camera (Built-in)
 boolean tangibleInterface = true;
+boolean speakToUser = true;
 
 //marker detection improvements
 boolean markerDiaCleanup = true;

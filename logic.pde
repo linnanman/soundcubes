@@ -76,13 +76,15 @@ void doLogic(PImage cameraImage) {
 
   //tangible user interface stuff:
   if (tangibleInterface) {
-    //play a single cube
+    /*
+      play single cube -slot
+      */
     Cube cubeToPlay = cubes.isAnyCubeOnCamera(this.playCubeArea);
     if (cubeToPlay != null) {
       
       Note toPlay = notes.getNote(cubeToPlay);
       if (toPlay != null) {
-        this.timer.setTimer("cubeToPlay", 500);
+        this.timer.setTimer("cubeToPlay", 1500);
         if (this.timer.isOver("cubeToPlay") && this.runonce.runOnce("cubeToPlay")) {
           speak("The cube is:");
           System.out.println("joojooo");
@@ -103,11 +105,13 @@ void doLogic(PImage cameraImage) {
       this.runonce.remove("cubeToPlay2");
     }
     
-    //play task again
+    /*
+      play task again -slot
+      */
     Cube taskToPlay = cubes.isAnyCubeOnCamera(this.playTaskAgainArea);
     if (taskToPlay != null) {
 
-        this.timer.setTimer("taskToPlay", 500);
+        this.timer.setTimer("taskToPlay", 1500);
         if (this.timer.isOver("taskToPlay") && this.runonce.runOnce("taskToPlay")) {
           if (this.state.getState() == "learning" || this.state.getState() == "easy") {
             speak("The note is:");
@@ -135,7 +139,7 @@ void doLogic(PImage cameraImage) {
         
       }
     else {
-      if (this.timer.isOver("taskToPlay2")) {
+      if ( !this.state.getState().equals("normal") || (this.state.getState().equals("normal") && this.timer.isOver("taskToPlay2")) ) {
         this.timer.removeTimer("taskToPlay");
         this.timer.removeTimer("taskToPlay2");
         this.timer.removeTimer("chord-firsttaskplay");
@@ -147,38 +151,44 @@ void doLogic(PImage cameraImage) {
     }
    
 
-    //change difficulty level
+    /*
+      change difficulty level -slot
+      */
     Cube difficultyCube = cubes.isAnyCubeOnCamera(this.difficultyLevelArea);
     if (difficultyCube != null) {
+      this.timer.setTimer("doNotChangeTooQuickly", 2000);
       //change difficult level
-      if (difficultyCube.equals(cubes.getCube(1)) && this.state.getState() != "learning") {
+      if (this.timer.isOver("doNotChangeTooQuickly") && difficultyCube.equals(cubes.getCube(1)) && this.state.getState() != "learning") {
         //speak("Difficulty level is: learning");
         this.state.setState("learning");
         this.runonce.clearAll();
         this.timer.clearAll();
         chordPlayed = false;
       }
-      else if (difficultyCube.equals(cubes.getCube(5)) && this.state.getState() != "easy") { //todo
+      else if (this.timer.isOver("doNotChangeTooQuickly") && difficultyCube.equals(cubes.getCube(5)) && this.state.getState() != "easy") { //todo
       //speak("Difficulty level is: easy");
         this.state.setState("easy"); 
         this.runonce.clearAll();
         this.timer.clearAll();
         chordPlayed = false;
       }
-      else if (difficultyCube.equals(cubes.getCube(6)) && this.state.getState() != "normal") { //todo
+      else if (this.timer.isOver("doNotChangeTooQuickly") && difficultyCube.equals(cubes.getCube(6)) && this.state.getState() != "normal") { //todo
         //speak("Difficulty c level is: normal");
         this.state.setState("normal");
         this.runonce.clearAll();
         this.timer.clearAll();
         chordPlayed = false;
       }
-      else if (difficultyCube.equals(cubes.getCube(8)) && this.state.getState() != "hard") { //todo
+      else if (this.timer.isOver("doNotChangeTooQuickly") && difficultyCube.equals(cubes.getCube(8)) && this.state.getState() != "hard") { //todo
         //speak("Difficulty level is: advanced");
         this.state.setState("hard");
         this.runonce.clearAll();
         this.timer.clearAll();
         chordPlayed = false;
       }
+    }
+    else {
+      this.timer.removeTimer("doNotChangeTooQuickly");
     }
     
     //no cube at all
@@ -284,14 +294,14 @@ void doLogic(PImage cameraImage) {
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube2Area) ||
       cubes.isCubeOnCamera(randomNote.cube.number, this.cube3Area)
       ) { //if cube is on camera
-      
+
       changeLed(1,1,1);
       text("Correct! Fantastic!", 200, 500);
       changeLed(2,2,2);
       //turnOnLed();
       //Pick new random note
       this.timer.setTimer("learning-correct", 4000);
-      this.timer.setTimer("correct-sound", 500);
+      this.timer.setTimer("correct-sound", 1500);
       }
       
     //move on
@@ -364,7 +374,7 @@ void doLogic(PImage cameraImage) {
       //turnOnLed();
       //Pick new random note
       this.timer.setTimer("learning-correct", 4000);
-      this.timer.setTimer("correct-sound", 500);
+      this.timer.setTimer("correct-sound", 1500);
       }
       
     //move on
@@ -477,7 +487,7 @@ void doLogic(PImage cameraImage) {
         playChord(randomChord); 
       }*/
       this.timer.setTimer("chord-correct", 4000);
-      this.timer.setTimer("correct-sound", 500);
+      this.timer.setTimer("correct-sound", 1500);
       
       text("All notes are correct! Fantastic!", 1000, 600);
       //TODO: Play new chord
@@ -579,7 +589,7 @@ void doLogic(PImage cameraImage) {
       }*/
       
       this.timer.setTimer("chord-correct", 4000);
-      this.timer.setTimer("correct-sound", 500);
+      this.timer.setTimer("correct-sound", 1500);
       
       text("All notes are correct! Fantastic!", 1000, 600);
       //TODO: Play new chord
