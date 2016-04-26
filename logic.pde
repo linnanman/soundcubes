@@ -438,20 +438,34 @@ void doLogic(PImage cameraImage) {
       }
       text("First note is correct!", 1000, 400);
       firstNoteCorrect = true;
+    } else if (cubes.isAnyCubeOnCamera(this.cube1Area) != null) {
+      ledControl.SetFirstLed(1);
+    } else {
+      ledControl.SetFirstLed(0);
     }
+    
     if (cubes.isCubeOnCamera(randomChord.secondNote.cube.number, this.cube2Area)) { //if cube is on camera
       if (this.runonce.runOnce("playSecond")) {
         //playSound(randomChord.secondNote.soundfile, false, false);
       }
       text("Second note is correct!", 1000, 450);
       secondNoteCorrect = true;
+    } else if (cubes.isAnyCubeOnCamera(this.cube2Area) != null) {
+      ledControl.SetSecondLed(1);
+    } else {
+      ledControl.SetSecondLed(0);
     }
+    
     if (cubes.isCubeOnCamera(randomChord.thirdNote.cube.number, this.cube3Area)) { //if cube is on camera
       if (this.runonce.runOnce("playThird")) {
         //playSound(randomChord.thirdNote.soundfile, false, false);
       }
       text("Third note is correct!", 1000, 500);
       thirdNoteCorrect = true;
+    } else if (cubes.isAnyCubeOnCamera(this.cube3Area) != null) {
+      ledControl.SetThirdLed(1);
+    } else {
+      ledControl.SetThirdLed(0);
     }
 
     if (firstNoteCorrect && secondNoteCorrect && thirdNoteCorrect) {
@@ -536,20 +550,34 @@ void doLogic(PImage cameraImage) {
       }
       text("First note is correct!", 1000, 400);
       firstNoteCorrect = true;
+    } else if (cubes.isAnyCubeOnCamera(this.cube1Area) != null) {
+      ledControl.SetFirstLed(1);
+    } else {
+      ledControl.SetFirstLed(0);
     }
+    
     if (cubes.isCubeOnCamera(randomChord.secondNote.cube.number, this.cube2Area)) { //if cube is on camera
       if (this.runonce.runOnce("playSecond-hard")) {
         //playSound(randomChord.secondNote.soundfile, false, false);
       }
       text("Second note is correct!", 1000, 450);
       secondNoteCorrect = true;
+    } else if (cubes.isAnyCubeOnCamera(this.cube2Area) != null) {
+      ledControl.SetSecondLed(1);
+    } else {
+      ledControl.SetSecondLed(0);
     }
+    
     if (cubes.isCubeOnCamera(randomChord.thirdNote.cube.number, this.cube3Area)) { //if cube is on camera
       if (this.runonce.runOnce("playThird-hard")) {
         //playSound(randomChord.thirdNote.soundfile, false, false);
       }
       text("Third note is correct!", 1000, 500);
       thirdNoteCorrect = true;
+    } else if (cubes.isAnyCubeOnCamera(this.cube3Area) != null) {
+      ledControl.SetThirdLed(1);
+    } else {
+      ledControl.SetThirdLed(0);
     }
 
     if (firstNoteCorrect && secondNoteCorrect && thirdNoteCorrect) {
