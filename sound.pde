@@ -52,3 +52,7 @@ void playChord(Chord chord) {
   s2.play();
   s3.play();
 }
+
+void speak(String speak) {
+   tts.speak(speak);
+}

@@ -104,6 +104,7 @@ void setup() {
 }
 
 void draw() {
+  
   //logic
   if (cam.available() == true) {
     cam.read();

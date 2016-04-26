@@ -1,4 +1,18 @@
 
+public class Speak implements Runnable {
+
+    private String speak;
+    public Speak(String speak) {
+      this.speak = speak;
+    }
+    
+    public void run() {
+        tts.speak(this.speak);
+        
+    }
+}
+
+
 class RunOnce {
   
   private Hashtable<String, Boolean> name;
@@ -12,6 +26,16 @@ class RunOnce {
     this.name = new Hashtable<String, Boolean>();
     if (val != null)
       this.name.put("intro", val);
+}
+
+  public void clearAllExcept(String stringi) {
+    Boolean val = this.name.get("intro");
+    Boolean val2 = this.name.get(stringi);
+    this.name = new Hashtable<String, Boolean>();
+    if (val != null)
+      this.name.put("intro", val);
+    if (val2 != null)
+      this.name.put(stringi, val2);
 }
 
  
@@ -72,6 +96,18 @@ class Timer {
     this.timers.put("intro", val);
     
 }
+
+
+  public void clearAllExcept(String stringi) {
+    Long val = this.timers.get("intro");
+    Long val2 = this.timers.get(stringi);
+    this.timers = new Hashtable<String, Long>();
+    this.timers.put("intro", val);
+    this.timers.put(stringi, val2);
+    
+}
+
+
 
   public void removeTimer(String name) {
     this.timers.remove(name);
@@ -503,20 +539,29 @@ class Chord {
     this.secondNote = secondNote;
     this.thirdNote = thirdNote;
   }
+  
+  public boolean equals(Chord anotherchord) {
+      if (this.name == anotherchord.name)
+        return true;
+      return false;
+  }
 }
 
 class Chords {
   public Chord cMajor;
+  public Chord eMajor;
 
   public Chords(Note C, Note E, Note G) {
     PImage cImg = loadImage("data/C_major_white.png");
-    String name = "cMajor";
-    cMajor = new Chord(C, E, G, cImg, name);
+    cMajor = new Chord(C, E, G, cImg, "cMajor");
+    eMajor = new Chord(E, G, C, cImg, "eMajor");
   }
 
   public Chord getRandomChord() {
-    Chord[] chords = { cMajor };
+    Chord[] chords = { cMajor, eMajor };
     Chord randomChord = chords[int(random(chords.length))];
     return randomChord;
   }
+  
+  
 }
