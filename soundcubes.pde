@@ -5,6 +5,8 @@ import processing.video.*;
 import java.util.*;
 import processing.net.*;
 import ddf.minim.*;
+import guru.ttslib.*;
+import java.lang.reflect.Method;
 
 //Settings
 boolean useSerial = false;
@@ -17,7 +19,7 @@ boolean limitToFive = true;
 
 //developer features
 boolean developer = false;
-boolean printFoundMarkers = true;
+boolean printFoundMarkers = false;
 boolean drawCubeCorners = false;
 
 int port = 5204;
@@ -33,6 +35,7 @@ Cubes cubes;
 State state;
 Timer timer;
 RunOnce runonce;
+TTS tts;
 
 // front_camera_para.dat contains calibration data about Surface Pro 3 front camera.
 // Despite calibration data being camera-specific, the same calibration data should
@@ -89,10 +92,11 @@ void setup() {
   cam = new Capture(this, camWidth, camHeight, cameraName, 30);
   cam.start();
 
-  server = new Server(this, port); 
+  //server = new Server(this, port); 
   minim = new Minim(this);
   player = minim.loadFile("null.wav");
   cubes = new Cubes();
+  tts = new TTS();
   this.timer = new Timer();
   this.runonce = new RunOnce();
 
@@ -119,6 +123,6 @@ void draw() {
     catch (Exception e) {
     }
     doLogic(processedImage);
-    serverAction();
+    //serverAction();
   }
 }

@@ -8,7 +8,10 @@ class RunOnce {
   }
   
   public void clearAll() {
-  this.name = new Hashtable<String, Boolean>();
+    Boolean val = this.name.get("intro");
+    this.name = new Hashtable<String, Boolean>();
+    if (val != null)
+      this.name.put("intro", val);
 }
 
  
@@ -64,7 +67,10 @@ class Timer {
   }
 
   public void clearAll() {
+    Long val = this.timers.get("intro");
     this.timers = new Hashtable<String, Long>();
+    this.timers.put("intro", val);
+    
 }
 
   public void removeTimer(String name) {

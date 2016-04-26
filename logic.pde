@@ -64,6 +64,8 @@ void doSetup() {
   this.calibrHeight = 100;
   this.calibrState = 1;
   this.calibrations = new ArrayList<int[]>();
+  
+
 }
 
 void doLogic(PImage cameraImage) {
@@ -75,28 +77,50 @@ void doLogic(PImage cameraImage) {
     //play a single cube
     Cube cubeToPlay = cubes.isAnyCubeOnCamera(this.playCubeArea);
     if (cubeToPlay != null) {
+      
       Note toPlay = notes.getNote(cubeToPlay);
       if (toPlay != null) {
-        this.timer.setTimer("cubeToPlay", 1000);
-        if (this.timer.isOver("cubeToPlay"))
+        this.timer.setTimer("cubeToPlay", 500);
+        if (this.timer.isOver("cubeToPlay") && this.runonce.runOnce("cubeToPlay")) {
+          tts.speak("The cube is:");
+          System.out.println("joojooo");
+          this.timer.setTimer("cubeToPlay2", 1500);
+          
+        }
+        if (this.timer.isOver("cubeToPlay2") && this.runonce.runOnce("cubeToPlay2")) {
           playSound(toPlay.soundfile, false, false);
+        }
+        
       }
       //System.out.println("cubetoplay");
     }
     else {
       this.timer.removeTimer("cubeToPlay");
+      this.timer.removeTimer("cubeToPlay2");
+      this.runonce.remove("cubeToPlay");
+      this.runonce.remove("cubeToPlay2");
     }
     
     //play task again
     Cube taskToPlay = cubes.isAnyCubeOnCamera(this.playTaskAgainArea);
     if (taskToPlay != null) {
-      this.timer.setTimer("taskToPlay", 1000);
-        if (this.timer.isOver("taskToPlay"))
+        this.timer.setTimer("taskToPlay", 500);
+        if (this.timer.isOver("taskToPlay") && this.runonce.runOnce("taskToPlay")) {
+          tts.speak("The note is:");
+          System.out.println("joojooo");
+          this.timer.setTimer("taskToPlay2", 1500);
+          
+        }
+        if (this.timer.isOver("taskToPlay2") && this.runonce.runOnce("taskToPlay2")) {
           playSound(randomNote.soundfile, false, false);
-      //System.out.println("tasktoplay");
-    }
+        }
+        
+      }
     else {
       this.timer.removeTimer("taskToPlay");
+      this.timer.removeTimer("taskToPlay2");
+      this.runonce.remove("taskToPlay");
+      this.runonce.remove("taskToPlay");
     }
    
 
@@ -104,25 +128,29 @@ void doLogic(PImage cameraImage) {
     Cube difficultyCube = cubes.isAnyCubeOnCamera(this.difficultyLevelArea);
     if (difficultyCube != null) {
       //change difficult level
-      if (difficultyCube.equals(cubes.getCube(1))) {
+      if (difficultyCube.equals(cubes.getCube(1)) && this.state.getState() != "learning") {
+        //tts.speak("Difficulty level is: learning");
         this.state.setState("learning");
         this.runonce.clearAll();
         this.timer.clearAll();
         chordPlayed = false;
       }
-      if (difficultyCube.equals(cubes.getCube(5))) { //todo
+      else if (difficultyCube.equals(cubes.getCube(5)) && this.state.getState() != "easy") { //todo
+      //tts.speak("Difficulty level is: easy");
         this.state.setState("easy"); 
         this.runonce.clearAll();
         this.timer.clearAll();
         chordPlayed = false;
       }
-      if (difficultyCube.equals(cubes.getCube(6))) { //todo
+      else if (difficultyCube.equals(cubes.getCube(6)) && this.state.getState() != "normal") { //todo
+        //tts.speak("Difficulty c level is: normal");
         this.state.setState("normal");
         this.runonce.clearAll();
         this.timer.clearAll();
         chordPlayed = false;
       }
-      if (difficultyCube.equals(cubes.getCube(8))) { //todo
+      else if (difficultyCube.equals(cubes.getCube(8)) && this.state.getState() != "hard") { //todo
+        //tts.speak("Difficulty level is: advanced");
         this.state.setState("hard");
         this.runonce.clearAll();
         this.timer.clearAll();
@@ -149,7 +177,12 @@ void doLogic(PImage cameraImage) {
   case "start":
     //turnOnLed();
     changeLed(0,0,0);
+    
 
+    this.timer.setTimer("intro", 1000);
+    if (this.timer.isOver("intro") && this.runonce.runOnce("intro"))
+        tts.speak("Please select a difficulty level");
+        
     this.runonce.clearAll();
     chordPlayed = false;
     this.timer.clearAll();
@@ -201,16 +234,26 @@ void doLogic(PImage cameraImage) {
     if (mousePressed) {
       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
         this.state.setState("start");
+        this.timer.clearAll();
+        this.runonce.clearAll();
+        break;
       }
     }
 
     image(randomNote.image, 900, 300);
     
-    if (this.runonce.runOnce("playNote")) {
-      playSound("newNoteIs.wav", true, false); 
+    if (this.runonce.runOnce("dlevel"))
+      tts.speak("Difficulty level is: learning");
+    
+    this.timer.setTimer("anoteis", 500);
+    if (this.timer.isOver("anoteis") && this.runonce.runOnce("playNote")) {
+      //playSound("newNoteIs.wav", true, false); 
+      tts.speak("A note is: " + randomNote.name);
+      this.timer.setTimer("noteisdelay", 1000);
       addSoundQueue(randomNote.soundfile); 
     }
-    playSoundQueue();
+    if (this.timer.isOver("noteisdelay"))
+      playSoundQueue();
 
     
     //correct cube found
@@ -230,7 +273,8 @@ void doLogic(PImage cameraImage) {
       
     //move on
     if (this.timer.isOver("correct-sound")) {
-      playSound("thatsCorrectAwesome.wav", true, false);
+      //playSound("thatsCorrectAwesome.wav", true, false);
+      tts.speak("That is correct. Awesome!");
     }
     
     if (this.timer.isOver("learning-correct")) {
@@ -266,14 +310,24 @@ void doLogic(PImage cameraImage) {
     if (mousePressed) {
       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
         this.state.setState("start");
+        this.timer.clearAll();
+        this.runonce.clearAll();
+        break;
       }
     }
 
-    if (this.runonce.runOnce("playNote")) {
-      playSound("newNoteIs.wav", true, false); 
+    if (this.runonce.runOnce("dlevel"))
+      tts.speak("Difficulty level is: easy");
+    
+    this.timer.setTimer("anoteis", 500);
+    if (this.timer.isOver("anoteis") && this.runonce.runOnce("playNote")) {
+      //playSound("newNoteIs.wav", true, false); 
+      tts.speak("A note is:");
+      this.timer.setTimer("noteisdelay", 1000);
       addSoundQueue(randomNote.soundfile); 
     }
-    playSoundQueue();
+    if (this.timer.isOver("noteisdelay"))
+      playSoundQueue();
     
     //correct cube found
     if (cubes.isCubeOnCamera(randomNote.cube.number, this.cube1Area) ||
@@ -339,10 +393,18 @@ void doLogic(PImage cameraImage) {
     image(randomChord.image, 900, 200);
     changeLed(firstNoteCorrect ? 2 : 1, secondNoteCorrect ? 2 : 1, thirdNoteCorrect ? 2 : 1);
     
-    if (!this.timer.isGoing("chord-introduction") && !this.timer.isOver("chord-introduction")) {
-      playSound("newChordIs.wav", true, false); 
+    if (this.runonce.runOnce("dlevel"))
+      tts.speak("Difficulty level is: normal");
+    
+    this.timer.setTimer("achordis", 1500);
+      
+    if (this.timer.isOver("achordis") && this.runonce.runOnce("playNote")) {
+      //playSound("newChordIs.wav", true, false); 
+      tts.speak("A chord is:");
     }
-    this.timer.setTimer("chord-introduction", 1500);
+    
+    
+    this.timer.setTimer("chord-introduction", 3500);
     if (!chordPlayed && this.timer.isOver("chord-introduction")) {
       playSound(randomChord.firstNote.soundfile, false, false);  
 
@@ -414,6 +476,9 @@ void doLogic(PImage cameraImage) {
     if (mousePressed) {
       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
         this.state.setState("start");
+        this.timer.clearAll();
+        this.runonce.clearAll();
+        break;
       }
     }
 
@@ -432,10 +497,18 @@ void doLogic(PImage cameraImage) {
     textFont(fontKarla);
     text("Find the Correct Chord", 1000, 170);
 
-    if (!this.timer.isGoing("chord-introduction") && !this.timer.isOver("chord-introduction")) {
-      playSound("newChordIs.wav", true, false); 
+        if (this.runonce.runOnce("dlevel"))
+      tts.speak("Difficulty level is: advanced");
+    
+    this.timer.setTimer("achordis", 1500);
+      
+    if (this.timer.isOver("achordis") && this.runonce.runOnce("playNote")) {
+      //playSound("newChordIs.wav", true, false); 
+      tts.speak("A chord is:");
     }
-    this.timer.setTimer("chord-introduction", 1500);
+    
+    
+    this.timer.setTimer("chord-introduction", 3500);
     if (!chordPlayed && this.timer.isOver("chord-introduction")) {
       playChord(randomChord);
       chordPlayed = true;
@@ -497,6 +570,9 @@ void doLogic(PImage cameraImage) {
     if (mousePressed) {
       if (mouseX > 100 && mouseX < 140 && mouseY > 50 && mouseY < 90) {
         this.state.setState("start");
+        this.timer.clearAll();
+        this.runonce.clearAll();
+        break;
       }
     }
 
@@ -585,6 +661,8 @@ void mouseClicked() {
       output.close(); // Finishes the file
       readCalibrations();
       this.state.setState("start");
+      this.timer.clearAll();
+      this.runonce.clearAll();
       this.calibrations = new ArrayList<int[]>();
       this.calibrState = 1;
     }
