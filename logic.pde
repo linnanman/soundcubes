@@ -1,4 +1,4 @@
-char pressedKey; //<>//
+char pressedKey; //<>// //<>//
 PImage arrow;
 PFont fontLobster;
 PFont fontLobster_smaller;
@@ -142,10 +142,10 @@ void doLogic(PImage cameraImage) {
 
     /*
       change difficulty level -slot
-     */
+     */ //<>//
     Cube difficultyCube = cubes.isAnyCubeOnCamera(this.difficultyLevelArea);
     if (difficultyCube != null) {
-      this.timer.setTimer("doNotChangeTooQuickly", 2000);
+      this.timer.setTimer("doNotChangeTooQuickly", 2000); //<>//
       //change difficult level
       if (this.timer.isOver("doNotChangeTooQuickly") && difficultyCube.equals(cubes.getCube(1)) && this.state.getState() != "learning") {
         //speak("Difficulty level is: learning");
@@ -200,7 +200,7 @@ void doLogic(PImage cameraImage) {
 
     this.runonce.clearAll();
     chordPlayed = false;
-    this.timer.clearAll();
+    this.timer.clearAllExcept("doNotChangeTooQuickly");
 
     // Logo
     fill(255);
