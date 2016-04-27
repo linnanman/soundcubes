@@ -438,6 +438,7 @@ void doLogic(PImage cameraImage) {
       }
       text("First note is correct!", 1000, 400);
       firstNoteCorrect = true;
+      ledControl.SetFirstLed(2);
     } else if (cubes.isAnyCubeOnCamera(this.cube1Area) != null) {
       ledControl.SetFirstLed(1);
     } else {
@@ -450,6 +451,7 @@ void doLogic(PImage cameraImage) {
       }
       text("Second note is correct!", 1000, 450);
       secondNoteCorrect = true;
+      ledControl.SetSecondLed(2);
     } else if (cubes.isAnyCubeOnCamera(this.cube2Area) != null) {
       ledControl.SetSecondLed(1);
     } else {
@@ -462,6 +464,7 @@ void doLogic(PImage cameraImage) {
       }
       text("Third note is correct!", 1000, 500);
       thirdNoteCorrect = true;
+      ledControl.SetThirdLed(2);
     } else if (cubes.isAnyCubeOnCamera(this.cube3Area) != null) {
       ledControl.SetThirdLed(1);
     } else {
@@ -550,6 +553,7 @@ void doLogic(PImage cameraImage) {
       }
       text("First note is correct!", 1000, 400);
       firstNoteCorrect = true;
+      ledControl.SetFirstLed(2);
     } else if (cubes.isAnyCubeOnCamera(this.cube1Area) != null) {
       ledControl.SetFirstLed(1);
     } else {
@@ -562,6 +566,7 @@ void doLogic(PImage cameraImage) {
       }
       text("Second note is correct!", 1000, 450);
       secondNoteCorrect = true;
+      ledControl.SetSecondLed(2);
     } else if (cubes.isAnyCubeOnCamera(this.cube2Area) != null) {
       ledControl.SetSecondLed(1);
     } else {
@@ -574,6 +579,7 @@ void doLogic(PImage cameraImage) {
       }
       text("Third note is correct!", 1000, 500);
       thirdNoteCorrect = true;
+      ledControl.SetThirdLed(2);
     } else if (cubes.isAnyCubeOnCamera(this.cube3Area) != null) {
       ledControl.SetThirdLed(1);
     } else {
