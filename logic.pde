@@ -29,6 +29,10 @@ int calibrHeight;
 List<int[]> calibrations;
 PrintWriter output;
 
+int intPlayCubeDelay = 300;
+int newDelay = 2000;
+int difficultyChangeDelay = 1000;
+
 void doSetup() {
 
 
@@ -58,7 +62,7 @@ void doSetup() {
   notes = new Notes(this.cubes);
   randomNote = notes.randomNote();
 
-  chords = new Chords(notes.C, notes.E, notes.G);
+  chords = new Chords(notes.C, notes.E, notes.G, notes.A);
   randomChord = chords.getRandomChord();
 
   //calibration variables
@@ -82,11 +86,11 @@ void doLogic(PImage cameraImage) {
 
       Note toPlay = notes.getNote(cubeToPlay);
       if (toPlay != null) {
-        this.timer.setTimer("cubeToPlay", 1500);
+        this.timer.setTimer("cubeToPlay", intPlayCubeDelay);
         if (this.timer.isOver("cubeToPlay") && this.runonce.runOnce("cubeToPlay")) {
           speak("The cube is:");
           System.out.println("joojooo");
-          this.timer.setTimer("cubeToPlay2", 1500);
+          this.timer.setTimer("cubeToPlay2", intPlayCubeDelay);
         }
         if (this.timer.isOver("cubeToPlay2") && this.runonce.runOnce("cubeToPlay2")) {
           playSound(toPlay.soundfile, true, true);
@@ -106,7 +110,7 @@ void doLogic(PImage cameraImage) {
     Cube taskToPlay = cubes.isAnyCubeOnCamera(this.playTaskAgainArea);
     if (taskToPlay != null) {
 
-      this.timer.setTimer("taskToPlay", 1500);
+      this.timer.setTimer("taskToPlay", intPlayCubeDelay);
       if (this.timer.isOver("taskToPlay") && this.runonce.runOnce("taskToPlay")) {
         if (this.state.getState() == "learning" || this.state.getState() == "easy") {
           speak("The note is:");
@@ -115,7 +119,7 @@ void doLogic(PImage cameraImage) {
         }
 
         System.out.println("joojooo");
-        this.timer.setTimer("taskToPlay2", 1500);
+        this.timer.setTimer("taskToPlay2", intPlayCubeDelay);
       }
       if (this.timer.isOver("taskToPlay2") && this.runonce.runOnce("taskToPlay2")) {
         System.out.println("joojoo2");
@@ -145,7 +149,7 @@ void doLogic(PImage cameraImage) {
      */
     Cube difficultyCube = cubes.isAnyCubeOnCamera(this.difficultyLevelArea);
     if (difficultyCube != null) {
-      this.timer.setTimer("doNotChangeTooQuickly", 2000);
+      this.timer.setTimer("doNotChangeTooQuickly", difficultyChangeDelay);
       //change difficult level
       if (this.timer.isOver("doNotChangeTooQuickly") && difficultyCube.equals(cubes.getCube(1)) && this.state.getState() != "learning") {
         //speak("Difficulty level is: learning");
@@ -279,8 +283,8 @@ void doLogic(PImage cameraImage) {
       text("Correct! Fantastic!", 200, 500);
       ledControl.ChangeLed(2, 2, 2);
       //Pick new random note
-      this.timer.setTimer("learning-correct", 6000);
-      this.timer.setTimer("correct-sound", 1500);
+      this.timer.setTimer("learning-correct", newDelay);
+      this.timer.setTimer("correct-sound", intPlayCubeDelay);
     } else if (cubes.isAnyCubeOnCamera(this.cube1Area) != null ||
       cubes.isAnyCubeOnCamera(this.cube2Area) != null ||
       cubes.isAnyCubeOnCamera(this.cube3Area) != null) {
@@ -357,8 +361,8 @@ void doLogic(PImage cameraImage) {
       text("Correct! Fantastic!", 200, 500);
       ledControl.ChangeLed(2, 2, 2);
       //Pick new random note
-      this.timer.setTimer("learning-correct", 6000);
-      this.timer.setTimer("correct-sound", 1500);
+      this.timer.setTimer("learning-correct", newDelay);
+      this.timer.setTimer("correct-sound", intPlayCubeDelay);
     } else if (cubes.isAnyCubeOnCamera(this.cube1Area) != null ||
       cubes.isAnyCubeOnCamera(this.cube2Area) != null ||
       cubes.isAnyCubeOnCamera(this.cube3Area) != null) {
@@ -473,8 +477,8 @@ void doLogic(PImage cameraImage) {
       /*if (this.runonce.runOnce("playChord")) {
        playChord(randomChord); 
        }*/
-      this.timer.setTimer("chord-correct", 6000);
-      this.timer.setTimer("correct-sound", 1500);
+      this.timer.setTimer("chord-correct", newDelay);
+      this.timer.setTimer("correct-sound", intPlayCubeDelay);
 
       text("All notes are correct! Fantastic!", 1000, 600);
       //TODO: Play new chord
@@ -586,8 +590,8 @@ void doLogic(PImage cameraImage) {
        playChord(randomChord); 
        }*/
 
-      this.timer.setTimer("chord-correct", 6000);
-      this.timer.setTimer("correct-sound", 1500);
+      this.timer.setTimer("chord-correct", newDelay);
+      this.timer.setTimer("correct-sound", intPlayCubeDelay);
 
       text("All notes are correct! Fantastic!", 1000, 600);
       //TODO: Play new chord

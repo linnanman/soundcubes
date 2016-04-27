@@ -490,11 +490,13 @@ class Notes {
   public PImage E_image;
   public PImage F_image;
   public PImage G_image;
+  public PImage A_image;
   public Random rand;
   public Note C;
   public Note E;
   public Note F;
   public Note G;
+  public Note A;
   List<Note> list = new ArrayList<Note>();
   
   public Notes(Cubes cubes) {
@@ -502,15 +504,18 @@ class Notes {
     E_image = loadImage("data/E.png");
     F_image = loadImage("data/F.png");
     G_image = loadImage("data/G.png");
+    A_image = loadImage("data/G.png");
     C = new Note("C", C_image, cubes.getCube(1), "notes/c.wav");
     E = new Note("E", E_image, cubes.getCube(5), "notes/e.wav");
     F = new Note("F", F_image, cubes.getCube(6), "notes/f.wav");
     G = new Note("G", G_image, cubes.getCube(8), "notes/g.wav");
+    A = new Note("A", G_image, cubes.getCube(8), "notes/a.wav");
     rand = new Random();
     list.add(C);
     list.add(E);
     list.add(F);
     list.add(G);
+    list.add(A);
   }
 
   public Note randomNote() {
@@ -551,16 +556,18 @@ class Chord {
 
 class Chords {
   public Chord cMajor;
-  public Chord eMajor;
+  public Chord aMajor;
 
-  public Chords(Note C, Note E, Note G) {
+  public Chords(Note C, Note E, Note G, Note A) {
     PImage cImg = loadImage("data/C_major_white.png");
+    PImage eImg = loadImage("data/C_major_white.png");
+    PImage aImg = loadImage("data/C_major_white.png");
     cMajor = new Chord(C, E, G, cImg, "cMajor");
-    eMajor = new Chord(E, G, C, cImg, "eMajor");
+    aMajor = new Chord(A, C, E, aImg, "aMajor");
   }
 
   public Chord getRandomChord() {
-    Chord[] chords = { cMajor, eMajor };
+    Chord[] chords = { cMajor, aMajor };
     Chord randomChord = chords[int(random(chords.length))];
     return randomChord;
   }
