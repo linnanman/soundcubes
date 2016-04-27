@@ -103,7 +103,8 @@ class Timer {
     Long val2 = this.timers.get(stringi);
     this.timers = new Hashtable<String, Long>();
     this.timers.put("intro", val);
-    this.timers.put(stringi, val2);
+    if (val2 != null)
+      this.timers.put(stringi, val2);
     
 }
 
@@ -504,12 +505,12 @@ class Notes {
     E_image = loadImage("data/E.png");
     F_image = loadImage("data/F.png");
     G_image = loadImage("data/G.png");
-    A_image = loadImage("data/G.png");
+    A_image = loadImage("data/A.png");
     C = new Note("C", C_image, cubes.getCube(1), "notes/c.wav");
     E = new Note("E", E_image, cubes.getCube(5), "notes/e.wav");
     F = new Note("F", F_image, cubes.getCube(6), "notes/f.wav");
     G = new Note("G", G_image, cubes.getCube(8), "notes/g.wav");
-    A = new Note("A", G_image, cubes.getCube(8), "notes/a.wav");
+    A = new Note("A", A_image, cubes.getCube(10), "notes/a.wav");
     rand = new Random();
     list.add(C);
     list.add(E);
@@ -556,18 +557,18 @@ class Chord {
 
 class Chords {
   public Chord cMajor;
-  public Chord aMajor;
+  public Chord aMinor;
 
   public Chords(Note C, Note E, Note G, Note A) {
     PImage cImg = loadImage("data/C_major_white.png");
-    PImage eImg = loadImage("data/C_major_white.png");
-    PImage aImg = loadImage("data/C_major_white.png");
+    //PImage eImg = loadImage("data/C_major_white.png");
+    PImage aImg = loadImage("data/A_minor.png");
     cMajor = new Chord(C, E, G, cImg, "cMajor");
-    aMajor = new Chord(A, C, E, aImg, "aMajor");
+    aMinor = new Chord(A, C, E, aImg, "aMinor");
   }
 
   public Chord getRandomChord() {
-    Chord[] chords = { cMajor, aMajor };
+    Chord[] chords = { cMajor, aMinor };
     Chord randomChord = chords[int(random(chords.length))];
     return randomChord;
   }
