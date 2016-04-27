@@ -1,7 +1,7 @@
 const int numCubes = 3;
 
-int greenLedPins[] = {2, 4, 6};
-int redLedPins[] = {3, 5, 7};
+int redLedPins[] = {2, 4, 6};
+int greenLedPins[] = {3, 5, 7};
 
 int OFF = 0;
 int WRONG = 1;
