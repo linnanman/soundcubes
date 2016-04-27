@@ -29,7 +29,7 @@ class RunOnce {
 }
 
   public void clearAllExcept(String stringi) {
-    Boolean val = this.name.get("intro");
+    Boolean val = this.name.get("intro"); //<>//
     Boolean val2 = this.name.get(stringi);
     this.name = new Hashtable<String, Boolean>();
     if (val != null)

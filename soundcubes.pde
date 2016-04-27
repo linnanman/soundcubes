@@ -9,15 +9,15 @@ import guru.ttslib.*;
 import java.lang.reflect.Method;
 
 //Settings
-boolean useSerial = false;
-boolean mirrorImage = false;
-String cameraName = "HD WebCam"; //Microsoft LifeCam Front, HD WebCam, FaceTime-HD-kamera (sisäinen), Microsoft LifeCam VX-1000, FaceTime HD Camera (Built-in)
+boolean useSerial = true;
+boolean mirrorImage = true;
+String cameraName = "Microsoft LifeCam Front"; //Microsoft LifeCam Front, HD WebCam, FaceTime-HD-kamera (sisäinen), Microsoft LifeCam VX-1000, FaceTime HD Camera (Built-in)
 boolean tangibleInterface = true;
 boolean speakToUser = true;
 
 //marker detection improvements
 boolean markerDiaCleanup = true;
-int minimum_dia = 60; //min diameter for marker, to avoid false marker recognitions
+int minimum_dia = 10; //min diameter for marker, to avoid false marker recognitions
 boolean markerSideCleanup = true;
 int markerSideFactor = 6; //to avoid false markers
 boolean limitToFive = true;
@@ -25,7 +25,7 @@ boolean showAreaBoxes = true;
 
 //developer features
 boolean developer = false;
-boolean printFoundMarkers = false;
+boolean printFoundMarkers = true;
 boolean drawCubeCorners = false;
 
 int port = 5204;
@@ -132,6 +132,7 @@ void draw() {
       nya.detect(processedImage);
     }
     catch (Exception e) {
+      println(e);
     }
     doLogic(processedImage);
     //serverAction();
